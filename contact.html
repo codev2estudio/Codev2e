@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
+  <title>Contact — CODEV2E Studio</title>
+  <meta name="description" content="Start a conversation with CODEV2E Studio. Tell us what you are building and we will reply with thoughts, a rough timeline, and whether we are the right fit.">
+  <meta name="theme-color" content="#07070d">
+  <link rel="canonical" href="https://codev2estudio.pages.dev/contact.html">
+  <link rel="icon" type="image/png" href="assets/img/hero-city.jpg">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contact — CODEV2E Studio">
+  <meta property="og:description" content="Start a conversation with CODEV2E Studio.">
+  <meta property="og:image" content="assets/img/contact-night.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <div class="loader">
+    <div class="loader-inner">
+      <div class="loader-mark">CODEV2E</div>
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="top-header">
+    <div class="header-container">
+      <a href="index.html" class="brand" aria-label="CODEV2E Studio home">
+        <span class="brand-mark">C</span>
+        <span class="brand-name"><b>CODEV2E</b><span>STUDIO</span></span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link" data-nav href="index.html" target="_blank" rel="noopener">Home</a>
+        <a class="nav-link" data-nav href="studio.html" target="_blank" rel="noopener">Studio</a>
+        <a class="nav-link" data-nav href="services.html" target="_blank" rel="noopener">Services</a>
+        <a class="nav-link" data-nav href="process.html" target="_blank" rel="noopener">Process</a>
+        <a class="nav-link nav-cta" data-nav href="contact.html" target="_blank" rel="noopener">Start a Project</a>
+      </nav>
+
+      <button class="menu-dots-btn" aria-label="Open menu" aria-expanded="false">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </button>
+      <div class="menu-dropdown" role="menu">
+        <a data-nav href="index.html" target="_blank" rel="noopener"><span class="ico">⌂</span> Home</a>
+        <a data-nav href="studio.html" target="_blank" rel="noopener"><span class="ico">✦</span> Studio</a>
+        <a data-nav href="services.html" target="_blank" rel="noopener"><span class="ico">◆</span> Services</a>
+        <a data-nav href="process.html" target="_blank" rel="noopener"><span class="ico">⟳</span> Process</a>
+        <div class="divider"></div>
+        <a data-nav href="contact.html" target="_blank" rel="noopener" class="dd-cta"><span class="ico">→</span> Start a Project</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== PAGE HERO ===== -->
+    <section class="page-hero" style="min-height: 60vh;">
+      <div class="hero-bg">
+        <img src="assets/img/contact-night.jpg" alt="Anime mountain landscape under starry night">
+      </div>
+      <div class="hero-aurora"></div>
+      <canvas id="particles"></canvas>
+
+      <div class="container page-hero-content">
+        <span class="eyebrow reveal">Start a Conversation</span>
+        <h1 class="reveal reveal-d1">Tell us what you are <span class="text-grad">building.</span></h1>
+        <p class="reveal reveal-d2">
+          Discovery is free. We will reply with thoughts, a rough timeline, and an honest
+          take on whether we are the right studio for your project.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT FORM ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="split" style="gap: 80px;">
+
+          <!-- Left: form -->
+          <div class="reveal">
+            <span class="eyebrow">Project Brief</span>
+            <h2 class="section-title" style="font-size: clamp(28px, 4vw, 44px); margin-bottom: 32px;">Send us a <span class="text-grad">message.</span></h2>
+
+            <form data-demo-form style="display: flex; flex-direction: column; gap: 18px;">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="name">Your Name</label>
+                  <input id="name" name="name" type="text" placeholder="Jane Animator" required>
+                </div>
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" placeholder="jane@studio.com" required>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="field">
+                  <label for="company">Company / Project</label>
+                  <input id="company" name="company" type="text" placeholder="Optional">
+                </div>
+                <div class="field">
+                  <label for="service">Service Needed</label>
+                  <select id="service" name="service" required>
+                    <option value="">Choose one</option>
+                    <option>2D Animation</option>
+                    <option>3D Animation</option>
+                    <option>Motion Graphics</option>
+                    <option>Character Design</option>
+                    <option>Storyboarding</option>
+                    <option>Visual Development</option>
+                    <option>Full Production</option>
+                    <option>Something else</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="field">
+                  <label for="budget">Budget Range</label>
+                  <select id="budget" name="budget">
+                    <option value="">Choose one</option>
+                    <option>Under $1k</option>
+                    <option>$1k – $5k</option>
+                    <option>$5k – $15k</option>
+                    <option>$15k – $50k</option>
+                    <option>$50k+</option>
+                    <option>Not sure yet</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="timeline">Timeline</label>
+                  <select id="timeline" name="timeline">
+                    <option value="">Choose one</option>
+                    <option>ASAP (rush)</option>
+                    <option>1–2 months</option>
+                    <option>3–6 months</option>
+                    <option>6+ months</option>
+                    <option>Flexible</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field full">
+                <label for="message">Tell us about your project</label>
+                <textarea id="message" name="message" placeholder="What are you building? Who is it for? What does success look like? References, links, and sketches all welcome." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="align-self: flex-start; padding: 16px 32px;">
+                Send Message <span class="arr">→</span>
+              </button>
+
+              <p style="font-size: 12px; color: var(--muted); margin-top: 8px;">
+                We typically reply within 1–2 business days. For urgent enquiries, ping us on Discord.
+              </p>
+            </form>
+          </div>
+
+          <!-- Right: sidebar info -->
+          <div class="reveal reveal-d2" style="display: flex; flex-direction: column; gap: 24px;">
+
+            <div class="card" style="padding: 28px;">
+              <div class="card-icon">✉</div>
+              <h3 style="margin-bottom: 8px;">Email</h3>
+              <p style="margin-bottom: 16px;">For project briefs, partnerships, and press.</p>
+              <a href="mailto:hello@codev2estudio.pages.dev" class="link-arrow">hello@codev2e.studio</a>
+            </div>
+
+            <div class="card" style="padding: 28px;">
+              <div class="card-icon">✦</div>
+              <h3 style="margin-bottom: 8px;">Social</h3>
+              <p style="margin-bottom: 16px;">Works in progress, behind-the-scenes, and updates.</p>
+              <div class="footer-socials" style="display: flex; gap: 10px;">
+                <a href="https://www.instagram.com/codev2e/" target="_blank" rel="noopener" style="width: 42px; height: 42px;">IG</a>
+                <a href="https://www.youtube.com/@CODEV2E" target="_blank" rel="noopener" style="width: 42px; height: 42px;">YT</a>
+                <a href="https://discord.gg/TK2JsrdjGj" target="_blank" rel="noopener" style="width: 42px; height: 42px;">DC</a>
+              </div>
+            </div>
+
+            <div class="card" style="padding: 28px;">
+              <div class="card-icon">◐</div>
+              <h3 style="margin-bottom: 8px;">Studio Hours</h3>
+              <p style="margin-bottom: 12px;">Monday – Friday</p>
+              <p style="color: var(--muted); font-size: 14px;">10:00 – 19:00 IST<br>Replies within 1–2 business days</p>
+            </div>
+
+            <div class="card" style="padding: 28px; background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.08), rgba(var(--accent-3-rgb), 0.06)); border-color: rgba(var(--accent-rgb), 0.25);">
+              <div class="card-icon" style="background: var(--grad-warm); color: #fff;">♥</div>
+              <h3 style="margin-bottom: 8px;">Before You Send</h3>
+              <p style="color: var(--muted); font-size: 14px; line-height: 1.7;">
+                The more you tell us in the first message, the faster we can give you a
+                useful reply. References, links, and rough budgets all help.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA BAND ===== -->
+    <section class="cta-band">
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+      <div class="container reveal">
+        <h2>Prefer to just <span class="text-grad">say hi?</span></h2>
+        <p>Discord is where we hang out. Drop in, share what you are working on, and we will chat.</p>
+        <a href="https://discord.gg/TK2JsrdjGj" target="_blank" rel="noopener" class="btn btn-primary">
+          Join the Discord <span class="arr">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-block">
+          <a href="index.html" class="brand">
+            <span class="brand-mark">C</span>
+            <span class="brand-name"><b>CODEV2E</b><span>STUDIO</span></span>
+          </a>
+          <p class="footer-tagline">
+            Independent animation studio crafting 2D, 3D, and original visual stories —
+            one frame at a time.
+          </p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/codev2e/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+            <a href="https://www.youtube.com/@CODEV2E" target="_blank" rel="noopener" aria-label="YouTube">YT</a>
+            <a href="https://discord.gg/TK2JsrdjGj" target="_blank" rel="noopener" aria-label="Discord">DC</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <ul>
+            <li><a href="index.html" target="_blank" rel="noopener">Home</a></li>
+            <li><a href="studio.html" target="_blank" rel="noopener">About</a></li>
+            <li><a href="process.html" target="_blank" rel="noopener">Process</a></li>
+            <li><a href="contact.html" target="_blank" rel="noopener">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html" target="_blank" rel="noopener">2D Animation</a></li>
+            <li><a href="services.html" target="_blank" rel="noopener">3D Animation</a></li>
+            <li><a href="services.html" target="_blank" rel="noopener">Motion Graphics</a></li>
+            <li><a href="services.html" target="_blank" rel="noopener">Visual Dev</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://www.instagram.com/codev2e/" target="_blank" rel="noopener">Instagram ↗</a></li>
+            <li><a href="https://www.youtube.com/@CODEV2E" target="_blank" rel="noopener">YouTube ↗</a></li>
+            <li><a href="https://discord.gg/TK2JsrdjGj" target="_blank" rel="noopener">Discord ↗</a></li>
+            <li><a href="contact.html" target="_blank" rel="noopener">Email us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copy">© <span data-year>2025</span> CODEV2E Studio. Crafted frame by frame.</div>
+        <div class="links">
+          <a href="studio.html" target="_blank" rel="noopener">Studio</a>
+          <a href="contact.html" target="_blank" rel="noopener">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
