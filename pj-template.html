@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ================= SHOWCASE METADATA =================
+       Change these values for this project.
+       For pj7.html use ./pj7.png, etc.
+  ========================================================= -->
+  <meta name="codev2e-title" content="PROJECT TITLE">
+  <meta name="codev2e-status" content="UPCOMING">
+  <meta name="codev2e-year" content="TBA">
+  <meta name="codev2e-genre" content="Animation · Original">
+  <meta name="codev2e-description" content="Short description shown on the main CODEV2E Showcase.">
+  <meta name="codev2e-image" content="./pj1.png">
+
+  <title>PROJECT TITLE | CODEV2E</title>
+  <meta name="description" content="Short project description.">
+  <meta name="author" content="Milan Naik">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PROJECT TITLE | CODEV2E">
+  <meta property="og:description" content="Short project description.">
+  <meta property="og:image" content="./pj1.png">
+
+  <style>
+    :root{--bg:#050505;--text:#f5f5f5;--muted:#808080;--line:rgba(255,255,255,.12);--content:1180px}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{background:var(--bg);color:var(--text);scroll-behavior:smooth}
+    body{font-family:Inter,Arial,sans-serif;background:var(--bg);line-height:1.75}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(var(--content),calc(100% - 48px));margin:auto}
+    header{display:flex;justify-content:space-between;align-items:center;padding:28px 0}
+    .brand{font-size:24px;font-weight:900;letter-spacing:-1.7px}
+    .back{font-size:9px;font-weight:900;letter-spacing:2px;color:#777}
+    .hero{min-height:70svh;display:flex;align-items:end;padding:80px 0 90px}
+    .eyebrow{font-size:9px;letter-spacing:3px;color:#6b6b6b;font-weight:800;margin-bottom:20px}
+    h1{font-size:clamp(62px,11vw,150px);line-height:.82;letter-spacing:-9px}
+    .outline{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.58)}
+    .lead{max-width:650px;color:#888;margin-top:34px;font-size:15px;line-height:1.85}
+    .banner{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid var(--line);margin-bottom:90px}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:80px;padding-bottom:140px}
+    article h2{font-size:42px;letter-spacing:-2.5px;line-height:.95}
+    article p{color:#888;margin:18px 0}
+    aside{border-top:1px solid var(--line);padding-top:18px;color:#777;font-size:11px}
+    aside strong{display:block;color:#fff;margin-bottom:3px}
+    footer{border-top:1px solid var(--line);padding:28px 0;color:#4f4f4f;font-size:9px;letter-spacing:1px}
+    @media(max-width:720px){
+      .wrap{width:calc(100% - 32px)}
+      .hero{min-height:60svh;padding-top:55px}
+      h1{font-size:18vw;letter-spacing:-6px}
+      .layout{grid-template-columns:1fr;gap:42px}
+      .banner{margin-bottom:58px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="./index.html">CODE<span style="opacity:.4">V2E</span></a>
+      <a class="back" href="./index.html#showcase">← BACK TO SHOWCASE</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">CODEV2E · PROJECT</p>
+          <h1>PROJECT<br><span class="outline">TITLE.</span></h1>
+          <p class="lead">
+            Write the introduction to this project here.
+          </p>
+        </div>
+      </section>
+
+      <img class="banner" src="./pj1.png" alt="Project banner">
+
+      <section class="layout">
+        <article>
+          <p class="eyebrow">ABOUT THE PROJECT</p>
+          <h2>THE STORY.</h2>
+          <p>
+            This page is completely customizable. Add your own sections,
+            characters, trailer, gallery, credits, links, animations, CSS or JavaScript.
+          </p>
+        </article>
+
+        <aside>
+          <strong>STATUS</strong>
+          UPCOMING
+          <br><br>
+          <strong>YEAR</strong>
+          TBA
+          <br><br>
+          <strong>GENRE</strong>
+          Animation · Original
+          <br><br>
+          <strong>CREATOR</strong>
+          Milan Naik
+        </aside>
+      </section>
+    </main>
+
+    <footer>© 2026 CODEV2E · ALL RIGHTS RESERVED.</footer>
+  </div>
+</body>
+</html>
