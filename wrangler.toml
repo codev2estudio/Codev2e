@@ -1,0 +1,8 @@
+name = "codev2e"
+pages_build_output_dir = "."
+compatibility_date = "2026-08-14"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "CODEV2E_DB"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
