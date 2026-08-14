@@ -4,6 +4,28 @@ import {
   requireAdminWrite
 } from "../_lib.js";
 
+export async function onRequestGet({ env }) {
+  const { results } = await env.db.prepare(`
+    SELECT
+      id,
+      title,
+      status,
+      year,
+      genre,
+      description,
+      image,
+      page_url,
+      published
+    FROM projects
+    WHERE published = 1
+    ORDER BY sort_order ASC, id DESC
+  `).all();
+
+  return json({
+    projects: results || []
+  });
+}
+
 export async function onRequestPost({ request, env }) {
   const authError = await requireAdminWrite(request, env);
 
@@ -73,4 +95,4 @@ export async function onRequestPost({ request, env }) {
     },
     201
   );
-        }
+}
