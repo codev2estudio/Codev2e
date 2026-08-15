@@ -1,13 +1,4 @@
 {
-  "heroWidget": {
-    "title": "THE FORGOTTEN DRIFT",
-    "genre": "DARK FANTASY // CINEMATIC ANIMATION",
-    "year": "2026",
-    "image": "https://images2.imgbox.com/7b/09/Z3i2yC2I_o.jpg",
-    "description": "An anomalous narrative journey through forgotten carriage routes and temporal shadows.",
-    "buttonText": "ORDER ACCESS",
-    "buttonLink": "#support"
-  },
   "characters": [
     {
       "id": "c1",
@@ -16,10 +7,6 @@
       "role": "LEAD PROTAGONIST // VANGUARD",
       "tag": "TACTICAL · STEALTH · OVERSIZED TECHWEAR",
       "quote": "SILENCE BEFORE THE DISRUPTION",
-      "stat1": "250+",
-      "stat1Label": "ANOMALIES CLEARED",
-      "stat2": "20+",
-      "stat2Label": "SECTOR MISSIONS",
       "image": "https://images2.imgbox.com/7b/09/Z3i2yC2I_o.jpg",
       "description": "Grounded, observant, and calculated. Operating in the urban sectors of the CODEV2E story universe, Kaien navigates anomalous narrative fractures with calm tactical discipline."
     },
@@ -30,10 +17,6 @@
       "role": "CO-LEAD // ANOMALY DUELIST",
       "tag": "STREETWEAR · HIGH MOBILITY · DUELIST",
       "quote": "BREAK THROUGH FIRST, ASK QUESTIONS LATER",
-      "stat1": "480+",
-      "stat1Label": "COMBAT ENCOUNTERS",
-      "stat2": "99.4%",
-      "stat2Label": "EFFICIENCY RATE",
       "image": "https://images2.imgbox.com/7d/53/7uU5R8tq_o.jpg",
       "description": "Relentless, explosive, and instinct-driven in combat. Marked by her signature magenta hair streak and combat duelist glove, Lilith spearheads frontline incursions into unstable zones."
     },
@@ -44,11 +27,7 @@
       "role": "CIPHER OPERATIVE // INTEL",
       "tag": "NEURAL NET · SURVEILLANCE · STRATEGY",
       "quote": "EVERY SIGNAL LEAVES A PATTERN",
-      "stat1": "1.2M",
-      "stat1Label": "NODES DECRYPTED",
-      "stat2": "CORE",
-      "stat2Label": "CIPHER ACCESS",
-      "image": "images/logo.png",
+      "image": "logo.png",
       "description": "The strategic core of the squad. Specializes in decrypting synthetic signal architectures, narrative code, and mapping anomaly threats before engagement."
     },
     {
@@ -58,11 +37,7 @@
       "role": "DRIFT NAVIGATOR // PILOT",
       "tag": "DIMENSIONAL DRIFT · ENERGY SYNCHRONIZATION",
       "quote": "THE HORIZON IS NEVER FIXED",
-      "stat1": "MACH 8",
-      "stat1Label": "DRIFT VELOCITY",
-      "stat2": "SECTOR 0",
-      "stat2Label": "HOME COORDINATE",
-      "image": "images/logo.png",
+      "image": "logo.png",
       "description": "A high-reflex dimensional pilot capable of steering crew vessels through volatile drift channels connecting the core sectors of the CODEV2E universe."
     },
     {
@@ -72,63 +47,29 @@
       "role": "ENIGMATIC PROTOTYPE // WARDEN",
       "tag": "CLASSIFIED · HEAVY WEAPONRY · FOUNDATION ERA",
       "quote": "ORIGINS LOCKED BEHIND PROTOCOL",
-      "stat1": "Lv.MAX",
-      "stat1Label": "ARMOR DENSITY",
-      "stat2": "LOCKED",
-      "stat2Label": "ORIGIN LOGS",
-      "image": "images/logo.png",
+      "image": "logo.png",
       "description": "A mysterious heavy combatant engineered during the early foundation era. His true allegiances and memories remain encrypted behind high-grade security protocols."
     }
   ],
   "projects": [
     {
       "id": 1,
-      "title": "PROJECT ALPHA: DISRUPTION",
-      "status": "RELEASED",
+      "title": "PROJECT ALPHA",
+      "status": "UPCOMING",
       "year": "2026",
       "genre": "Dark Urban Sci-Fi // Animation",
       "description": "The flagship original anime production following Kaien and Lilith as they uncover the truth behind the CODEV2E world anomalies.",
-      "image": "https://images2.imgbox.com/7b/09/Z3i2yC2I_o.jpg",
+      "image": "logo.png",
       "pageUrl": "#"
-    },
-    {
-      "id": 2,
-      "title": "SECTOR VOID CHRONICLES",
-      "status": "UPCOMING",
-      "year": "2027",
-      "genre": "High-Mobility Fantasy // Animation",
-      "description": "An exploratory visual series detailing the origins of the anomaly duelist factions and narrative drift engines.",
-      "image": "https://images2.imgbox.com/7d/53/7uU5R8tq_o.jpg",
-      "pageUrl": "#"
-    }
-  ],
-  "products": [
-    {
-      "id": "p1",
-      "title": "CODEV2E ARTBOOK: VOL 1",
-      "category": "PHYSICAL ARTBOOK",
-      "price": "$38.00",
-      "tag": "LIMITED FIRST EDITION",
-      "image": "https://images2.imgbox.com/7b/09/Z3i2yC2I_o.jpg",
-      "description": "180 pages of production character concept sketches, matte backgrounds, and lore documents from Odisha, India."
-    },
-    {
-      "id": "p2",
-      "title": "KAIEN STREETWEAR HOODIE",
-      "category": "APPAREL",
-      "price": "$64.00",
-      "tag": "PREMIUM COTTON",
-      "image": "https://images2.imgbox.com/7d/53/7uU5R8tq_o.jpg",
-      "description": "Oversized matte black techwear hoodie with embroidered CODEV2E insignia."
     }
   ],
   "announcements": [
     {
       "id": "1",
       "category": "STUDIO DISPATCH",
-      "title": "STUDIO SHOWLIST & DIGITAL MARKETPLACE LIVE",
+      "title": "ORIGINAL ROSTER ARCHIVE ACTIVATED",
       "date": "2026-08-15",
-      "content": "Explore our OTT project showcase, interactive character roster, and official studio merchandise store."
+      "content": "Official character visual development sheets and narrative profiles are now live on the CODEV2E portal."
     }
   ]
 }
