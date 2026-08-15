@@ -1,172 +1,705 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CODEV2E Studio Admin</title>
-<meta name="robots" content="noindex,nofollow,noarchive">
-<link rel="icon" href="images/logo.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#f5f5f0;--surface:rgba(255,255,255,.72);--text:#111;--muted:#5b5b5b;--dim:#888;--line:rgba(0,0,0,.10);--ease:cubic-bezier(.16,1,.3,1)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,sans-serif}body{background:linear-gradient(rgba(255,255,255,.22),rgba(255,255,255,.22)),repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.018) 3px 4px),var(--bg)}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit}.layout{min-height:100vh;display:grid;grid-template-columns:260px 1fr}.sidebar{position:sticky;top:0;height:100vh;padding:24px 18px;border-right:2px solid #111;background:rgba(245,245,240,.78);backdrop-filter:blur(20px)}.brand{font:900 28px/.9 'Space Grotesk';letter-spacing:-2px}.brand span{opacity:.35}.sub{font-size:8px;letter-spacing:2px;color:var(--dim);margin:10px 0 30px}.tabs{display:grid;gap:7px}.tab{border:1px solid rgba(0,0,0,.10);background:transparent;text-align:left;padding:12px 13px;font-size:9px;letter-spacing:1.8px;font-weight:900;transition:.2s}.tab.active,.tab:hover{background:#111;color:#fff}.side-actions{position:absolute;left:18px;right:18px;bottom:20px;display:grid;gap:8px}.btn{border:1.5px solid #111;background:#111;color:#fff;padding:12px 14px;font-size:8px;letter-spacing:1.8px;font-weight:900}.btn.light{background:rgba(255,255,255,.65);color:#111}.main{padding:28px 32px 80px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:26px}.eyebrow{font-size:8px;font-weight:900;letter-spacing:3px;color:var(--dim)}h1{font:900 clamp(42px,6vw,76px)/.8 'Space Grotesk';letter-spacing:-5px;margin:8px 0}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.panel{display:none;animation:rise .45s var(--ease)}.panel.active{display:block}@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}.card{border:1.5px solid rgba(0,0,0,.12);background:var(--surface);padding:18px;margin-bottom:16px;box-shadow:0 10px 28px rgba(0,0,0,.05)}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{padding:16px;border:1px solid var(--line);background:rgba(255,255,255,.45)}.stat b{display:block;font:900 36px/1 'Space Grotesk';margin-top:7px}.toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.list{display:grid;gap:10px}.row{display:grid;grid-template-columns:82px minmax(0,1fr) auto;gap:13px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.48);padding:10px}.thumb{width:82px;height:62px;object-fit:cover;background:#111}.row h3{font:900 18px/.95 'Space Grotesk';margin:0 0 6px}.row p{margin:0;color:var(--muted);font-size:11px;line-height:1.55}.actions{display:flex;gap:6px;flex-wrap:wrap}.small{padding:9px 10px;border:1px solid rgba(0,0,0,.15);background:#fff;font-size:8px;letter-spacing:1.5px;font-weight:900}.small.danger{border-color:#111}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:8px;font-weight:900;letter-spacing:1.8px;color:var(--dim)}.field input,.field textarea,.field select{width:100%;padding:11px;border:1px solid rgba(0,0,0,.15);background:rgba(255,255,255,.82);color:#111}.field textarea{min-height:100px;resize:vertical}.checks{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.notice{padding:12px;border-left:3px solid #111;background:rgba(0,0,0,.035);font-size:11px;line-height:1.6;color:var(--muted);margin-bottom:16px}.codebox{width:100%;min-height:260px;font:12px/1.5 monospace}.modal{position:fixed;inset:0;z-index:100;background:rgba(245,245,240,.70);backdrop-filter:blur(22px);display:grid;place-items:center;padding:18px;opacity:0;visibility:hidden;transition:.25s}.modal.open{opacity:1;visibility:visible}.modal-box{width:min(920px,100%);max-height:90vh;overflow:auto;border:2px solid #111;background:rgba(255,255,255,.92);padding:22px}.close{float:right;border:0;background:none;font-size:30px}.github-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.footer-note{margin-top:25px;font-size:9px;color:var(--dim);line-height:1.6}.showcase-admin-preview{margin-top:18px;border:1px solid var(--line);background:rgba(255,255,255,.6);display:flex;align-items:center;gap:18px;padding:14px;min-height:130px}.showcase-admin-preview img{width:110px;height:110px;object-fit:contain;background:#eee}.showcase-admin-preview h3{font:900 25px/.95 "Space Grotesk";letter-spacing:-1px}@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:relative;height:auto;border-right:0;border-bottom:2px solid #111}.tabs{grid-template-columns:repeat(3,1fr)}.side-actions{position:static;margin-top:12px}.main{padding:20px 14px 60px}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.form-grid,.github-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.tabs{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:62px minmax(0,1fr)}.thumb{width:62px;height:50px}.row .actions{grid-column:1/-1}.topbar{align-items:flex-start;flex-direction:column}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CODEV2E · Studio Command Engine</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f5f0;
+      --surface: rgba(255, 255, 255, 0.75);
+      --surface-card: rgba(255, 255, 255, 0.9);
+      --line: rgba(0, 0, 0, 0.12);
+      --line-strong: rgba(0, 0, 0, 0.25);
+      --text: #111111;
+      --muted: #666666;
+      --dim: #999999;
+      --danger: #dc2626;
+      --font-display: 'Space Grotesk', Inter, sans-serif;
+      --ease: cubic-bezier(.2,.75,.2,1);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { background: var(--bg); }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 0 0 100px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1 { font-family: var(--font-display); font-size: clamp(34px, 6vw, 64px); font-weight: 900; letter-spacing: -3px; line-height: .86; }
+    h2 { font-family: var(--font-display); font-size: 22px; font-weight: 900; letter-spacing: -1px; }
+    .outline { color: transparent; -webkit-text-stroke: 1.5px rgba(0,0,0,0.7); }
+    .eyebrow { font-size: 9px; font-weight: 800; letter-spacing: 3px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; }
+
+    .container { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+    .auth-screen { max-width: 440px; margin: 100px auto 40px; }
+
+    .btn {
+      min-height: 44px;
+      padding: 0 20px;
+      background: #111;
+      color: #fff;
+      border: 2px solid #111;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      transition: all .25s var(--ease);
+      border-radius: 4px;
+    }
+    .btn:hover { background: #000; transform: translateY(-2px); }
+    .btn-outline { background: rgba(255,255,255,0.7); border-color: #111; color: #111; }
+    .btn-outline:hover { background: #111; color: #fff; border-color: #111; }
+    .btn-danger { background: transparent; border-color: var(--danger); color: var(--danger); }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+    .btn-sm { min-height: 34px; padding: 0 12px; font-size: 8px; }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid var(--line);
+      color: #111;
+      font-family: inherit;
+      font-size: 13px;
+      border-radius: 4px;
+      transition: border-color .2s ease;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: #111;
+      outline: none;
+      background: #fff;
+    }
+    label {
+      display: block;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(245, 245, 240, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 2px solid #111;
+      padding: 16px 0;
+      margin-bottom: 40px;
+    }
+    .top-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .studio-brand { font-family: var(--font-display); font-size: 20px; font-weight: 900; letter-spacing: -1.2px; }
+    .studio-brand span { opacity: .4; }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid rgba(0,0,0,0.1);
+      padding-bottom: 14px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      padding: 10px 18px;
+      background: transparent;
+      border: 1.5px solid transparent;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all .2s ease;
+      border-radius: 4px;
+    }
+    .tab-btn.active {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+    .tab-btn:hover:not(.active) {
+      color: #111;
+      border-color: rgba(0,0,0,0.2);
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 2px solid rgba(0,0,0,0.1);
+      padding: 32px;
+      border-radius: 6px;
+    }
+    .editor-card {
+      position: relative;
+      border: 1.5px solid var(--line);
+      background: var(--surface-card);
+      padding: 24px;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 140px minmax(0, 1fr);
+      gap: 24px;
+      border-radius: 4px;
+      transition: border-color .25s ease;
+    }
+    .editor-card:hover { border-color: #111; }
+    .editor-preview-box {
+      width: 100%;
+      height: 180px;
+      background: #eee;
+      border: 1.5px solid var(--line);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+    .editor-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .editor-fields { display: flex; flex-direction: column; gap: 12px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      background: rgba(0,0,0,0.1);
+      font-size: 8px;
+      font-weight: 800;
+      color: #111;
+      margin-left: 6px;
+      border-radius: 2px;
+    }
+    .tab-btn.active .badge { background: rgba(255,255,255,0.2); color: #fff; }
+
+    .locked-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.15);
+      font-size: 8px;
+      font-weight: 800;
+      color: #111;
+      letter-spacing: 1.5px;
+      border-radius: 4px;
+    }
+
+    .upload-action-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .hidden-file-input { display: none; }
+
+    @media (max-width: 768px) {
+      .editor-card { grid-template-columns: 1fr; }
+      .editor-preview-box { height: 200px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-<div class="layout">
-<aside class="sidebar">
-  <div class="brand">CODE<span>V2E</span></div>
-  <div class="sub">STUDIO CONTROL / V3</div>
-  <div class="tabs">
-    <button class="tab active" data-panel="dashboard">DASHBOARD</button>
-    <button class="tab" data-panel="characters">CHARACTERS</button>
-    <button class="tab" data-panel="projects">PROJECTS</button><button class="tab" data-panel="showcase">SHOWCASE</button>
-    <button class="tab" data-panel="news">NEWS</button>
-    <button class="tab" data-panel="products">MARKET</button>
-    <button class="tab" data-panel="about">ABOUT</button>
-    <button class="tab" data-panel="publish">PUBLISH</button>
+
+  <!-- ================= AUTH SCREEN ================= -->
+  <div class="container auth-screen" id="authView">
+    <p class="eyebrow">CODEV2E · COMMAND ENGINE</p>
+    <h1>ADMIN<br><span class="outline">PORTAL.</span></h1>
+    
+    <div class="panel" style="margin-top: 24px;">
+      <form id="loginForm">
+        <div style="margin-bottom: 14px;">
+          <label>GITHUB USERNAME</label>
+          <input type="text" id="repoOwner" placeholder="e.g. codev2estudio" required>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label>REPOSITORY NAME</label>
+          <input type="text" id="repoName" placeholder="e.g. Codev2e" required>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label>ACCESS TOKEN (PAT)</label>
+          <input type="password" id="ghToken" placeholder="github_pat_..." required>
+        </div>
+
+        <button class="btn" style="width: 100%;" type="submit">CONNECT TO REPOSITORY</button>
+      </form>
+      <div id="authStatus" style="margin-top: 14px; font-size: 11px; color: var(--danger); line-height: 1.5;"></div>
+    </div>
   </div>
-  <div class="side-actions"><a class="btn light" href="index.html">OPEN SITE</a><a class="btn light" href="showcase.html">OPEN SHOWCASE</a><a class="btn light" href="new.html">OPEN MARKET</a></div>
-</aside>
 
-<main class="main">
-  <header class="topbar"><div><div class="eyebrow">EDITORIAL CONTROL ROOM</div><h1 id="pageTitle">DASHBOARD.</h1></div><div class="top-actions"><button class="btn" id="exportBtn">EXPORT DATA.JSON</button><button class="btn light" id="importBtn">IMPORT JSON</button><input id="fileInput" type="file" accept=".json,application/json" hidden></div></header>
+  <!-- ================= DASHBOARD ================= -->
+  <div id="dashView" style="display: none;">
 
-  <section class="panel active" id="panel-dashboard">
-    <div class="stats"><div class="stat"><div class="eyebrow">CHARACTERS</div><b id="statCharacters">0</b></div><div class="stat"><div class="eyebrow">PROJECTS</div><b id="statProjects">0</b></div><div class="stat"><div class="eyebrow">NEWS</div><b id="statNews">0</b></div><div class="stat"><div class="eyebrow">PRODUCTS</div><b id="statProducts">0</b></div></div>
-    <div class="card" style="margin-top:16px"><div class="eyebrow">WORKFLOW</div><h2 style="font:900 34px/.9 'Space Grotesk';letter-spacing:-2px">EDIT → PREVIEW → PUBLISH.</h2><p style="max-width:720px;color:var(--muted);font-size:12px;line-height:1.8">This panel edits the same JSON model used by the public site. Export <code>data.json</code> and place it beside <code>index.html</code> and <code>new.html</code>, or use the optional GitHub publisher below.</p></div>
-    <div class="notice"><b>Security note:</b> because the site is static, this page cannot provide server-grade authentication by itself. Do not put a permanent GitHub token inside this HTML. The optional publisher accepts a token only for the current browser session and never writes it to localStorage.</div>
-  </section>
-
-  <section class="panel" id="panel-characters"><div class="toolbar"><div class="eyebrow">CHARACTER FILES</div><button class="btn" id="addCharacter">+ ADD CHARACTER</button></div><div class="list" id="characterList"></div></section>
-  <section class="panel" id="panel-projects"><div class="toolbar"><div><div class="eyebrow">STORY PROJECTS</div><div style="font-size:11px;color:var(--muted);margin-top:6px">Poster, name, description, story, video and release status can all be edited here.</div></div><button class="btn" id="addProject">+ ADD PROJECT</button></div><div class="list" id="projectList"></div></section>
-
-  <section class="panel" id="panel-showcase">
-    <div class="toolbar">
-      <div>
-        <div class="eyebrow">SHOWCASE</div>
-        <h2 style="font:900 32px/.9 'Space Grotesk';letter-spacing:-2px;margin:8px 0 0">FEATURED CHARACTER.</h2>
-      </div>
-      <button class="btn" id="saveShowcase">SAVE SHOWCASE</button>
-    </div>
-    <div class="card">
-      <div class="form-grid">
-        <div class="field full">
-          <label>CHARACTER SHOWN FIRST</label>
-          <select id="showcaseCharacter"></select>
-        </div>
-      </div>
-      <div class="showcase-admin-preview" id="showcaseAdminPreview">
-        <img id="showcasePreviewImage" src="images/logo.png" alt="">
+    <header class="top-bar">
+      <div class="container top-bar-inner">
         <div>
-          <div class="eyebrow" id="showcasePreviewRole">CHARACTER</div>
-          <h3 id="showcasePreviewName">Select a character</h3>
+          <div class="studio-brand">CODE<span>V2E</span> // COMMAND</div>
+          <span style="font-size: 9px; color: var(--muted); font-weight: 700; letter-spacing: 1px;" id="repoIndicator">CONNECTED</span>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button class="btn btn-outline" id="saveAllBtn">PUBLISH CHANGES</button>
+          <button class="btn btn-danger btn-sm" id="logoutBtn">LOGOUT</button>
         </div>
       </div>
-      <div class="footer-note">The showcase page uses the same character and project archive. Add, edit or delete entries from CHARACTERS and PROJECTS.</div>
-    </div>
-  </section>
+    </header>
 
-  <section class="panel" id="panel-news"><div class="toolbar"><div class="eyebrow">STUDIO DISPATCHES</div><button class="btn" id="addNews">+ ADD NEWS</button></div><div class="list" id="newsList"></div></section>
-  <section class="panel" id="panel-products"><div class="toolbar"><div class="eyebrow">MARKET CATALOGUE</div><button class="btn" id="addProduct">+ ADD PRODUCT</button></div><div class="list" id="productList"></div></section>
+    <main class="container">
+      
+      <nav class="nav-tabs">
+        <button class="tab-btn active" data-tab="tab-chars">01. CHARACTERS <span class="badge" id="countChars">5</span></button>
+        <button class="tab-btn" data-tab="tab-projects">02. SHOWLIST PROJECTS <span class="badge" id="countProjects">0</span></button>
+        <button class="tab-btn" data-tab="tab-news">03. ANNOUNCEMENTS <span class="badge" id="countNews">0</span></button>
+      </nav>
 
-  <section class="panel" id="panel-about">
-    <div class="toolbar"><div><div class="eyebrow">ABOUT PAGE</div><h2 style="font:900 32px/.9 'Space Grotesk';letter-spacing:-2px;margin:8px 0 0">ABOUT.</h2></div><button class="btn" id="saveAbout">SAVE ABOUT</button></div>
-    <div class="card">
-      <div class="form-grid">
-        <div class="field"><label>IMAGE PATH / URL</label><input id="aboutImage" placeholder="images/about.jpg"></div>
-        <div class="field"><label>HEADING</label><input id="aboutTitle" placeholder="ABOUT."></div>
-        <div class="field full"><label>DESCRIPTION</label><textarea id="aboutText" rows="9" placeholder="Write the studio description shown in the About panel."></textarea></div>
-      </div>
-      <div class="footer-note">This content is pre-added and can be edited anytime. Export or publish data.json to make changes live.</div>
-    </div>
-  </section>
+      <!-- TAB 1: CHARACTERS (EDIT ONLY) -->
+      <section id="tab-chars" class="tab-content">
+        <div class="panel">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <p class="eyebrow">CONTINUOUS HOME SCREEN ROSTER</p>
+              <h2>CORE CHARACTERS (5 FIXED SLOTS)</h2>
+            </div>
+            <span class="locked-badge">🔒 LOCKED SLOTS (EDIT ONLY)</span>
+          </div>
+          <div id="charListContainer"></div>
+        </div>
+      </section>
 
-  <section class="panel" id="panel-publish">
-    <div class="card"><div class="eyebrow">OPTION A</div><h2 style="font:900 38px/.9 'Space Grotesk'">DOWNLOAD JSON.</h2><p style="color:var(--muted);font-size:12px;line-height:1.7">Best for GitHub: export the file, replace your repository's <code>data.json</code>, commit, and deploy.</p><button class="btn" id="publishDownload">DOWNLOAD CURRENT DATA</button></div>
-    <div class="card"><div class="eyebrow">OPTION B</div><h2 style="font:900 38px/.9 'Space Grotesk'">PUBLISH TO GITHUB.</h2><div class="github-grid">
-      <div class="field"><label>OWNER</label><input id="ghOwner" placeholder="your-github-name"></div>
-      <div class="field"><label>REPOSITORY</label><input id="ghRepo" placeholder="repository-name"></div>
-      <div class="field"><label>BRANCH</label><input id="ghBranch" value="main"></div>
-      <div class="field"><label>FILE PATH</label><input id="ghPath" value="data.json"></div>
-      <div class="field full"><label>FINE-GRAINED TOKEN (SESSION ONLY)</label><input id="ghToken" type="password" autocomplete="off" placeholder="github_pat_..."></div>
-    </div><button class="btn" id="ghPublish" style="margin-top:12px">PUBLISH DATA.JSON</button><div class="footer-note" id="publishStatus"></div></div>
-    <div class="card"><div class="eyebrow">CURRENT JSON</div><textarea id="jsonBox" class="codebox"></textarea><button class="btn light" id="applyJson" style="margin-top:10px">APPLY JSON ABOVE</button></div>
-  </section>
-</main>
-</div>
+      <!-- TAB 2: PROJECTS -->
+      <section id="tab-projects" class="tab-content" style="display: none;">
+        <div class="panel">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <p class="eyebrow">ANIMATION PRODUCTIONS</p>
+              <h2>SHOWLIST ARCHIVE</h2>
+            </div>
+            <button class="btn btn-outline btn-sm" id="addProjectBtn">+ ADD NEW PROJECT</button>
+          </div>
+          <div id="projectListContainer"></div>
+        </div>
+      </section>
 
-<div class="modal" id="editModal"><div class="modal-box"><button class="close" id="closeModal">×</button><div class="eyebrow" id="modalEyebrow">EDITOR</div><h2 id="modalHeading" style="font:900 44px/.85 'Space Grotesk';letter-spacing:-3px;margin:10px 0 24px">EDIT.</h2><form id="editForm"><div id="editFields"></div><div style="display:flex;gap:8px;margin-top:16px"><button class="btn" type="submit">SAVE CHANGES</button><button class="btn light" type="button" id="cancelModal">CANCEL</button></div></form></div></div>
+      <!-- TAB 3: ANNOUNCEMENTS -->
+      <section id="tab-news" class="tab-content" style="display: none;">
+        <div class="panel">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <p class="eyebrow">STUDIO DISPATCHES</p>
+              <h2>NEWS & UPDATES</h2>
+            </div>
+            <button class="btn btn-outline btn-sm" id="addNewsBtn">+ ADD ANNOUNCEMENT</button>
+          </div>
+          <div id="newsListContainer"></div>
+        </div>
+      </section>
 
-<script>
-(()=>{let data={characters:[],projects:[],announcements:[],products:[],settings:{}};let editing=null;
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const defaultItem=(type)=>({characters:{id:crypto.randomUUID(),number:"01",name:"",role:"",tag:"",quote:"",description:"",image:"images/logo.png"},projects:{id:crypto.randomUUID(),title:"",status:"UPCOMING",year:"2026",genre:"",description:"",story:"",video:"",image:"images/logo.png",pageUrl:"#",featured:false},news:{id:crypto.randomUUID(),date:"",category:"DISPATCH",title:"",content:""},products:{id:crypto.randomUUID(),title:"",category:"APPAREL",price:0,description:"",image:"images/logo.png",available:true}}[type]);
-const schema={
-characters:[
-["number","Archive No.","text"],["name","Name","text"],["role","Role","text"],["tag","Tag","text"],["quote","Quote","text"],["image","Image path / URL","text"],["description","Description","textarea"]],
-projects:[
-["title","Title","text"],["status","Status","select:RELEASED,UPCOMING"],["year","Year","text"],["genre","Genre","text"],["image","Poster path / URL","text"],["pageUrl","Project URL","text"],["description","Short description","textarea"],["story","Story details","textarea"],["video","Video URL","text"],["featured","Featured on home","checkbox"]],
-news:[
-["date","Date","text"],["category","Category","text"],["title","Title","text"],["content","Content","textarea"]],
-products:[
-["title","Product title","text"],["category","Category","select:APPAREL,PRINT,COLLECTIBLE,OTHER"],["price","Price (INR)","number"],["image","Image path / URL","text"],["description","Description","textarea"],["available","Available for order","checkbox"]]
-};
-function key(type){return type==="news"?"announcements":type}
-function renderAbout(){const a=data.settings?.about||{};$("#aboutImage").value=a.image||"";$("#aboutTitle").value=a.title||"ABOUT.";$("#aboutText").value=a.text||""}
- function renderShowcase(){
-   data.settings??={}; data.settings.showcase??={};
-   const select=$("#showcaseCharacter"); if(!select)return;
-   select.innerHTML="";
-   data.characters.forEach((c,i)=>{
-     const o=document.createElement("option");
-     o.value=c.id||"";
-     o.textContent=(c.name||"Character "+(i+1));
-     select.appendChild(o);
-   });
-   const wanted=data.settings.showcase.characterId||data.characters[0]?.id||"";
-   select.value=wanted;
-   updateShowcasePreview();
- }
- function updateShowcasePreview(){
-   const id=$("#showcaseCharacter")?.value;
-   const c=data.characters.find(x=>(x.id||"")===id)||data.characters[0];
-   $("#showcasePreviewImage").src=c?.image||"images/logo.png";
-   $("#showcasePreviewImage").alt=c?.name||"";
-   $("#showcasePreviewName").textContent=c?.name||"Select a character";
-   $("#showcasePreviewRole").textContent=c?.role||"CHARACTER";
- }
+    </main>
+  </div>
 
-function updateStats(){$("#statCharacters").textContent=data.characters.length;$("#statProjects").textContent=data.projects.length;$("#statNews").textContent=data.announcements.length;$("#statProducts").textContent=data.products.length;$("#jsonBox").value=JSON.stringify(data,null,2);renderAbout();renderShowcase()}
-function list(type){const arr=data[key(type)]||[], host=$("#"+({"characters":"characterList","projects":"projectList","news":"newsList","products":"productList"}[type]));host.innerHTML="";if(!arr.length){host.innerHTML='<div class="card">No entries yet. Use the add button to create one.</div>';return}arr.forEach((item,i)=>{const row=document.createElement("div");row.className="row";row.innerHTML=`<img class="thumb" src="${esc(item.image||"images/logo.png")}" onerror="this.src='images/logo.png'"><div><h3>${esc(item.name||item.title||"Untitled")}</h3><p>${esc(item.description||item.content||item.role||"")}</p></div><div class="actions"><button class="small" data-edit>EDIT</button><button class="small danger" data-del>DELETE</button></div>`;row.querySelector("[data-edit]").onclick=()=>openEditor(type,i);row.querySelector("[data-del]").onclick=()=>{if(confirm("Delete this entry?")){arr.splice(i,1);save();renderAll()}};host.appendChild(row)})}
-function renderAll(){updateStats();["characters","projects","news","products"].forEach(list)}
-function openEditor(type,index){editing={type,index};const item=index==null?defaultItem(type):{...data[key(type)][index]};$("#modalEyebrow").textContent=type.toUpperCase()+" EDITOR";$("#modalHeading").textContent=index==null?"ADD "+type.toUpperCase()+".":"EDIT "+(item.name||item.title||type).toUpperCase()+".";const host=$("#editFields");host.innerHTML="";schema[type].forEach(([k,label,kind])=>{const f=document.createElement("div");f.className="field"+(kind==="textarea"?" full":"");let control;if(kind==="textarea")control=document.createElement("textarea");else if(kind==="checkbox"){control=document.createElement("input");control.type="checkbox"}else if(kind.startsWith("select:")){control=document.createElement("select");kind.slice(7).split(",").forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;control.appendChild(o)})}else{control=document.createElement("input");control.type=kind}control.name=k;if(kind==="checkbox")control.checked=Boolean(item[k]);else control.value=item[k]??"";const labelEl=document.createElement("label");labelEl.textContent=label;f.append(labelEl,control);host.appendChild(f)});$("#editModal").classList.add("open")}
-function closeEditor(){$("#editModal").classList.remove("open");editing=null}
-$("#closeModal").onclick=closeEditor;$("#cancelModal").onclick=closeEditor;
-$("#editForm").onsubmit=e=>{e.preventDefault();const type=editing.type;const arr=data[key(type)];const obj={...(editing.index==null?defaultItem(type):arr[editing.index])};schema[type].forEach(([k,,kind])=>{const el=e.currentTarget.elements[k];obj[k]=kind==="checkbox"?el.checked:(kind==="number"?Number(el.value||0):el.value)});if(editing.index==null)arr.push(obj);else arr[editing.index]=obj;save();renderAll();closeEditor()};
-function save(){localStorage.setItem("codev2e_admin_data",JSON.stringify(data));updateStats()}
-async function load(){try{const saved=localStorage.getItem("codev2e_admin_data");if(saved)data=JSON.parse(saved);else{const r=await fetch("./data.json?v="+Date.now(),{cache:"no-store"});if(r.ok)data=await r.json()}}catch{}data.characters??=[];data.projects??=[];data.announcements??=[];data.products??=[];data.settings??={};data.settings.about??={image:"images/logo.png",title:"WE CREATE WHAT DOESN'T EXIST YET.",text:"CODEV2E is an independent creative studio building original characters, stories and visual worlds from Odisha, India.\n\nEvery project starts with an idea and grows through character design, visual storytelling and world-building."};data.settings.showcase??={characterId:data.characters[0]?.id||""};data.characters.forEach((c,i)=>{if(!c.id)c.id=crypto.randomUUID()});if(!data.settings.showcase.characterId&&data.characters[0])data.settings.showcase.characterId=data.characters[0].id;renderAll()}
-function download(){const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="data.json";a.click();URL.revokeObjectURL(a.href)}
-$("#exportBtn").onclick=download;$("#publishDownload").onclick=download;
-$("#importBtn").onclick=()=>$("#fileInput").click();
-$("#fileInput").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{data=JSON.parse(await f.text());save();renderAll()}catch{alert("Invalid JSON file.")}};
-$("#applyJson").onclick=()=>{try{data=JSON.parse($("#jsonBox").value);save();renderAll();alert("JSON applied.")}catch{alert("Invalid JSON.")}};
-function bindAdd(id,type){$("#"+id).onclick=()=>openEditor(type,null)}bindAdd("addCharacter","characters");bindAdd("addProject","projects");bindAdd("addNews","news");bindAdd("addProduct","products");
-$$(".tab").forEach(t=>t.onclick=()=>{$$(".tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");$$(".panel").forEach(p=>p.classList.remove("active"));$("#panel-"+t.dataset.panel).classList.add("active");$("#pageTitle").textContent=t.textContent+".";updateStats()});
-$("#saveAbout").onclick=()=>{data.settings??={};data.settings.about={image:$("#aboutImage").value.trim()||"images/logo.png",title:$("#aboutTitle").value.trim()||"ABOUT.",text:$("#aboutText").value.trim()};save();renderAll();$("#publishStatus").textContent="About content saved locally. Export or publish data.json to make it live.";};
+  <script>
+    let state = { characters: [], projects: [], announcements: [] };
+    let fileSha = "";
 
- $("#showcaseCharacter").onchange=updateShowcasePreview;
- $("#saveShowcase").onclick=()=>{
-   data.settings??={};
-   data.settings.showcase={characterId:$("#showcaseCharacter").value||""};
-   save(); renderAll();
-   $("#publishStatus").textContent="Showcase saved. Export or publish data.json to make it live.";
- };
-$("#ghPublish").onclick=async()=>{const owner=$("#ghOwner").value.trim(),repo=$("#ghRepo").value.trim(),branch=$("#ghBranch").value.trim()||"main",path=$("#ghPath").value.trim()||"data.json",token=$("#ghToken").value.trim(),status=$("#publishStatus");if(!owner||!repo||!token){status.textContent="Owner, repository and token are required.";return}status.textContent="Checking repository file...";try{const api=`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(branch)}`;let sha="";const existing=await fetch(api,{headers:{Authorization:`Bearer ${token}`,Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}});if(existing.ok){const j=await existing.json();sha=j.sha}const body={message:"Update CODEV2E data.json",content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)))),branch,...(sha?{sha}:{})};const put=await fetch(api,{method:"PUT",headers:{Authorization:`Bearer ${token}`,Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28","Content-Type":"application/json"},body:JSON.stringify(body)});if(!put.ok){const txt=await put.text();throw new Error(txt.slice(0,220))}status.textContent="Published successfully. Remove the token from the field when done."}catch(e){status.textContent="Publish failed: "+e.message}};
-load();
-})();
-</script>
-</body></html>
+    function utf8ToBase64(str) {
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (m, p1) => String.fromCharCode('0x' + p1)));
+    }
+
+    function base64ToUtf8(str) {
+      return decodeURIComponent(Array.prototype.map.call(atob(str), c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+    }
+
+    function initSession() {
+      const owner = sessionStorage.getItem("codev2e_gh_owner");
+      const repo = sessionStorage.getItem("codev2e_gh_repo");
+      const token = sessionStorage.getItem("codev2e_gh_token");
+
+      if (owner && repo && token) {
+        document.getElementById("repoOwner").value = owner;
+        document.getElementById("repoName").value = repo;
+        document.getElementById("ghToken").value = token;
+        loadStudioRepository(owner, repo, token);
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const owner = document.getElementById("repoOwner").value.trim();
+      const repo = document.getElementById("repoName").value.trim();
+      const token = document.getElementById("ghToken").value.trim();
+      const status = document.getElementById("authStatus");
+
+      status.style.color = "var(--muted)";
+      status.textContent = "Connecting to GitHub & loading data.json...";
+
+      const ok = await loadStudioRepository(owner, repo, token);
+      if (ok) {
+        sessionStorage.setItem("codev2e_gh_owner", owner);
+        sessionStorage.setItem("codev2e_gh_repo", repo);
+        sessionStorage.setItem("codev2e_gh_token", token);
+      } else {
+        status.style.color = "var(--danger)";
+        status.textContent = "Authentication failed. Check your Token, Username, and Repository name.";
+      }
+    });
+
+    async function loadStudioRepository(owner, repo, token) {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/vnd.github+json"
+          }
+        });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        fileSha = data.sha;
+        
+        state = JSON.parse(base64ToUtf8(data.content.replace(/\s/g, '')));
+        if (!state.characters || !state.characters.length) {
+          state.characters = [
+            { id: "c1", number: "01", name: "KAIEN", role: "LEAD PROTAGONIST // VANGUARD", tag: "TACTICAL · STEALTH · OVERSIZED TECHWEAR", quote: "SILENCE BEFORE THE DISRUPTION", image: "images/logo.png", description: "" },
+            { id: "c2", number: "02", name: "LILITH", role: "CO-LEAD // ANOMALY DUELIST", tag: "STREETWEAR · HIGH MOBILITY · DUELIST", quote: "BREAK THROUGH FIRST", image: "images/logo.png", description: "" },
+            { id: "c3", number: "03", name: "REN", role: "CIPHER OPERATIVE // INTEL", tag: "NEURAL NET · SURVEILLANCE", quote: "EVERY SIGNAL LEAVES A PATTERN", image: "images/logo.png", description: "" },
+            { id: "c4", number: "04", name: "AERIS", role: "DRIFT NAVIGATOR // PILOT", tag: "DIMENSIONAL DRIFT", quote: "THE HORIZON IS NEVER FIXED", image: "images/logo.png", description: "" },
+            { id: "c5", number: "05", name: "ZERO-X", role: "ENIGMATIC PROTOTYPE // WARDEN", tag: "CLASSIFIED", quote: "ORIGINS LOCKED BEHIND PROTOCOL", image: "images/logo.png", description: "" }
+          ];
+        }
+        if (!state.projects) state.projects = [];
+        if (!state.announcements) state.announcements = [];
+
+        document.getElementById("authView").style.display = "none";
+        document.getElementById("dashView").style.display = "block";
+        document.getElementById("repoIndicator").textContent = `${owner}/${repo}`;
+
+        renderWorkspace();
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.clear();
+      window.location.reload();
+    });
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
+
+        btn.classList.add("active");
+        const target = document.getElementById(btn.dataset.tab);
+        if (target) target.style.display = "block";
+      });
+    });
+
+    function updateCounters() {
+      document.getElementById("countChars").textContent = state.characters.length;
+      document.getElementById("countProjects").textContent = state.projects.length;
+      document.getElementById("countNews").textContent = state.announcements.length;
+    }
+
+    function renderWorkspace() {
+      renderCharacters();
+      renderProjects();
+      renderNews();
+      updateCounters();
+    }
+
+    /* DIRECT IMAGE UPLOADER */
+    async function uploadDirectImage(file, targetType, index, btnEl) {
+      if (!file) return;
+
+      const owner = sessionStorage.getItem("codev2e_gh_owner");
+      const repo = sessionStorage.getItem("codev2e_gh_repo");
+      const token = sessionStorage.getItem("codev2e_gh_token");
+
+      const originalText = btnEl.textContent;
+      btnEl.textContent = "UPLOADING TO GITHUB...";
+      btnEl.disabled = true;
+
+      try {
+        const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "").toLowerCase();
+        const filePath = `images/${Date.now()}-${cleanName}`;
+
+        const reader = new FileReader();
+        const base64Data = await new Promise((resolve, reject) => {
+          reader.onload = () => resolve(reader.result.split(',')[1]);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: `Upload image ${filePath} via Studio Admin`,
+            content: base64Data
+          })
+        });
+
+        if (!res.ok) throw new Error("GitHub rejected upload.");
+
+        if (targetType === 'character') state.characters[index].image = filePath;
+        else if (targetType === 'project') state.projects[index].image = filePath;
+
+        renderWorkspace();
+        alert(`✓ Image uploaded successfully to ${filePath}! Click "PUBLISH CHANGES" to save.`);
+      } catch (err) {
+        alert("Upload failed: " + err.message);
+      } finally {
+        btnEl.textContent = originalText;
+        btnEl.disabled = false;
+      }
+    }
+
+    function renderCharacters() {
+      const container = document.getElementById("charListContainer");
+      container.innerHTML = state.characters.map((c, i) => `
+        <article class="editor-card">
+          <div class="editor-preview-box">
+            <img src="${c.image || 'images/logo.png'}" alt="Preview" onerror="this.src='images/logo.png'">
+          </div>
+
+          <div class="editor-fields">
+            <div class="grid-3">
+              <div>
+                <label>ROSTER SLOT</label>
+                <input type="text" value="${c.number || `0${i+1}`}" placeholder="01" onchange="state.characters[${i}].number = this.value">
+              </div>
+              <div>
+                <label>CHARACTER NAME</label>
+                <input type="text" value="${c.name || ''}" placeholder="e.g. KAIEN" onchange="state.characters[${i}].name = this.value">
+              </div>
+              <div>
+                <label>ROLE // AFFILIATION</label>
+                <input type="text" value="${c.role || ''}" placeholder="e.g. LEAD PROTAGONIST" onchange="state.characters[${i}].role = this.value">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div>
+                <label>TRAITS / TAGS</label>
+                <input type="text" value="${c.tag || ''}" placeholder="e.g. TACTICAL · STEALTH" onchange="state.characters[${i}].tag = this.value">
+              </div>
+              <div>
+                <label>SIGNATURE QUOTE</label>
+                <input type="text" value="${c.quote || ''}" placeholder="e.g. SILENCE BEFORE DISRUPTION" onchange="state.characters[${i}].quote = this.value">
+              </div>
+            </div>
+
+            <div>
+              <label>CHARACTER ARTWORK</label>
+              <input type="text" value="${c.image || ''}" placeholder="images/... or URL" oninput="state.characters[${i}].image = this.value; this.closest('.editor-card').querySelector('.editor-preview-box img').src = this.value;">
+              
+              <div class="upload-action-row">
+                <input type="file" accept="image/*" class="hidden-file-input" id="file-char-${i}" onchange="uploadDirectImage(this.files[0], 'character', ${i}, this.nextElementSibling)">
+                <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('file-char-${i}').click()">⬆ UPLOAD ARTWORK FROM DEVICE</button>
+              </div>
+            </div>
+
+            <div>
+              <label>LORE & STORY DESCRIPTION</label>
+              <textarea rows="3" placeholder="Character narrative..." onchange="state.characters[${i}].description = this.value">${c.description || ''}</textarea>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderProjects() {
+      const container = document.getElementById("projectListContainer");
+      container.innerHTML = state.projects.map((p, i) => `
+        <article class="editor-card">
+          <div class="editor-preview-box">
+            <img src="${p.image || 'images/logo.png'}" alt="Preview" onerror="this.src='images/logo.png'">
+          </div>
+
+          <div class="editor-fields">
+            <div class="grid-3">
+              <div>
+                <label>PROJECT TITLE</label>
+                <input type="text" value="${p.title || ''}" placeholder="e.g. PROJECT ALPHA" onchange="state.projects[${i}].title = this.value">
+              </div>
+              <div>
+                <label>STATUS</label>
+                <select onchange="state.projects[${i}].status = this.value">
+                  <option value="RELEASED" ${p.status === 'RELEASED' ? 'selected' : ''}>RELEASED</option>
+                  <option value="UPCOMING" ${p.status === 'UPCOMING' ? 'selected' : ''}>UPCOMING</option>
+                </select>
+              </div>
+              <div>
+                <label>YEAR</label>
+                <input type="text" value="${p.year || ''}" placeholder="e.g. 2026" onchange="state.projects[${i}].year = this.value">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div>
+                <label>GENRE / THEME</label>
+                <input type="text" value="${p.genre || ''}" placeholder="e.g. Dark Urban Sci-Fi" onchange="state.projects[${i}].genre = this.value">
+              </div>
+              <div>
+                <label>TARGET LINK (OPTIONAL)</label>
+                <input type="text" value="${p.pageUrl || '#'}" placeholder="#" onchange="state.projects[${i}].pageUrl = this.value">
+              </div>
+            </div>
+
+            <div>
+              <label>POSTER ARTWORK</label>
+              <input type="text" value="${p.image || ''}" placeholder="images/poster.png or URL" oninput="state.projects[${i}].image = this.value; this.closest('.editor-card').querySelector('.editor-preview-box img').src = this.value;">
+              
+              <div class="upload-action-row">
+                <input type="file" accept="image/*" class="hidden-file-input" id="file-proj-${i}" onchange="uploadDirectImage(this.files[0], 'project', ${i}, this.nextElementSibling)">
+                <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('file-proj-${i}').click()">⬆ UPLOAD POSTER FROM DEVICE</button>
+              </div>
+            </div>
+
+            <div>
+              <label>PROJECT SYNOPSIS</label>
+              <textarea rows="3" placeholder="Story synopsis..." onchange="state.projects[${i}].description = this.value">${p.description || ''}</textarea>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+              <button class="btn btn-danger btn-sm" onclick="state.projects.splice(${i},1); renderWorkspace();">DELETE PROJECT</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderNews() {
+      const container = document.getElementById("newsListContainer");
+      container.innerHTML = state.announcements.map((a, i) => `
+        <article class="editor-card" style="grid-template-columns: 1fr;">
+          <div class="editor-fields">
+            <div class="grid-3">
+              <div>
+                <label>HEADLINE</label>
+                <input type="text" value="${a.title || ''}" placeholder="Announcement Title" onchange="state.announcements[${i}].title = this.value">
+              </div>
+              <div>
+                <label>CATEGORY</label>
+                <input type="text" value="${a.category || 'STUDIO DISPATCH'}" placeholder="e.g. PRODUCTION UPDATE" onchange="state.announcements[${i}].category = this.value">
+              </div>
+              <div>
+                <label>DATE</label>
+                <input type="date" value="${a.date || ''}" onchange="state.announcements[${i}].date = this.value">
+              </div>
+            </div>
+
+            <div>
+              <label>MESSAGE BODY</label>
+              <textarea rows="4" placeholder="Announcement message..." onchange="state.announcements[${i}].content = this.value">${a.content || ''}</textarea>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+              <button class="btn btn-danger btn-sm" onclick="state.announcements.splice(${i},1); renderWorkspace();">DELETE</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    document.getElementById("addProjectBtn").addEventListener("click", () => {
+      state.projects.unshift({
+        id: Date.now(),
+        title: "NEW PRODUCTION",
+        status: "UPCOMING",
+        year: "2026",
+        genre: "Original Animation",
+        description: "Project synopsis...",
+        image: "images/logo.png",
+        pageUrl: "#"
+      });
+      renderWorkspace();
+    });
+
+    document.getElementById("addNewsBtn").addEventListener("click", () => {
+      state.announcements.unshift({
+        id: Date.now().toString(),
+        title: "NEW ANNOUNCEMENT",
+        category: "STUDIO DISPATCH",
+        date: new Date().toISOString().split("T")[0],
+        content: ""
+      });
+      renderWorkspace();
+    });
+
+    /* PUBLISH CHANGES */
+    document.getElementById("saveAllBtn").addEventListener("click", async () => {
+      const btn = document.getElementById("saveAllBtn");
+      btn.textContent = "COMMITTING...";
+      btn.disabled = true;
+
+      const owner = sessionStorage.getItem("codev2e_gh_owner");
+      const repo = sessionStorage.getItem("codev2e_gh_repo");
+      const token = sessionStorage.getItem("codev2e_gh_token");
+
+      try {
+        const jsonString = JSON.stringify(state, null, 2);
+        const encodedContent = utf8ToBase64(jsonString);
+
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: `Studio Update [${new Date().toISOString()}]`,
+            content: encodedContent,
+            sha: fileSha
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          fileSha = data.content.sha;
+          alert("✓ Published successfully! Studio changes and uploaded images are now live.");
+        } else {
+          throw new Error(data.message || "Failed to commit");
+        }
+      } catch (err) {
+        alert("Commit failed: " + err.message);
+      } finally {
+        btn.textContent = "PUBLISH CHANGES";
+        btn.disabled = false;
+      }
+    });
+
+    initSession();
+  </script>
+</body>
+</html>
