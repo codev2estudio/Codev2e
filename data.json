@@ -1,4 +1,65 @@
 {
-  "announcements": [],
-  "projects": []
+  "characters": [
+    {
+      "id": "c1",
+      "name": "KAIEN",
+      "role": "LEAD PROTAGONIST / VANGUARD",
+      "tag": "TACTICAL · STEALTH · OVERSIZED TECHWEAR",
+      "image": "https://images2.imgbox.com/7b/09/Z3i2yC2I_o.jpg",
+      "description": "Quiet, observant, and grounded. Kaien operates in the urban underground of the CODEV2E universe, uncovering forgotten anomaly systems with calculated precision."
+    },
+    {
+      "id": "c2",
+      "name": "LILITH",
+      "role": "CO-LEAD / ANOMALY DUELIST",
+      "tag": "STREETWEAR · HIGH ENERGY · DUELIST",
+      "image": "https://images2.imgbox.com/7d/53/7uU5R8tq_o.jpg",
+      "description": "Fierce, quick-witted, and relentless in combat. Recognized by her signature magenta hair streak and duelist glove, Lilith leads offensive breakthroughs in high-threat sectors."
+    },
+    {
+      "id": "c3",
+      "name": "REN",
+      "role": "CIPHER OPERATIVE",
+      "tag": "ANALYTICS · NEURAL NET · STRATEGY",
+      "image": "logo.png",
+      "description": "The strategic core of the team. Specializes in decrypting synthetic signal architectures and long-range tactical surveillance."
+    },
+    {
+      "id": "c4",
+      "name": "AERIS",
+      "role": "DRIFT NAVIGATOR",
+      "tag": "ENERGY SYNCHRONIZATION · PILOT",
+      "image": "logo.png",
+      "description": "A high-reflex dimensional pilot capable of traversing unstable narrative drifts between core sectors."
+    },
+    {
+      "id": "c5",
+      "name": "ZERO-X",
+      "role": "PROTOTYPE WARDEN",
+      "tag": "EXPERIMENTAL · HEAVY COMBAT",
+      "image": "logo.png",
+      "description": "An enigmatic enforcer engineered during the early foundation era. His true allegiances remain locked behind encrypted firewalls."
+    }
+  ],
+  "announcements": [
+    {
+      "id": "1",
+      "category": "STUDIO UPDATE",
+      "title": "CODEV2E CHARACTER ROSTER UNVEILED",
+      "date": "2026-08-15",
+      "content": "Official visual development rosters for the original CODEV2E story universe are now live on the portal."
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "PROJECT ALPHA",
+      "status": "UPCOMING",
+      "year": "2026",
+      "genre": "Animation / Dark Urban Sci-Fi",
+      "description": "The flagship animated project featuring Kaien, Lilith, and the CODEV2E roster navigating original story universes.",
+      "image": "logo.png",
+      "pageUrl": "#"
+    }
+  ]
 }
