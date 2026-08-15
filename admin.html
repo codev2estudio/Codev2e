@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CODEV2E · Studio Admin Panel</title>
+  <link rel="icon" href="logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050505;
+      --surface: #101010;
+      --surface-card: #0c0c0c;
+      --line: rgba(255,255,255,.12);
+      --text: #f5f5f5;
+      --muted: #868686;
+      --danger: #ef4444;
+      --success: #22c55e;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; padding: 40px 20px; }
+    .container { width: min(960px, 100%); margin: 0 auto; }
+    h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 900; letter-spacing: -3px; line-height: .9; }
+    h2 { font-size: 20px; font-weight: 800; letter-spacing: -1px; }
+    .outline { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.6); }
+    .eyebrow { font-size: 9px; font-weight: 800; letter-spacing: 2.5px; color: var(--muted); margin-bottom: 12px; }
+    
+    .panel { background: var(--surface); border: 1px solid var(--line); padding: 30px; margin-top: 24px; border-radius: 4px; }
+    .auth-box { max-width: 460px; margin: 80px auto; }
+    .btn { min-height: 44px; padding: 0 20px; background: #fff; color: #000; border: none; font-weight: 900; font-size: 9px; letter-spacing: 2px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+    .btn:hover { background: #e2e2e2; }
+    .btn-danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+    .btn-outline { background: transparent; border: 1px solid var(--line); color: #fff; }
+    .btn-outline:hover { background: #fff; color: #000; }
+    
+    input, textarea, select { width: 100%; padding: 13px; background: #080808; border: 1px solid var(--line); color: #fff; font-family: inherit; font-size: 13px; margin-bottom: 12px; }
+    input:focus, textarea:focus, select:focus { border-color: #fff; outline: none; }
+    
+    .card-item { border: 1px solid var(--line); padding: 20px; margin-bottom: 14px; background: var(--surface-card); display: flex; flex-direction: column; gap: 8px; }
+    .header-bar { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--line); padding-bottom: 20px; gap: 15px; }
+    .status-msg { margin-top: 12px; font-size: 12px; }
+    .help-text { font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+
+  <!-- ================= AUTH VIEW ================= -->
+  <div class="auth-box" id="authView">
+    <p class="eyebrow">CODEV2E · STUDIO ACCESS</p>
+    <h1>ADMIN<br><span class="outline">LOGIN.</span></h1>
+    <div class="panel">
+      <p class="help-text">Authenticate using your GitHub Fine-Grained Personal Access Token with repository write permissions.</p>
+      <form id="loginForm">
+        <input type="text" id="repoOwner" placeholder="GITHUB USERNAME (e.g. milannaik)" required>
+        <input type="text" id="repoName" placeholder="REPOSITORY NAME (e.g. codev2e-studio)" required>
+        <input type="password" id="ghToken" placeholder="GITHUB ACCESS TOKEN (github_pat_...)" required>
+        <button class="btn" style="width: 100%;" type="submit">AUTHENTICATE & LOAD</button>
+      </form>
+      <div class="status-msg" id="authStatus" style="color: var(--danger);"></div>
+    </div>
+  </div>
+
+  <!-- ================= DASHBOARD VIEW ================= -->
+  <div class="container" id="dashView" style="display: none;">
+    <div class="header-bar">
+      <div>
+        <p class="eyebrow">CODEV2E STUDIO MANAGEMENT</p>
+        <h1>STUDIO<br><span class="outline">DASHBOARD.</span></h1>
+      </div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn btn-outline" id="saveAllBtn">PUBLISH CHANGES</button>
+        <button class="btn btn-danger" id="logoutBtn">LOGOUT</button>
+      </div>
+    </div>
+
+    <!-- ANNOUNCEMENTS SECTION -->
+    <div class="panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>ANNOUNCEMENTS</h2>
+        <button class="btn btn-outline" id="addAnnounceBtn">+ ADD ANNOUNCEMENT</button>
+      </div>
+      <div id="announceList"></div>
+    </div>
+
+    <!-- PROJECTS SECTION -->
+    <div class="panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>PROJECTS & WORLDS</h2>
+        <button class="btn btn-outline" id="addProjectBtn">+ ADD PROJECT</button>
+      </div>
+      <div id="projectsList"></div>
+    </div>
+  </div>
+
+  <script>
+    let state = { announcements: [], projects: [] };
+    let fileSha = "";
+
+    function utf8ToBase64(str) {
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode('0x' + p1)));
+    }
+
+    function base64ToUtf8(str) {
+      return decodeURIComponent(Array.prototype.map.call(atob(str), c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+    }
+
+    // Check stored credentials
+    function initSession() {
+      const owner = sessionStorage.getItem("gh_owner");
+      const repo = sessionStorage.getItem("gh_repo");
+      const token = sessionStorage.getItem("gh_token");
+
+      if (owner && repo && token) {
+        document.getElementById("repoOwner").value = owner;
+        document.getElementById("repoName").value = repo;
+        document.getElementById("ghToken").value = token;
+        loadRepoData(owner, repo, token);
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const owner = document.getElementById("repoOwner").value.trim();
+      const repo = document.getElementById("repoName").value.trim();
+      const token = document.getElementById("ghToken").value.trim();
+      const statusEl = document.getElementById("authStatus");
+
+      statusEl.style.color = "var(--muted)";
+      statusEl.textContent = "Connecting to GitHub repository...";
+
+      const success = await loadRepoData(owner, repo, token);
+      if (success) {
+        sessionStorage.setItem("gh_owner", owner);
+        sessionStorage.setItem("gh_repo", repo);
+        sessionStorage.setItem("gh_token", token);
+      } else {
+        statusEl.style.color = "var(--danger)";
+        statusEl.textContent = "Authentication failed. Check your Token, Owner, and Repo name.";
+      }
+    });
+
+    async function loadRepoData(owner, repo, token) {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/vnd.github+json"
+          }
+        });
+
+        if (!res.ok) throw new Error("Fetch error");
+        const data = await res.json();
+        fileSha = data.sha;
+        
+        const rawJson = base64ToUtf8(data.content.replace(/\s/g, ''));
+        state = JSON.parse(rawJson);
+
+        document.getElementById("authView").style.display = "none";
+        document.getElementById("dashView").style.display = "block";
+        renderAnnouncements();
+        renderProjects();
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.clear();
+      window.location.reload();
+    });
+
+    function renderAnnouncements() {
+      const list = document.getElementById("announceList");
+      list.innerHTML = state.announcements.map((item, idx) => `
+        <div class="card-item">
+          <input type="text" value="${item.title || ''}" placeholder="Announcement Title" onchange="state.announcements[${idx}].title = this.value">
+          <input type="text" value="${item.category || ''}" placeholder="Category (e.g. ANNOUNCEMENT, NEWS)" onchange="state.announcements[${idx}].category = this.value">
+          <input type="date" value="${item.date || ''}" onchange="state.announcements[${idx}].date = this.value">
+          <textarea rows="3" placeholder="Message content" onchange="state.announcements[${idx}].content = this.value">${item.content || ''}</textarea>
+          <button class="btn btn-danger" style="align-self: flex-start;" onclick="state.announcements.splice(${idx},1); renderAnnouncements();">DELETE</button>
+        </div>
+      `).join("");
+    }
+
+    function renderProjects() {
+      const list = document.getElementById("projectsList");
+      list.innerHTML = state.projects.map((pj, idx) => `
+        <div class="card-item">
+          <input type="text" value="${pj.title || ''}" placeholder="Project Title" onchange="state.projects[${idx}].title = this.value">
+          <select onchange="state.projects[${idx}].status = this.value">
+            <option value="RELEASED" ${pj.status === 'RELEASED' ? 'selected' : ''}>RELEASED</option>
+            <option value="UPCOMING" ${pj.status === 'UPCOMING' ? 'selected' : ''}>UPCOMING</option>
+          </select>
+          <input type="text" value="${pj.year || ''}" placeholder="Year (e.g. 2026 or TBA)" onchange="state.projects[${idx}].year = this.value">
+          <input type="text" value="${pj.genre || ''}" placeholder="Genre (e.g. Sci-Fi, Dark Fantasy)" onchange="state.projects[${idx}].genre = this.value">
+          <input type="text" value="${pj.image || ''}" placeholder="Artwork image filename (e.g. pj1.png or logo.png)" onchange="state.projects[${idx}].image = this.value">
+          <input type="text" value="${pj.pageUrl || ''}" placeholder="Target Page URL (e.g. pj1.html or #)" onchange="state.projects[${idx}].pageUrl = this.value">
+          <textarea rows="3" placeholder="Project Description" onchange="state.projects[${idx}].description = this.value">${pj.description || ''}</textarea>
+          <button class="btn btn-danger" style="align-self: flex-start;" onclick="state.projects.splice(${idx},1); renderProjects();">DELETE PROJECT</button>
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("addAnnounceBtn").addEventListener("click", () => {
+      state.announcements.unshift({
+        id: Date.now().toString(),
+        title: "NEW ANNOUNCEMENT",
+        category: "ANNOUNCEMENT",
+        date: new Date().toISOString().split("T")[0],
+        content: ""
+      });
+      renderAnnouncements();
+    });
+
+    document.getElementById("addProjectBtn").addEventListener("click", () => {
+      state.projects.push({
+        id: state.projects.length + 1,
+        title: "NEW PROJECT",
+        status: "UPCOMING",
+        year: "2026",
+        genre: "Original",
+        description: "",
+        image: "logo.png",
+        pageUrl: "#"
+      });
+      renderProjects();
+    });
+
+    document.getElementById("saveAllBtn").addEventListener("click", async () => {
+      const btn = document.getElementById("saveAllBtn");
+      btn.textContent = "COMMITTING TO GITHUB...";
+      btn.disabled = true;
+
+      const owner = sessionStorage.getItem("gh_owner");
+      const repo = sessionStorage.getItem("gh_repo");
+      const token = sessionStorage.getItem("gh_token");
+
+      try {
+        const contentStr = JSON.stringify(state, null, 2);
+        const encodedContent = utf8ToBase64(contentStr);
+
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: `Update studio content via Admin Panel [${new Date().toISOString()}]`,
+            content: encodedContent,
+            sha: fileSha
+          })
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          fileSha = result.content.sha;
+          alert("✓ Published successfully! GitHub Pages will update within 1-2 minutes.");
+        } else {
+          throw new Error(result.message || "Commit failed");
+        }
+      } catch (err) {
+        alert("Failed to commit changes: " + err.message);
+      } finally {
+        btn.textContent = "PUBLISH CHANGES";
+        btn.disabled = false;
+      }
+    });
+
+    initSession();
+  </script>
+</body>
+  </html>
