@@ -3,703 +3,306 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>CODEV2E · Studio Command Engine</title>
+  <title>CODEV2E · Command Engine</title>
   <link rel="icon" href="images/logo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #f5f5f0;
-      --surface: rgba(255, 255, 255, 0.75);
-      --surface-card: rgba(255, 255, 255, 0.9);
-      --line: rgba(0, 0, 0, 0.12);
-      --line-strong: rgba(0, 0, 0, 0.25);
-      --text: #111111;
-      --muted: #666666;
-      --dim: #999999;
-      --danger: #dc2626;
-      --font-display: 'Space Grotesk', Inter, sans-serif;
-      --ease: cubic-bezier(.2,.75,.2,1);
+      --text: #111113;
+      --surface: #ffffff;
+      --line: rgba(0,0,0,0.12);
+      --font-display: 'Syne', 'Space Grotesk', sans-serif;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    html { background: var(--bg); }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      min-height: 100vh;
-      padding: 0 0 100px;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    h1 { font-family: var(--font-display); font-size: clamp(34px, 6vw, 64px); font-weight: 900; letter-spacing: -3px; line-height: .86; }
-    h2 { font-family: var(--font-display); font-size: 22px; font-weight: 900; letter-spacing: -1px; }
-    .outline { color: transparent; -webkit-text-stroke: 1.5px rgba(0,0,0,0.7); }
-    .eyebrow { font-size: 9px; font-weight: 800; letter-spacing: 3px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; }
-
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 100px; }
     .container { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
-    .auth-screen { max-width: 440px; margin: 100px auto 40px; }
-
-    .btn {
-      min-height: 44px;
-      padding: 0 20px;
-      background: #111;
-      color: #fff;
-      border: 2px solid #111;
-      font-size: 9px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-transform: uppercase;
-      transition: all .25s var(--ease);
-      border-radius: 4px;
-    }
-    .btn:hover { background: #000; transform: translateY(-2px); }
-    .btn-outline { background: rgba(255,255,255,0.7); border-color: #111; color: #111; }
-    .btn-outline:hover { background: #111; color: #fff; border-color: #111; }
-    .btn-danger { background: transparent; border-color: var(--danger); color: var(--danger); }
-    .btn-danger:hover { background: var(--danger); color: #fff; }
-    .btn-sm { min-height: 34px; padding: 0 12px; font-size: 8px; }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.85);
-      border: 1.5px solid var(--line);
-      color: #111;
-      font-family: inherit;
-      font-size: 13px;
-      border-radius: 4px;
-      transition: border-color .2s ease;
-    }
-    input:focus, textarea:focus, select:focus {
-      border-color: #111;
-      outline: none;
-      background: #fff;
-    }
-    label {
-      display: block;
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: var(--muted);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-
-    .top-bar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(245, 245, 240, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 2px solid #111;
-      padding: 16px 0;
-      margin-bottom: 40px;
-    }
-    .top-bar-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .studio-brand { font-family: var(--font-display); font-size: 20px; font-weight: 900; letter-spacing: -1.2px; }
-    .studio-brand span { opacity: .4; }
-
-    .nav-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 30px;
-      border-bottom: 2px solid rgba(0,0,0,0.1);
-      padding-bottom: 14px;
-      overflow-x: auto;
-    }
-    .tab-btn {
-      padding: 10px 18px;
-      background: transparent;
-      border: 1.5px solid transparent;
-      color: var(--muted);
-      font-size: 9px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: all .2s ease;
-      border-radius: 4px;
-    }
-    .tab-btn.active {
-      background: #111;
-      color: #fff;
-      border-color: #111;
-    }
-    .tab-btn:hover:not(.active) {
-      color: #111;
-      border-color: rgba(0,0,0,0.2);
-    }
-
-    .panel {
-      background: var(--surface);
-      border: 2px solid rgba(0,0,0,0.1);
-      padding: 32px;
-      border-radius: 6px;
-    }
-    .editor-card {
-      position: relative;
-      border: 1.5px solid var(--line);
-      background: var(--surface-card);
-      padding: 24px;
-      margin-bottom: 20px;
-      display: grid;
-      grid-template-columns: 140px minmax(0, 1fr);
-      gap: 24px;
-      border-radius: 4px;
-      transition: border-color .25s ease;
-    }
-    .editor-card:hover { border-color: #111; }
-    .editor-preview-box {
-      width: 100%;
-      height: 180px;
-      background: #eee;
-      border: 1.5px solid var(--line);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border-radius: 4px;
-    }
-    .editor-preview-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-    }
-    .editor-fields { display: flex; flex-direction: column; gap: 12px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .auth-box { max-width: 440px; margin: 100px auto; padding: 36px; background: #fff; border: 3px solid #111; border-radius: 8px; }
     
-    .badge {
-      display: inline-block;
-      padding: 2px 6px;
-      background: rgba(0,0,0,0.1);
-      font-size: 8px;
-      font-weight: 800;
-      color: #111;
-      margin-left: 6px;
-      border-radius: 2px;
-    }
-    .tab-btn.active .badge { background: rgba(255,255,255,0.2); color: #fff; }
+    .top-bar { position: sticky; top: 0; background: rgba(245,245,240,0.92); backdrop-filter: blur(16px); border-bottom: 2px solid #111; padding: 16px 0; margin-bottom: 30px; z-index: 100; }
+    .top-bar-inner { display: flex; justify-content: space-between; align-items: center; }
 
-    .locked-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      background: rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.15);
-      font-size: 8px;
-      font-weight: 800;
-      color: #111;
-      letter-spacing: 1.5px;
-      border-radius: 4px;
-    }
+    .nav-tabs { display: flex; gap: 8px; margin-bottom: 30px; border-bottom: 2px solid #111; padding-bottom: 12px; overflow-x: auto; }
+    .tab-btn { padding: 10px 16px; background: transparent; border: 2px solid transparent; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; border-radius: 4px; }
+    .tab-btn.active { background: #111; color: #fff; border-color: #111; }
 
-    .upload-action-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 4px;
-    }
-    .hidden-file-input { display: none; }
-
-    @media (max-width: 768px) {
-      .editor-card { grid-template-columns: 1fr; }
-      .editor-preview-box { height: 200px; }
-      .grid-2, .grid-3 { grid-template-columns: 1fr; }
-    }
+    .panel { background: #fff; border: 2.5px solid #111; padding: 28px; border-radius: 8px; }
+    .card-item { border: 2px solid var(--line); padding: 20px; margin-bottom: 20px; border-radius: 6px; background: #fafaf8; }
+    
+    input, textarea, select { width: 100%; padding: 12px; background: #fff; border: 1.5px solid #111; margin-bottom: 10px; font-family: inherit; font-size: 13px; border-radius: 4px; }
+    label { font-size: 8px; font-weight: 800; letter-spacing: 1.5px; color: #666; text-transform: uppercase; margin-bottom: 4px; display: block; }
+    
+    .btn { padding: 10px 20px; background: #111; color: #fff; border: 2px solid #111; font-size: 10px; font-weight: 800; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
+    .btn-outline { background: #fff; color: #111; }
+    .btn-danger { background: transparent; border-color: #dc2626; color: #dc2626; }
+    .btn-danger:hover { background: #dc2626; color: #fff; }
   </style>
 </head>
 <body>
 
-  <!-- ================= AUTH SCREEN ================= -->
-  <div class="container auth-screen" id="authView">
-    <p class="eyebrow">CODEV2E · COMMAND ENGINE</p>
-    <h1>ADMIN<br><span class="outline">PORTAL.</span></h1>
-    
-    <div class="panel" style="margin-top: 24px;">
-      <form id="loginForm">
-        <div style="margin-bottom: 14px;">
-          <label>GITHUB USERNAME</label>
-          <input type="text" id="repoOwner" placeholder="e.g. codev2estudio" required>
-        </div>
-
-        <div style="margin-bottom: 14px;">
-          <label>REPOSITORY NAME</label>
-          <input type="text" id="repoName" placeholder="e.g. Codev2e" required>
-        </div>
-
-        <div style="margin-bottom: 20px;">
-          <label>ACCESS TOKEN (PAT)</label>
-          <input type="password" id="ghToken" placeholder="github_pat_..." required>
-        </div>
-
-        <button class="btn" style="width: 100%;" type="submit">CONNECT TO REPOSITORY</button>
-      </form>
-      <div id="authStatus" style="margin-top: 14px; font-size: 11px; color: var(--danger); line-height: 1.5;"></div>
-    </div>
+  <div class="auth-box" id="authView">
+    <h1 style="font-family: var(--font-display); font-size: 32px; margin-bottom: 14px;">COMMAND LOGIN</h1>
+    <form id="loginForm">
+      <label>GITHUB USERNAME</label>
+      <input type="text" id="repoOwner" placeholder="e.g. codev2estudio" required>
+      <label>REPOSITORY NAME</label>
+      <input type="text" id="repoName" placeholder="e.g. Codev2e" required>
+      <label>ACCESS TOKEN (PAT)</label>
+      <input type="password" id="ghToken" placeholder="github_pat_..." required>
+      <button type="submit" class="btn" style="width: 100%;">AUTHENTICATE</button>
+    </form>
+    <div id="authStatus" style="color: #dc2626; font-size: 11px; margin-top: 10px;"></div>
   </div>
 
-  <!-- ================= DASHBOARD ================= -->
   <div id="dashView" style="display: none;">
-
     <header class="top-bar">
       <div class="container top-bar-inner">
-        <div>
-          <div class="studio-brand">CODE<span>V2E</span> // COMMAND</div>
-          <span style="font-size: 9px; color: var(--muted); font-weight: 700; letter-spacing: 1px;" id="repoIndicator">CONNECTED</span>
-        </div>
-
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <button class="btn btn-outline" id="saveAllBtn">PUBLISH CHANGES</button>
-          <button class="btn btn-danger btn-sm" id="logoutBtn">LOGOUT</button>
+        <div style="font-family: var(--font-display); font-weight: 900; font-size: 18px;">CODE<span>V2E</span> COMMAND</div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-outline" id="saveBtn">PUBLISH TO LIVE SITE</button>
+          <button class="btn btn-danger" onclick="sessionStorage.clear(); location.reload();">LOGOUT</button>
         </div>
       </div>
     </header>
 
     <main class="container">
-      
       <nav class="nav-tabs">
-        <button class="tab-btn active" data-tab="tab-chars">01. CHARACTERS <span class="badge" id="countChars">5</span></button>
-        <button class="tab-btn" data-tab="tab-projects">02. SHOWLIST PROJECTS <span class="badge" id="countProjects">0</span></button>
-        <button class="tab-btn" data-tab="tab-news">03. ANNOUNCEMENTS <span class="badge" id="countNews">0</span></button>
+        <button class="tab-btn active" data-tab="tab-hero">01. MOVIE WIDGET</button>
+        <button class="tab-btn" data-tab="tab-ott">02. OTT PROJECTS</button>
+        <button class="tab-btn" data-tab="tab-chars">03. CHARACTERS</button>
+        <button class="tab-btn" data-tab="tab-market">04. MARKET ITEMS</button>
+        <button class="tab-btn" data-tab="tab-news">05. NEWS</button>
       </nav>
 
-      <!-- TAB 1: CHARACTERS (EDIT ONLY) -->
-      <section id="tab-chars" class="tab-content">
+      <!-- TAB 1: HERO MOVIE WIDGET -->
+      <section id="tab-hero" class="tab-content">
         <div class="panel">
-          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
-            <div>
-              <p class="eyebrow">CONTINUOUS HOME SCREEN ROSTER</p>
-              <h2>CORE CHARACTERS (5 FIXED SLOTS)</h2>
-            </div>
-            <span class="locked-badge">🔒 LOCKED SLOTS (EDIT ONLY)</span>
-          </div>
-          <div id="charListContainer"></div>
+          <h2 style="font-family: var(--font-display); margin-bottom: 20px;">TOP MOVIE BANNER (IMAGE 2 WIDGET)</h2>
+          <label>MOVIE TITLE</label>
+          <input type="text" id="hwTitle" oninput="state.heroWidget.title=this.value">
+          <label>MOVIE DESCRIPTION</label>
+          <textarea id="hwDesc" rows="3" oninput="state.heroWidget.description=this.value"></textarea>
+          <label>BANNER IMAGE PATH OR URL</label>
+          <input type="text" id="hwImg" oninput="state.heroWidget.image=this.value">
+          <input type="file" id="hwFile" style="display:none;" onchange="uploadFile(this.files[0], (path)=>{ state.heroWidget.image=path; document.getElementById('hwImg').value=path; })">
+          <button class="btn btn-outline" onclick="document.getElementById('hwFile').click()">⬆ UPLOAD BANNER FROM DEVICE</button>
         </div>
       </section>
 
-      <!-- TAB 2: PROJECTS -->
-      <section id="tab-projects" class="tab-content" style="display: none;">
+      <!-- TAB 2: OTT PROJECTS -->
+      <section id="tab-ott" class="tab-content" style="display: none;">
         <div class="panel">
-          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
-            <div>
-              <p class="eyebrow">ANIMATION PRODUCTIONS</p>
-              <h2>SHOWLIST ARCHIVE</h2>
-            </div>
-            <button class="btn btn-outline btn-sm" id="addProjectBtn">+ ADD NEW PROJECT</button>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <h2 style="font-family: var(--font-display);">SHOWLIST OTT PRODUCTIONS</h2>
+            <button class="btn btn-outline" id="addProjBtn">+ ADD PROJECT</button>
           </div>
-          <div id="projectListContainer"></div>
+          <div id="projList"></div>
         </div>
       </section>
 
-      <!-- TAB 3: ANNOUNCEMENTS -->
+      <!-- TAB 3: CHARACTERS -->
+      <section id="tab-chars" class="tab-content" style="display: none;">
+        <div class="panel">
+          <h2 style="font-family: var(--font-display); margin-bottom: 20px;">ROSTER (5 CORE CHARACTERS)</h2>
+          <div id="charList"></div>
+        </div>
+      </section>
+
+      <!-- TAB 4: MARKET -->
+      <section id="tab-market" class="tab-content" style="display: none;">
+        <div class="panel">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <h2 style="font-family: var(--font-display);">MARKET STORE PRODUCTS</h2>
+            <button class="btn btn-outline" id="addProdBtn">+ ADD PRODUCT</button>
+          </div>
+          <div id="prodList"></div>
+        </div>
+      </section>
+
+      <!-- TAB 5: NEWS -->
       <section id="tab-news" class="tab-content" style="display: none;">
         <div class="panel">
-          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
-            <div>
-              <p class="eyebrow">STUDIO DISPATCHES</p>
-              <h2>NEWS & UPDATES</h2>
-            </div>
-            <button class="btn btn-outline btn-sm" id="addNewsBtn">+ ADD ANNOUNCEMENT</button>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <h2 style="font-family: var(--font-display);">STUDIO NEWS & DISPATCHES</h2>
+            <button class="btn btn-outline" id="addNewsBtn">+ ADD NEWS</button>
           </div>
-          <div id="newsListContainer"></div>
+          <div id="newsList"></div>
         </div>
       </section>
-
     </main>
   </div>
 
   <script>
-    let state = { characters: [], projects: [], announcements: [] };
+    let state = { heroWidget: {}, projects: [], characters: [], products: [], announcements: [] };
     let fileSha = "";
 
-    function utf8ToBase64(str) {
-      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (m, p1) => String.fromCharCode('0x' + p1)));
-    }
-
-    function base64ToUtf8(str) {
-      return decodeURIComponent(Array.prototype.map.call(atob(str), c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-    }
-
-    function initSession() {
+    function init() {
       const owner = sessionStorage.getItem("codev2e_gh_owner");
       const repo = sessionStorage.getItem("codev2e_gh_repo");
       const token = sessionStorage.getItem("codev2e_gh_token");
-
-      if (owner && repo && token) {
-        document.getElementById("repoOwner").value = owner;
-        document.getElementById("repoName").value = repo;
-        document.getElementById("ghToken").value = token;
-        loadStudioRepository(owner, repo, token);
-      }
+      if (owner && repo && token) loadRepo(owner, repo, token);
     }
 
-    document.getElementById("loginForm").addEventListener("submit", async e => {
+    document.getElementById("loginForm").onsubmit = async e => {
       e.preventDefault();
       const owner = document.getElementById("repoOwner").value.trim();
       const repo = document.getElementById("repoName").value.trim();
       const token = document.getElementById("ghToken").value.trim();
-      const status = document.getElementById("authStatus");
-
-      status.style.color = "var(--muted)";
-      status.textContent = "Connecting to GitHub & loading data.json...";
-
-      const ok = await loadStudioRepository(owner, repo, token);
-      if (ok) {
+      if (await loadRepo(owner, repo, token)) {
         sessionStorage.setItem("codev2e_gh_owner", owner);
         sessionStorage.setItem("codev2e_gh_repo", repo);
         sessionStorage.setItem("codev2e_gh_token", token);
       } else {
-        status.style.color = "var(--danger)";
-        status.textContent = "Authentication failed. Check your Token, Username, and Repository name.";
+        document.getElementById("authStatus").textContent = "Connection failed. Check Token and Repo.";
       }
-    });
+    };
 
-    async function loadStudioRepository(owner, repo, token) {
+    async function loadRepo(owner, repo, token) {
       try {
         const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/vnd.github+json"
-          }
+          headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json" }
         });
-        if (!res.ok) throw new Error();
         const data = await res.json();
         fileSha = data.sha;
+        state = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\s/g, '')))));
         
-        state = JSON.parse(base64ToUtf8(data.content.replace(/\s/g, '')));
-        if (!state.characters || !state.characters.length) {
-          state.characters = [
-            { id: "c1", number: "01", name: "KAIEN", role: "LEAD PROTAGONIST // VANGUARD", tag: "TACTICAL · STEALTH · OVERSIZED TECHWEAR", quote: "SILENCE BEFORE THE DISRUPTION", image: "images/logo.png", description: "" },
-            { id: "c2", number: "02", name: "LILITH", role: "CO-LEAD // ANOMALY DUELIST", tag: "STREETWEAR · HIGH MOBILITY · DUELIST", quote: "BREAK THROUGH FIRST", image: "images/logo.png", description: "" },
-            { id: "c3", number: "03", name: "REN", role: "CIPHER OPERATIVE // INTEL", tag: "NEURAL NET · SURVEILLANCE", quote: "EVERY SIGNAL LEAVES A PATTERN", image: "images/logo.png", description: "" },
-            { id: "c4", number: "04", name: "AERIS", role: "DRIFT NAVIGATOR // PILOT", tag: "DIMENSIONAL DRIFT", quote: "THE HORIZON IS NEVER FIXED", image: "images/logo.png", description: "" },
-            { id: "c5", number: "05", name: "ZERO-X", role: "ENIGMATIC PROTOTYPE // WARDEN", tag: "CLASSIFIED", quote: "ORIGINS LOCKED BEHIND PROTOCOL", image: "images/logo.png", description: "" }
-          ];
-        }
-        if (!state.projects) state.projects = [];
-        if (!state.announcements) state.announcements = [];
-
         document.getElementById("authView").style.display = "none";
         document.getElementById("dashView").style.display = "block";
-        document.getElementById("repoIndicator").textContent = `${owner}/${repo}`;
 
-        renderWorkspace();
+        if (state.heroWidget) {
+          document.getElementById("hwTitle").value = state.heroWidget.title || "";
+          document.getElementById("hwDesc").value = state.heroWidget.description || "";
+          document.getElementById("hwImg").value = state.heroWidget.image || "";
+        }
+        renderAll();
         return true;
-      } catch (err) {
-        return false;
-      }
+      } catch (err) { return false; }
     }
 
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      sessionStorage.clear();
-      window.location.reload();
-    });
-
+    // Tabs
     document.querySelectorAll(".tab-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
+      btn.onclick = () => {
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
         document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
-
         btn.classList.add("active");
-        const target = document.getElementById(btn.dataset.tab);
-        if (target) target.style.display = "block";
-      });
+        document.getElementById(btn.dataset.tab).style.display = "block";
+      };
     });
 
-    function updateCounters() {
-      document.getElementById("countChars").textContent = state.characters.length;
-      document.getElementById("countProjects").textContent = state.projects.length;
-      document.getElementById("countNews").textContent = state.announcements.length;
-    }
-
-    function renderWorkspace() {
-      renderCharacters();
-      renderProjects();
-      renderNews();
-      updateCounters();
-    }
-
-    /* DIRECT IMAGE UPLOADER */
-    async function uploadDirectImage(file, targetType, index, btnEl) {
+    // Upload Helper
+    async function uploadFile(file, callback) {
       if (!file) return;
-
       const owner = sessionStorage.getItem("codev2e_gh_owner");
       const repo = sessionStorage.getItem("codev2e_gh_repo");
       const token = sessionStorage.getItem("codev2e_gh_token");
-
-      const originalText = btnEl.textContent;
-      btnEl.textContent = "UPLOADING TO GITHUB...";
-      btnEl.disabled = true;
-
-      try {
-        const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "").toLowerCase();
-        const filePath = `images/${Date.now()}-${cleanName}`;
-
-        const reader = new FileReader();
-        const base64Data = await new Promise((resolve, reject) => {
-          reader.onload = () => resolve(reader.result.split(',')[1]);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-
+      
+      const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "").toLowerCase();
+      const filePath = `images/${Date.now()}-${cleanName}`;
+      
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64Data = reader.result.split(',')[1];
         const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
           method: "PUT",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/vnd.github+json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: `Upload image ${filePath} via Studio Admin`,
-            content: base64Data
-          })
+          headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json", "Content-Type": "application/json" },
+          body: JSON.stringify({ message: `Upload ${filePath}`, content: base64Data })
         });
-
-        if (!res.ok) throw new Error("GitHub rejected upload.");
-
-        if (targetType === 'character') state.characters[index].image = filePath;
-        else if (targetType === 'project') state.projects[index].image = filePath;
-
-        renderWorkspace();
-        alert(`✓ Image uploaded successfully to ${filePath}! Click "PUBLISH CHANGES" to save.`);
-      } catch (err) {
-        alert("Upload failed: " + err.message);
-      } finally {
-        btnEl.textContent = originalText;
-        btnEl.disabled = false;
-      }
+        if (res.ok) {
+          alert("✓ Uploaded! Click 'PUBLISH' when done.");
+          callback(filePath);
+          renderAll();
+        } else alert("Upload error.");
+      };
+      reader.readAsDataURL(file);
     }
 
-    function renderCharacters() {
-      const container = document.getElementById("charListContainer");
-      container.innerHTML = state.characters.map((c, i) => `
-        <article class="editor-card">
-          <div class="editor-preview-box">
-            <img src="${c.image || 'images/logo.png'}" alt="Preview" onerror="this.src='images/logo.png'">
+    function renderAll() {
+      // 1. Projects
+      document.getElementById("projList").innerHTML = (state.projects || []).map((p, i) => `
+        <div class="card-item">
+          <input type="text" value="${p.title}" oninput="state.projects[${i}].title=this.value" placeholder="Title">
+          <select onchange="state.projects[${i}].status=this.value">
+            <option value="RELEASED" ${p.status==='RELEASED'?'selected':''}>RELEASED</option>
+            <option value="UPCOMING" ${p.status==='UPCOMING'?'selected':''}>UPCOMING</option>
+          </select>
+          <input type="text" value="${p.image}" oninput="state.projects[${i}].image=this.value" placeholder="Poster URL">
+          <textarea rows="2" oninput="state.projects[${i}].description=this.value">${p.description}</textarea>
+          <button class="btn btn-danger" onclick="state.projects.splice(${i},1); renderAll();">DELETE</button>
+        </div>
+      `).join("");
+
+      // 2. Characters
+      document.getElementById("charList").innerHTML = (state.characters || []).map((c, i) => `
+        <div class="card-item">
+          <div style="display:flex; gap:10px;">
+            <input type="text" value="${c.name}" oninput="state.characters[${i}].name=this.value" placeholder="Name">
+            <input type="text" value="${c.role}" oninput="state.characters[${i}].role=this.value" placeholder="Role">
           </div>
+          <input type="text" value="${c.image}" oninput="state.characters[${i}].image=this.value" placeholder="Artwork Path">
+          <input type="file" id="cf-${i}" style="display:none;" onchange="uploadFile(this.files[0], p => state.characters[${i}].image=p)">
+          <button class="btn btn-outline" style="margin-bottom:8px;" onclick="document.getElementById('cf-${i}').click()">⬆ UPLOAD ARTWORK</button>
+          <textarea rows="2" oninput="state.characters[${i}].description=this.value">${c.description}</textarea>
+        </div>
+      `).join("");
 
-          <div class="editor-fields">
-            <div class="grid-3">
-              <div>
-                <label>ROSTER SLOT</label>
-                <input type="text" value="${c.number || `0${i+1}`}" placeholder="01" onchange="state.characters[${i}].number = this.value">
-              </div>
-              <div>
-                <label>CHARACTER NAME</label>
-                <input type="text" value="${c.name || ''}" placeholder="e.g. KAIEN" onchange="state.characters[${i}].name = this.value">
-              </div>
-              <div>
-                <label>ROLE // AFFILIATION</label>
-                <input type="text" value="${c.role || ''}" placeholder="e.g. LEAD PROTAGONIST" onchange="state.characters[${i}].role = this.value">
-              </div>
-            </div>
+      // 3. Products
+      document.getElementById("prodList").innerHTML = (state.products || []).map((pr, i) => `
+        <div class="card-item">
+          <input type="text" value="${pr.title}" oninput="state.products[${i}].title=this.value" placeholder="Product Name">
+          <input type="text" value="${pr.price}" oninput="state.products[${i}].price=this.value" placeholder="Price (e.g. $38.00)">
+          <input type="text" value="${pr.image}" oninput="state.products[${i}].image=this.value" placeholder="Product Image">
+          <textarea rows="2" oninput="state.products[${i}].description=this.value">${pr.description}</textarea>
+          <button class="btn btn-danger" onclick="state.products.splice(${i},1); renderAll();">DELETE PRODUCT</button>
+        </div>
+      `).join("");
 
-            <div class="grid-2">
-              <div>
-                <label>TRAITS / TAGS</label>
-                <input type="text" value="${c.tag || ''}" placeholder="e.g. TACTICAL · STEALTH" onchange="state.characters[${i}].tag = this.value">
-              </div>
-              <div>
-                <label>SIGNATURE QUOTE</label>
-                <input type="text" value="${c.quote || ''}" placeholder="e.g. SILENCE BEFORE DISRUPTION" onchange="state.characters[${i}].quote = this.value">
-              </div>
-            </div>
-
-            <div>
-              <label>CHARACTER ARTWORK</label>
-              <input type="text" value="${c.image || ''}" placeholder="images/... or URL" oninput="state.characters[${i}].image = this.value; this.closest('.editor-card').querySelector('.editor-preview-box img').src = this.value;">
-              
-              <div class="upload-action-row">
-                <input type="file" accept="image/*" class="hidden-file-input" id="file-char-${i}" onchange="uploadDirectImage(this.files[0], 'character', ${i}, this.nextElementSibling)">
-                <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('file-char-${i}').click()">⬆ UPLOAD ARTWORK FROM DEVICE</button>
-              </div>
-            </div>
-
-            <div>
-              <label>LORE & STORY DESCRIPTION</label>
-              <textarea rows="3" placeholder="Character narrative..." onchange="state.characters[${i}].description = this.value">${c.description || ''}</textarea>
-            </div>
-          </div>
-        </article>
+      // 4. News
+      document.getElementById("newsList").innerHTML = (state.announcements || []).map((a, i) => `
+        <div class="card-item">
+          <input type="text" value="${a.title}" oninput="state.announcements[${i}].title=this.value" placeholder="Headline">
+          <textarea rows="2" oninput="state.announcements[${i}].content=this.value">${a.content}</textarea>
+          <button class="btn btn-danger" onclick="state.announcements.splice(${i},1); renderAll();">DELETE</button>
+        </div>
       `).join("");
     }
 
-    function renderProjects() {
-      const container = document.getElementById("projectListContainer");
-      container.innerHTML = state.projects.map((p, i) => `
-        <article class="editor-card">
-          <div class="editor-preview-box">
-            <img src="${p.image || 'images/logo.png'}" alt="Preview" onerror="this.src='images/logo.png'">
-          </div>
+    document.getElementById("addProjBtn").onclick = () => {
+      state.projects.unshift({ id: Date.now(), title: "NEW PROJECT", status: "RELEASED", year: "2026", genre: "Animation", description: "", image: "images/logo.png" });
+      renderAll();
+    };
 
-          <div class="editor-fields">
-            <div class="grid-3">
-              <div>
-                <label>PROJECT TITLE</label>
-                <input type="text" value="${p.title || ''}" placeholder="e.g. PROJECT ALPHA" onchange="state.projects[${i}].title = this.value">
-              </div>
-              <div>
-                <label>STATUS</label>
-                <select onchange="state.projects[${i}].status = this.value">
-                  <option value="RELEASED" ${p.status === 'RELEASED' ? 'selected' : ''}>RELEASED</option>
-                  <option value="UPCOMING" ${p.status === 'UPCOMING' ? 'selected' : ''}>UPCOMING</option>
-                </select>
-              </div>
-              <div>
-                <label>YEAR</label>
-                <input type="text" value="${p.year || ''}" placeholder="e.g. 2026" onchange="state.projects[${i}].year = this.value">
-              </div>
-            </div>
+    document.getElementById("addProdBtn").onclick = () => {
+      state.products.unshift({ id: "p" + Date.now(), title: "NEW PRODUCT", price: "$25.00", category: "MERCH", image: "images/logo.png", description: "" });
+      renderAll();
+    };
 
-            <div class="grid-2">
-              <div>
-                <label>GENRE / THEME</label>
-                <input type="text" value="${p.genre || ''}" placeholder="e.g. Dark Urban Sci-Fi" onchange="state.projects[${i}].genre = this.value">
-              </div>
-              <div>
-                <label>TARGET LINK (OPTIONAL)</label>
-                <input type="text" value="${p.pageUrl || '#'}" placeholder="#" onchange="state.projects[${i}].pageUrl = this.value">
-              </div>
-            </div>
+    document.getElementById("addNewsBtn").onclick = () => {
+      state.announcements.unshift({ id: Date.now().toString(), title: "DISPATCH", category: "NEWS", date: new Date().toISOString().split("T")[0], content: "" });
+      renderAll();
+    };
 
-            <div>
-              <label>POSTER ARTWORK</label>
-              <input type="text" value="${p.image || ''}" placeholder="images/poster.png or URL" oninput="state.projects[${i}].image = this.value; this.closest('.editor-card').querySelector('.editor-preview-box img').src = this.value;">
-              
-              <div class="upload-action-row">
-                <input type="file" accept="image/*" class="hidden-file-input" id="file-proj-${i}" onchange="uploadDirectImage(this.files[0], 'project', ${i}, this.nextElementSibling)">
-                <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('file-proj-${i}').click()">⬆ UPLOAD POSTER FROM DEVICE</button>
-              </div>
-            </div>
-
-            <div>
-              <label>PROJECT SYNOPSIS</label>
-              <textarea rows="3" placeholder="Story synopsis..." onchange="state.projects[${i}].description = this.value">${p.description || ''}</textarea>
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-              <button class="btn btn-danger btn-sm" onclick="state.projects.splice(${i},1); renderWorkspace();">DELETE PROJECT</button>
-            </div>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    function renderNews() {
-      const container = document.getElementById("newsListContainer");
-      container.innerHTML = state.announcements.map((a, i) => `
-        <article class="editor-card" style="grid-template-columns: 1fr;">
-          <div class="editor-fields">
-            <div class="grid-3">
-              <div>
-                <label>HEADLINE</label>
-                <input type="text" value="${a.title || ''}" placeholder="Announcement Title" onchange="state.announcements[${i}].title = this.value">
-              </div>
-              <div>
-                <label>CATEGORY</label>
-                <input type="text" value="${a.category || 'STUDIO DISPATCH'}" placeholder="e.g. PRODUCTION UPDATE" onchange="state.announcements[${i}].category = this.value">
-              </div>
-              <div>
-                <label>DATE</label>
-                <input type="date" value="${a.date || ''}" onchange="state.announcements[${i}].date = this.value">
-              </div>
-            </div>
-
-            <div>
-              <label>MESSAGE BODY</label>
-              <textarea rows="4" placeholder="Announcement message..." onchange="state.announcements[${i}].content = this.value">${a.content || ''}</textarea>
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-              <button class="btn btn-danger btn-sm" onclick="state.announcements.splice(${i},1); renderWorkspace();">DELETE</button>
-            </div>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    document.getElementById("addProjectBtn").addEventListener("click", () => {
-      state.projects.unshift({
-        id: Date.now(),
-        title: "NEW PRODUCTION",
-        status: "UPCOMING",
-        year: "2026",
-        genre: "Original Animation",
-        description: "Project synopsis...",
-        image: "images/logo.png",
-        pageUrl: "#"
-      });
-      renderWorkspace();
-    });
-
-    document.getElementById("addNewsBtn").addEventListener("click", () => {
-      state.announcements.unshift({
-        id: Date.now().toString(),
-        title: "NEW ANNOUNCEMENT",
-        category: "STUDIO DISPATCH",
-        date: new Date().toISOString().split("T")[0],
-        content: ""
-      });
-      renderWorkspace();
-    });
-
-    /* PUBLISH CHANGES */
-    document.getElementById("saveAllBtn").addEventListener("click", async () => {
-      const btn = document.getElementById("saveAllBtn");
+    document.getElementById("saveBtn").onclick = async () => {
+      const btn = document.getElementById("saveBtn");
       btn.textContent = "COMMITTING...";
-      btn.disabled = true;
-
       const owner = sessionStorage.getItem("codev2e_gh_owner");
       const repo = sessionStorage.getItem("codev2e_gh_repo");
       const token = sessionStorage.getItem("codev2e_gh_token");
+      
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2))));
+      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+        method: "PUT",
+        headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json", "Content-Type": "application/json" },
+        body: JSON.stringify({ message: `Studio update [${new Date().toISOString()}]`, content, sha: fileSha })
+      });
+      if (res.ok) {
+        const d = await res.json();
+        fileSha = d.content.sha;
+        alert("✓ Published live successfully!");
+      } else alert("Error publishing changes.");
+      btn.textContent = "PUBLISH TO LIVE SITE";
+    };
 
-      try {
-        const jsonString = JSON.stringify(state, null, 2);
-        const encodedContent = utf8ToBase64(jsonString);
-
-        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
-          method: "PUT",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/vnd.github+json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: `Studio Update [${new Date().toISOString()}]`,
-            content: encodedContent,
-            sha: fileSha
-          })
-        });
-
-        const data = await res.json();
-        if (res.ok) {
-          fileSha = data.content.sha;
-          alert("✓ Published successfully! Studio changes and uploaded images are now live.");
-        } else {
-          throw new Error(data.message || "Failed to commit");
-        }
-      } catch (err) {
-        alert("Commit failed: " + err.message);
-      } finally {
-        btn.textContent = "PUBLISH CHANGES";
-        btn.disabled = false;
-      }
-    });
-
-    initSession();
+    init();
   </script>
 </body>
 </html>
