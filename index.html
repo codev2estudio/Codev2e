@@ -623,42 +623,84 @@
     .reveal { opacity: 0; transform: translateY(24px) scale(0.98); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
     .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
 
-    /* ---------- SHOWCASE VIEW ---------- */
-    .showcase-shell { padding-top: var(--header-height); background:#f5f5f0; }
-    .showcase-hero { min-height: 42svh; display:flex; align-items:flex-end; border-bottom:2px solid #111; background:linear-gradient(180deg,#ededeb,#f5f5f0 82%); }
-    .showcase-hero-inner { width:min(var(--content-width),calc(100% - 48px)); margin:0 auto; padding:80px 0 44px; }
-    .showcase-hero h1 { font-family:var(--font-display); font-size:clamp(72px,12vw,170px); line-height:.78; letter-spacing:-9px; font-weight:900; margin:14px 0 0; }
-    .showcase-hero-copy { display:none; }
-    .showcase-tabs { position:sticky; top:0; z-index:800; display:flex; gap:0; padding:0 max(18px,calc((100% - var(--content-width))/2)); overflow-x:auto; border-bottom:2px solid #111; background:rgba(245,245,240,.92); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); }
-    .showcase-tab { flex:0 0 auto; min-height:46px; padding:0 22px; border:0; border-right:1px solid rgba(0,0,0,.18); background:transparent; color:#111; font-size:9px; font-weight:900; letter-spacing:2px; }
-    .showcase-tab:first-child { border-left:1px solid rgba(0,0,0,.18); }
-    .showcase-tab.active,.showcase-tab:hover { background:#111; color:#fff; }
-    .showcase-content { width:min(var(--content-width),calc(100% - 48px)); margin:0 auto; padding:64px 0 100px; }
-    .shelf { margin-bottom:92px; scroll-margin-top:90px; }
-    .shelf-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:24px; border-bottom:2px solid #111; padding-bottom:10px; }
-    .shelf-head h2 { font-family:var(--font-display); font-size:clamp(48px,7vw,92px); line-height:.8; letter-spacing:-6px; font-weight:900; margin:0; text-transform:lowercase; }
-    .shelf-head p { display:none; }
-    .project-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
-    .upcoming-grid { display:flex; gap:18px; overflow-x:auto; padding:4px 2px 16px; scroll-snap-type:x mandatory; scrollbar-width:thin; }
-    .upcoming-grid .project-card { flex:0 0 clamp(210px,24vw,300px); scroll-snap-align:start; }
-    .project-card { position:relative; overflow:hidden; border:2px solid #111; background:#fff; cursor:pointer; transition:transform .3s var(--ease),box-shadow .3s ease; }
-    .project-card:hover { transform:translateY(-5px); box-shadow:8px 8px 0 #111; }
-    .poster { position:relative; aspect-ratio:16/9; overflow:hidden; background:#111; border-bottom:2px solid #111; }
-    .upcoming-grid .poster { aspect-ratio:3/4; }
-    .poster img { width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
-    .project-card:hover .poster img { transform:scale(1.045); }
-    .poster-badge { position:absolute; left:10px; bottom:10px; padding:6px 8px; background:#111; color:#fff; font-size:7px; font-weight:900; letter-spacing:1.4px; }
-    .project-info { padding:14px 15px 16px; }
-    .project-info small { color:#666; font-size:7px; font-weight:900; letter-spacing:1.6px; text-transform:uppercase; }
-    .project-info h3 { font-family:var(--font-display); margin:7px 0 0; font-size:clamp(20px,2vw,28px); line-height:.9; letter-spacing:-1px; text-transform:uppercase; }
-    .project-info p { display:none; }
-    .project-view-link { display:block; margin-top:11px; color:#111; font-size:7px; font-weight:900; letter-spacing:1.7px; }
-    .showcase-feature { border-top:2px solid #111; padding-top:18px; margin-top:18px; }
-    .feature-media { position:relative; aspect-ratio:16/8.4; overflow:hidden; border:2px solid #111; background:#111; cursor:pointer; }
-    .feature-media img { width:100%; height:100%; object-fit:cover; }
-    .feature-play { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:58px; height:58px; border:2px solid #fff; background:rgba(0,0,0,.72); color:#fff; display:grid; place-items:center; font-size:18px; }
-    .feature-title { margin-top:12px; font-family:var(--font-display); font-size:clamp(28px,4vw,52px); line-height:.85; letter-spacing:-3px; text-transform:uppercase; }
-    .showcase-empty { grid-column:1/-1; min-height:170px; display:grid; place-items:center; border:2px dashed #111; color:#111; font-family:var(--font-display); font-size:26px; }
+    /* ---------- SHOWLIST VIEW ---------- */
+    .showcase-shell { padding-top: var(--header-height); }
+    .showcase-hero {
+      min-height: 65svh;
+      display: flex;
+      align-items: flex-end;
+      background: linear-gradient(180deg, #eaeae5, #f5f5f0 80%);
+    }
+    .showcase-hero-inner { width: min(var(--content-width), calc(100% - 48px)); margin: 0 auto; padding: 100px 0 70px; }
+    .showcase-hero h1 { font-family: var(--font-display); font-size: clamp(70px, 11vw, 154px); line-height: 0.8; letter-spacing: -8px; font-weight: 900; }
+    .showcase-hero-copy { max-width: 520px; margin-top: 30px; color: var(--text-muted); font-size: 14px; line-height: 1.8; }
+    .showcase-tabs {
+      position: sticky;
+      top: 0;
+      z-index: 800;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      padding: 14px max(24px, calc((100% - var(--content-width)) / 2));
+      overflow-x: auto;
+      border-bottom: 1px solid var(--glass-border);
+      background: rgba(245, 245, 240, 0.75);
+      backdrop-filter: saturate(180%) blur(var(--glass-blur));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--glass-blur));
+    }
+    .showcase-tab {
+      flex: 0 0 auto;
+      min-height: 38px;
+      padding: 0 16px;
+      border: 1.5px solid rgba(0,0,0,0.15);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      border-radius: 6px;
+    }
+    .showcase-tab.active, .showcase-tab:hover { background: #111; color: #fff; border-color: #111; }
+    .showcase-content { width: min(var(--content-width), calc(100% - 48px)); margin: 0 auto; padding: 80px 0 110px; }
+    .shelf { margin-bottom: 84px; scroll-margin-top: 120px; }
+    .shelf-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 28px; border-bottom: 2px solid rgba(0,0,0,0.06); padding-bottom: 16px; }
+    .shelf-head h2 { font-family: var(--font-display); font-size: clamp(48px, 6vw, 92px); line-height: 0.85; letter-spacing: -5px; font-weight: 900; }
+    .shelf-head p { max-width: 360px; color: var(--text-muted); font-size: 12px; line-height: 1.7; }
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; }
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: saturate(180%) blur(16px);
+      -webkit-backdrop-filter: saturate(180%) blur(16px);
+      border-radius: 6px;
+      transition: transform 0.35s var(--ease), box-shadow 0.35s ease;
+      cursor: pointer;
+    }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+    .poster { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #000; border-bottom: 2px solid #111; }
+    .poster img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.65s var(--ease); }
+    .project-card:hover .poster img { transform: scale(1.05); }
+    .poster-badge {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      z-index: 2;
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+    }
+    .project-info { padding: 20px; }
+    .project-info small { color: var(--text-dim); font-size: 8px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+    .project-info h3 { font-family: var(--font-display); margin: 8px 0 8px; font-size: 22px; letter-spacing: -0.8px; }
+    .project-info p { color: var(--text-muted); font-size: 12px; line-height: 1.65; }
+    .project-view-link { display: inline-block; margin-top: 14px; color: #111; font-size: 8px; font-weight: 800; letter-spacing: 1.8px; }
+    .showcase-empty { grid-column: 1/-1; min-height: 220px; display: grid; place-items: center; border: 2px dashed rgba(0,0,0,0.2); color: #111; font-family: var(--font-display); font-size: 32px; }
 
     /* ---------- ANNOUNCEMENTS ---------- */
     .announcement-shell { min-height: 100svh; padding: 140px 0 90px; width: min(var(--content-width), calc(100% - 48px)); margin: 0 auto; }
@@ -841,20 +883,9 @@
       .roster-header h2 { font-size: 16vw; letter-spacing: -4px; }
       .char-main-heading { font-size: 15vw; letter-spacing: -4px; }
       .about-title h2 { font-size: 15vw; letter-spacing: -4px; }
-      .showcase-content { width:calc(100% - 24px); padding-top:44px; }
-      .showcase-hero-inner { width:calc(100% - 24px); padding-top:62px; }
-      .showcase-hero { min-height:34svh; }
-      .showcase-hero h1 { font-size:20vw; letter-spacing:-6px; }
-      .project-grid { grid-template-columns:1fr; gap:14px; }
-      .project-grid .project-card { width:100%; }
-      .released-grid .poster { aspect-ratio:16/9; }
-      .upcoming-grid { gap:12px; margin-right:-12px; padding-right:12px; }
-      .upcoming-grid .project-card { flex-basis:44vw; }
-      .shelf-head h2 { font-size:18vw; letter-spacing:-5px; }
-      .feature-media { aspect-ratio:16/9; }
-      .manga-speed-lines, .manga-speed-lines-left { display:none; }
-      .hero .manga-sfx { display:none; }
-      .manga-divider { display:none; }
+      .manga-speed-lines, .manga-speed-lines-left { display: none; }
+      .hero .manga-sfx { display: none; }
+      .manga-divider { display: none; }
     }
   </style>
 </head>
@@ -1158,8 +1189,17 @@
 
       <section class="showcase-hero" id="showlist">
         <div class="showcase-hero-inner reveal">
-          <p class="eyebrow">CODEV2E SHOWCASE</p>
-          <h1>SHOW<br><span class="outline">CASE.</span></h1>
+          <p class="eyebrow">PRODUCTION ARCHIVE</p>
+
+          <h1>
+            ANIMATED
+            <br>
+            <span class="outline">WORLDS.</span>
+          </h1>
+
+          <p class="showcase-hero-copy">
+            Explore released titles, upcoming universe concepts, and character animations in development.
+          </p>
         </div>
       </section>
 
@@ -1171,16 +1211,20 @@
 
       <div class="showcase-content">
         <section class="shelf" id="released">
-          <div class="shelf-head reveal"><h2>release</h2></div>
-          <div class="project-grid released-grid" id="releasedGrid"></div>
+          <div class="shelf-head reveal">
+            <h2>RELEASED</h2>
+            <p>Stories currently inside the active CODEV2E archive.</p>
+          </div>
+          <div class="project-grid" id="releasedGrid"></div>
         </section>
 
         <section class="shelf" id="upcoming">
-          <div class="shelf-head reveal"><h2>upcoming</h2></div>
-          <div class="upcoming-grid" id="upcomingGrid"></div>
+          <div class="shelf-head reveal">
+            <h2>UPCOMING</h2>
+            <p>Productions and animated worlds in active concept development.</p>
+          </div>
+          <div class="project-grid" id="upcomingGrid"></div>
         </section>
-
-        <section class="showcase-feature" id="showcaseFeature"></section>
       </div>
     </main>
   </div>
@@ -1323,14 +1367,14 @@
         e.preventDefault();
         const route = link.dataset.route;
         const href = link.getAttribute("href") || "";
-        if (route === "showlist") { window.location.href = "showcase.html"; return; }
+        if (route === "showlist") { setActiveRoute("showlist"); return; }
         if (route === "announcement") { setActiveRoute("announcement"); return; }
         setActiveRoute("home", href.replace("#", "") || "home");
       });
     });
 
     document.querySelectorAll(".open-showlist").forEach(link => {
-      link.addEventListener("click", e => { e.preventDefault(); window.location.href = "showcase.html"; });
+      link.addEventListener("click", e => { e.preventDefault(); setActiveRoute("showlist"); });
     });
 
     document.querySelectorAll(".nav-home").forEach(link => {
@@ -1388,64 +1432,47 @@
       initRevealObserver();
     }
 
-    /* RENDER SHOWCASE PROJECTS */
+    /* RENDER SHOWLIST PROJECTS */
     function renderProjects() {
       const releasedGrid = document.getElementById("releasedGrid");
       const upcomingGrid = document.getElementById("upcomingGrid");
-      const feature = document.getElementById("showcaseFeature");
       if (!releasedGrid || !upcomingGrid) return;
       releasedGrid.innerHTML = "";
       upcomingGrid.innerHTML = "";
-
-      const openProject = (p) => {
-        if (p.pageUrl && p.pageUrl !== "#") { window.location.href = p.pageUrl; return; }
-        modalStatus.textContent = p.status || "PROJECT";
-        modalTitle.textContent = p.title || "Untitled";
-        modalDescription.textContent = p.story || p.description || "";
-        modalGenre.textContent = p.genre || "ORIGINAL";
-        modalYear.textContent = p.year || "";
-        modalPoster.innerHTML = `<img src="${p.image || 'images/logo.png'}" alt="${p.title || 'Project'}">`;
-        projectModal.classList.add("open");
-        projectModal.setAttribute("aria-hidden", "false");
-        document.body.classList.add("locked");
-      };
 
       projects.forEach(p => {
         const card = document.createElement("article");
         card.className = "project-card reveal";
         card.innerHTML = `
           <div class="poster">
-            <img src="${p.image || 'images/logo.png'}" alt="${p.title || 'Project'}" loading="lazy" onerror="this.src='images/logo.png'">
-            <span class="poster-badge">${p.status || 'PROJECT'} · ${p.year || ''}</span>
+            <img src="${p.image || 'images/logo.png'}" alt="${p.title}" loading="lazy" onerror="this.src='images/logo.png'">
+            <span class="poster-badge">${p.status} · ${p.year}</span>
           </div>
           <div class="project-info">
-            <small>${p.genre || 'ORIGINAL'}</small>
-            <h3>${p.title || 'Untitled'}</h3>
-            <span class="project-view-link">VIEW</span>
-          </div>`;
-        card.addEventListener("click", () => openProject(p));
-        if (String(p.status).toUpperCase() === "RELEASED") releasedGrid.appendChild(card);
-        else upcomingGrid.appendChild(card);
+            <small>${p.genre}</small>
+            <h3>${p.title}</h3>
+            <p>${p.description}</p>
+            <span class="project-view-link">VIEW DETAILS →</span>
+          </div>
+        `;
+        card.addEventListener("click", () => {
+          if (p.pageUrl && p.pageUrl !== "#") window.location.href = p.pageUrl;
+          else {
+            modalStatus.textContent = p.status;
+            modalTitle.textContent = p.title;
+            modalDescription.textContent = p.description;
+            modalGenre.textContent = p.genre;
+            modalYear.textContent = p.year;
+            modalPoster.innerHTML = `<img src="${p.image || 'images/logo.png'}" alt="${p.title}">`;
+            projectModal.classList.add("open");
+            document.body.classList.add("locked");
+          }
+        });
+        (p.status === "RELEASED" ? releasedGrid : upcomingGrid).appendChild(card);
       });
 
       if (!releasedGrid.children.length) releasedGrid.innerHTML = '<div class="showcase-empty">NO RELEASED PROJECTS.</div>';
       if (!upcomingGrid.children.length) upcomingGrid.innerHTML = '<div class="showcase-empty">NO UPCOMING PROJECTS.</div>';
-
-      if (feature) {
-        const featured = projects.find(p => p.featured) || projects.find(p => String(p.status).toUpperCase() === "RELEASED") || projects[0];
-        if (featured) {
-          feature.innerHTML = `
-            <div class="eyebrow">FEATURED</div>
-            <div class="feature-media" id="featureMedia">
-              <img src="${featured.image || 'images/logo.png'}" alt="${featured.title || 'Featured project'}" loading="lazy" onerror="this.src='images/logo.png'">
-              ${featured.video ? '<span class="feature-play">▶</span>' : ''}
-            </div>
-            <div class="feature-title">${featured.title || 'Untitled'}</div>`;
-          document.getElementById("featureMedia").addEventListener("click", () => openProject(featured));
-        } else {
-          feature.innerHTML = "";
-        }
-      }
       initRevealObserver();
     }
 
@@ -1497,8 +1524,11 @@
         document.querySelectorAll(".showcase-tab").forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
         const target = tab.dataset.target;
-        const el = document.getElementById(target === "all" ? "released" : target);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (target === "all") document.getElementById("released").scrollIntoView({ behavior: "smooth" });
+        else {
+          const el = document.getElementById(target);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }
       });
     });
 
