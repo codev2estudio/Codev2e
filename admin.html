@@ -4,24 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>CODEV2E · Studio Command Engine</title>
-  <link rel="icon" href="logo.png">
+  <link rel="icon" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #08080a;
-      --surface: #101014;
-      --surface-card: #141418;
-      --line: rgba(255,255,255,.12);
-      --line-strong: rgba(255,255,255,.3);
-      --text: #f4f4f6;
-      --muted: #80808a;
-      --dim: #4a4a52;
-      --danger: #ef4444;
-      --success: #22c55e;
-      --ease: cubic-bezier(.2,.75,.2,1);
+      --bg: #f5f5f0;
+      --surface: rgba(255, 255, 255, 0.75);
+      --surface-card: rgba(255, 255, 255, 0.9);
+      --line: rgba(0, 0, 0, 0.12);
+      --line-strong: rgba(0, 0, 0, 0.25);
+      --text: #111111;
+      --muted: #666666;
+      --dim: #999999;
+      --danger: #dc2626;
       --font-display: 'Space Grotesk', Inter, sans-serif;
+      --ease: cubic-bezier(.2,.75,.2,1);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     html { background: var(--bg); }
@@ -36,7 +35,7 @@
 
     h1 { font-family: var(--font-display); font-size: clamp(34px, 6vw, 64px); font-weight: 900; letter-spacing: -3px; line-height: .86; }
     h2 { font-family: var(--font-display); font-size: 22px; font-weight: 900; letter-spacing: -1px; }
-    .outline { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.6); }
+    .outline { color: transparent; -webkit-text-stroke: 1.5px rgba(0,0,0,0.7); }
     .eyebrow { font-size: 9px; font-weight: 800; letter-spacing: 3px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; }
 
     .container { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
@@ -45,9 +44,9 @@
     .btn {
       min-height: 44px;
       padding: 0 20px;
-      background: #fff;
-      color: #000;
-      border: 1px solid transparent;
+      background: #111;
+      color: #fff;
+      border: 2px solid #111;
       font-size: 9px;
       font-weight: 900;
       letter-spacing: 2px;
@@ -57,29 +56,30 @@
       justify-content: center;
       text-transform: uppercase;
       transition: all .25s var(--ease);
+      border-radius: 4px;
     }
-    .btn:hover { background: #e0e0e0; transform: translateY(-2px); }
-    .btn-outline { background: transparent; border-color: var(--line); color: #fff; }
-    .btn-outline:hover { background: #fff; color: #000; border-color: #fff; }
-    .btn-danger { background: transparent; border-color: rgba(239,68,68,.4); color: var(--danger); }
-    .btn-danger:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+    .btn:hover { background: #000; transform: translateY(-2px); }
+    .btn-outline { background: rgba(255,255,255,0.7); border-color: #111; color: #111; }
+    .btn-outline:hover { background: #111; color: #fff; border-color: #111; }
+    .btn-danger { background: transparent; border-color: var(--danger); color: var(--danger); }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
     .btn-sm { min-height: 34px; padding: 0 12px; font-size: 8px; }
 
     input, textarea, select {
       width: 100%;
       padding: 14px 16px;
-      background: #060608;
-      border: 1px solid var(--line);
-      color: #fff;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid var(--line);
+      color: #111;
       font-family: inherit;
       font-size: 13px;
-      border-radius: 0;
+      border-radius: 4px;
       transition: border-color .2s ease;
     }
     input:focus, textarea:focus, select:focus {
-      border-color: #fff;
+      border-color: #111;
       outline: none;
-      background: #09090c;
+      background: #fff;
     }
     label {
       display: block;
@@ -95,9 +95,10 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(8,8,10,.92);
+      background: rgba(245, 245, 240, 0.88);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 2px solid #111;
       padding: 16px 0;
       margin-bottom: 40px;
     }
@@ -115,14 +116,14 @@
       display: flex;
       gap: 8px;
       margin-bottom: 30px;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 2px solid rgba(0,0,0,0.1);
       padding-bottom: 14px;
       overflow-x: auto;
     }
     .tab-btn {
       padding: 10px 18px;
       background: transparent;
-      border: 1px solid transparent;
+      border: 1.5px solid transparent;
       color: var(--muted);
       font-size: 9px;
       font-weight: 900;
@@ -130,41 +131,46 @@
       cursor: pointer;
       text-transform: uppercase;
       transition: all .2s ease;
+      border-radius: 4px;
     }
     .tab-btn.active {
-      background: #fff;
-      color: #000;
+      background: #111;
+      color: #fff;
+      border-color: #111;
     }
     .tab-btn:hover:not(.active) {
-      color: #fff;
-      border-color: var(--line);
+      color: #111;
+      border-color: rgba(0,0,0,0.2);
     }
 
     .panel {
       background: var(--surface);
-      border: 1px solid var(--line);
+      border: 2px solid rgba(0,0,0,0.1);
       padding: 32px;
+      border-radius: 6px;
     }
     .editor-card {
       position: relative;
-      border: 1px solid var(--line);
+      border: 1.5px solid var(--line);
       background: var(--surface-card);
       padding: 24px;
       margin-bottom: 20px;
       display: grid;
       grid-template-columns: 140px minmax(0, 1fr);
       gap: 24px;
+      border-radius: 4px;
       transition: border-color .25s ease;
     }
-    .editor-card:hover { border-color: var(--line-strong); }
+    .editor-card:hover { border-color: #111; }
     .editor-preview-box {
       width: 100%;
       height: 180px;
-      background: #060608;
-      border: 1px solid var(--line);
+      background: #eee;
+      border: 1.5px solid var(--line);
       display: grid;
       place-items: center;
       overflow: hidden;
+      border-radius: 4px;
     }
     .editor-preview-box img {
       width: 100%;
@@ -175,24 +181,29 @@
     .editor-fields { display: flex; flex-direction: column; gap: 12px; }
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    
     .badge {
       display: inline-block;
       padding: 2px 6px;
-      background: rgba(255,255,255,.1);
+      background: rgba(0,0,0,0.1);
       font-size: 8px;
       font-weight: 800;
-      color: #fff;
+      color: #111;
       margin-left: 6px;
+      border-radius: 2px;
     }
+    .tab-btn.active .badge { background: rgba(255,255,255,0.2); color: #fff; }
+
     .locked-badge {
       display: inline-block;
-      padding: 3px 8px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--line);
+      padding: 4px 10px;
+      background: rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.15);
       font-size: 8px;
       font-weight: 800;
-      color: var(--muted);
+      color: #111;
       letter-spacing: 1.5px;
+      border-radius: 4px;
     }
 
     .upload-action-row {
@@ -260,12 +271,12 @@
     <main class="container">
       
       <nav class="nav-tabs">
-        <button class="tab-btn active" data-tab="tab-chars">01. CHARACTERS (LOCKED ROSTER) <span class="badge" id="countChars">5</span></button>
+        <button class="tab-btn active" data-tab="tab-chars">01. CHARACTERS <span class="badge" id="countChars">5</span></button>
         <button class="tab-btn" data-tab="tab-projects">02. SHOWLIST PROJECTS <span class="badge" id="countProjects">0</span></button>
         <button class="tab-btn" data-tab="tab-news">03. ANNOUNCEMENTS <span class="badge" id="countNews">0</span></button>
       </nav>
 
-      <!-- TAB 1: CHARACTERS (EDIT-ONLY PROTECTED ROSTER) -->
+      <!-- TAB 1: CHARACTERS (EDIT ONLY) -->
       <section id="tab-chars" class="tab-content">
         <div class="panel">
           <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
@@ -371,11 +382,11 @@
         state = JSON.parse(base64ToUtf8(data.content.replace(/\s/g, '')));
         if (!state.characters || !state.characters.length) {
           state.characters = [
-            { id: "c1", number: "01", name: "KAIEN", role: "LEAD PROTAGONIST // VANGUARD", tag: "TACTICAL · STEALTH · OVERSIZED TECHWEAR", quote: "SILENCE BEFORE THE DISRUPTION", image: "logo.png", description: "" },
-            { id: "c2", number: "02", name: "LILITH", role: "CO-LEAD // ANOMALY DUELIST", tag: "STREETWEAR · HIGH MOBILITY · DUELIST", quote: "BREAK THROUGH FIRST", image: "logo.png", description: "" },
-            { id: "c3", number: "03", name: "REN", role: "CIPHER OPERATIVE // INTEL", tag: "NEURAL NET · SURVEILLANCE", quote: "EVERY SIGNAL LEAVES A PATTERN", image: "logo.png", description: "" },
-            { id: "c4", number: "04", name: "AERIS", role: "DRIFT NAVIGATOR // PILOT", tag: "DIMENSIONAL DRIFT", quote: "THE HORIZON IS NEVER FIXED", image: "logo.png", description: "" },
-            { id: "c5", number: "05", name: "ZERO-X", role: "ENIGMATIC PROTOTYPE // WARDEN", tag: "CLASSIFIED", quote: "ORIGINS LOCKED BEHIND PROTOCOL", image: "logo.png", description: "" }
+            { id: "c1", number: "01", name: "KAIEN", role: "LEAD PROTAGONIST // VANGUARD", tag: "TACTICAL · STEALTH · OVERSIZED TECHWEAR", quote: "SILENCE BEFORE THE DISRUPTION", image: "images/logo.png", description: "" },
+            { id: "c2", number: "02", name: "LILITH", role: "CO-LEAD // ANOMALY DUELIST", tag: "STREETWEAR · HIGH MOBILITY · DUELIST", quote: "BREAK THROUGH FIRST", image: "images/logo.png", description: "" },
+            { id: "c3", number: "03", name: "REN", role: "CIPHER OPERATIVE // INTEL", tag: "NEURAL NET · SURVEILLANCE", quote: "EVERY SIGNAL LEAVES A PATTERN", image: "images/logo.png", description: "" },
+            { id: "c4", number: "04", name: "AERIS", role: "DRIFT NAVIGATOR // PILOT", tag: "DIMENSIONAL DRIFT", quote: "THE HORIZON IS NEVER FIXED", image: "images/logo.png", description: "" },
+            { id: "c5", number: "05", name: "ZERO-X", role: "ENIGMATIC PROTOTYPE // WARDEN", tag: "CLASSIFIED", quote: "ORIGINS LOCKED BEHIND PROTOCOL", image: "images/logo.png", description: "" }
           ];
         }
         if (!state.projects) state.projects = [];
@@ -397,7 +408,6 @@
       window.location.reload();
     });
 
-    /* TAB SWITCHING */
     document.querySelectorAll(".tab-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -422,7 +432,7 @@
       updateCounters();
     }
 
-    /* DIRECT IMAGE UPLOADER TO GITHUB REPOSITORY */
+    /* DIRECT IMAGE UPLOADER */
     async function uploadDirectImage(file, targetType, index, btnEl) {
       if (!file) return;
 
@@ -473,13 +483,12 @@
       }
     }
 
-    /* ---------- 1. CHARACTERS RENDERER (EDIT ONLY, NO DELETE) ---------- */
     function renderCharacters() {
       const container = document.getElementById("charListContainer");
       container.innerHTML = state.characters.map((c, i) => `
         <article class="editor-card">
           <div class="editor-preview-box">
-            <img src="${c.image || 'logo.png'}" alt="Preview" onerror="this.src='logo.png'">
+            <img src="${c.image || 'images/logo.png'}" alt="Preview" onerror="this.src='images/logo.png'">
           </div>
 
           <div class="editor-fields">
@@ -504,13 +513,13 @@
                 <input type="text" value="${c.tag || ''}" placeholder="e.g. TACTICAL · STEALTH" onchange="state.characters[${i}].tag = this.value">
               </div>
               <div>
-                <label>CHARACTER SIGNATURE QUOTE</label>
+                <label>SIGNATURE QUOTE</label>
                 <input type="text" value="${c.quote || ''}" placeholder="e.g. SILENCE BEFORE DISRUPTION" onchange="state.characters[${i}].quote = this.value">
               </div>
             </div>
 
             <div>
-              <label>CHARACTER ARTWORK (URL OR UPLOAD)</label>
+              <label>CHARACTER ARTWORK</label>
               <input type="text" value="${c.image || ''}" placeholder="images/... or URL" oninput="state.characters[${i}].image = this.value; this.closest('.editor-card').querySelector('.editor-preview-box img').src = this.value;">
               
               <div class="upload-action-row">
@@ -528,13 +537,12 @@
       `).join("");
     }
 
-    /* ---------- 2. PROJECTS RENDERER ---------- */
     function renderProjects() {
       const container = document.getElementById("projectListContainer");
       container.innerHTML = state.projects.map((p, i) => `
         <article class="editor-card">
           <div class="editor-preview-box">
-            <img src="${p.image || 'logo.png'}" alt="Preview" onerror="this.src='logo.png'">
+            <img src="${p.image || 'images/logo.png'}" alt="Preview" onerror="this.src='images/logo.png'">
           </div>
 
           <div class="editor-fields">
@@ -590,7 +598,6 @@
       `).join("");
     }
 
-    /* ---------- 3. NEWS RENDERER ---------- */
     function renderNews() {
       const container = document.getElementById("newsListContainer");
       container.innerHTML = state.announcements.map((a, i) => `
@@ -632,7 +639,7 @@
         year: "2026",
         genre: "Original Animation",
         description: "Project synopsis...",
-        image: "logo.png",
+        image: "images/logo.png",
         pageUrl: "#"
       });
       renderWorkspace();
@@ -649,10 +656,10 @@
       renderWorkspace();
     });
 
-    /* PUBLISH TO GITHUB REST API */
+    /* PUBLISH CHANGES */
     document.getElementById("saveAllBtn").addEventListener("click", async () => {
       const btn = document.getElementById("saveAllBtn");
-      btn.textContent = "COMMITTING TO GITHUB...";
+      btn.textContent = "COMMITTING...";
       btn.disabled = true;
 
       const owner = sessionStorage.getItem("codev2e_gh_owner");
