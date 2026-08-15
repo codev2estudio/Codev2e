@@ -1,0 +1,23 @@
+{
+  "announcements": [
+    {
+      "id": "1",
+      "category": "ANNOUNCEMENT",
+      "title": "CODEV2E STUDIO PORTAL LIVE",
+      "date": "2026-05-15",
+      "content": "Official independent animation studio portal is now operational."
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "PROJECT ALPHA",
+      "status": "UPCOMING",
+      "year": "2026",
+      "genre": "Animation / Sci-Fi",
+      "description": "An original story universe currently in visual development.",
+      "image": "logo.png",
+      "pageUrl": "#"
+    }
+  ]
+}
