@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CODEV2E · Studio Admin Panel</title>
   <link rel="icon" href="logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;900&family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #050505;
@@ -15,19 +15,20 @@
       --text: #f5f5f5;
       --muted: #868686;
       --danger: #ef4444;
-      --success: #22c55e;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; padding: 40px 20px; }
-    .container { width: min(960px, 100%); margin: 0 auto; }
-    h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 900; letter-spacing: -3px; line-height: .9; }
-    h2 { font-size: 20px; font-weight: 800; letter-spacing: -1px; }
+    .container { width: min(980px, 100%); margin: 0 auto; }
+    h1 { font-family: var(--font-display); font-size: clamp(34px, 5vw, 56px); font-weight: 900; letter-spacing: -2px; line-height: .9; }
+    h2 { font-family: var(--font-display); font-size: 22px; font-weight: 800; letter-spacing: -1px; }
     .outline { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.6); }
-    .eyebrow { font-size: 9px; font-weight: 800; letter-spacing: 2.5px; color: var(--muted); margin-bottom: 12px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: 2px; color: var(--muted); margin-bottom: 12px; }
     
-    .panel { background: var(--surface); border: 1px solid var(--line); padding: 30px; margin-top: 24px; border-radius: 4px; }
+    .panel { background: var(--surface); border: 1px solid var(--line); padding: 30px; margin-top: 24px; }
     .auth-box { max-width: 460px; margin: 80px auto; }
-    .btn { min-height: 44px; padding: 0 20px; background: #fff; color: #000; border: none; font-weight: 900; font-size: 9px; letter-spacing: 2px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+    .btn { min-height: 44px; padding: 0 20px; background: #fff; color: #000; border: none; font-family: var(--font-mono); font-weight: 900; font-size: 10px; letter-spacing: 1.5px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
     .btn:hover { background: #e2e2e2; }
     .btn-danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
     .btn-danger:hover { background: var(--danger); color: #fff; }
@@ -37,80 +38,85 @@
     input, textarea, select { width: 100%; padding: 13px; background: #080808; border: 1px solid var(--line); color: #fff; font-family: inherit; font-size: 13px; margin-bottom: 12px; }
     input:focus, textarea:focus, select:focus { border-color: #fff; outline: none; }
     
-    .card-item { border: 1px solid var(--line); padding: 20px; margin-bottom: 14px; background: var(--surface-card); display: flex; flex-direction: column; gap: 8px; }
+    .card-item { border: 1px solid var(--line); padding: 20px; margin-bottom: 16px; background: var(--surface-card); display: flex; flex-direction: column; gap: 8px; }
     .header-bar { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--line); padding-bottom: 20px; gap: 15px; }
     .status-msg { margin-top: 12px; font-size: 12px; }
-    .help-text { font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 15px; }
   </style>
 </head>
 <body>
 
-  <!-- ================= AUTH VIEW ================= -->
+  <!-- AUTH VIEW -->
   <div class="auth-box" id="authView">
     <p class="eyebrow">CODEV2E · STUDIO ACCESS</p>
     <h1>ADMIN<br><span class="outline">LOGIN.</span></h1>
     <div class="panel">
-      <p class="help-text">Authenticate using your GitHub Fine-Grained Personal Access Token with repository write permissions.</p>
       <form id="loginForm">
-        <input type="text" id="repoOwner" placeholder="GITHUB USERNAME (e.g. milannaik)" required>
-        <input type="text" id="repoName" placeholder="REPOSITORY NAME (e.g. codev2e-studio)" required>
-        <input type="password" id="ghToken" placeholder="GITHUB ACCESS TOKEN (github_pat_...)" required>
+        <input type="text" id="repoOwner" placeholder="GITHUB USERNAME (e.g. codev2estudio)" required>
+        <input type="text" id="repoName" placeholder="REPOSITORY NAME (e.g. Codev2e)" required>
+        <input type="password" id="ghToken" placeholder="GITHUB TOKEN (github_pat_...)" required>
         <button class="btn" style="width: 100%;" type="submit">AUTHENTICATE & LOAD</button>
       </form>
       <div class="status-msg" id="authStatus" style="color: var(--danger);"></div>
     </div>
   </div>
 
-  <!-- ================= DASHBOARD VIEW ================= -->
+  <!-- DASHBOARD VIEW -->
   <div class="container" id="dashView" style="display: none;">
     <div class="header-bar">
       <div>
-        <p class="eyebrow">CODEV2E STUDIO MANAGEMENT</p>
+        <p class="eyebrow">CODEV2E STUDIO CONTROL</p>
         <h1>STUDIO<br><span class="outline">DASHBOARD.</span></h1>
       </div>
       <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <button class="btn btn-outline" id="saveAllBtn">PUBLISH CHANGES</button>
+        <button class="btn btn-outline" id="saveAllBtn">PUBLISH ALL CHANGES</button>
         <button class="btn btn-danger" id="logoutBtn">LOGOUT</button>
       </div>
+    </div>
+
+    <!-- CHARACTERS SECTION -->
+    <div class="panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>ORIGINAL CHARACTERS (HOME SCREEN)</h2>
+        <button class="btn btn-outline" id="addCharBtn">+ ADD CHARACTER</button>
+      </div>
+      <div id="charList"></div>
+    </div>
+
+    <!-- PROJECTS / SHOWLIST SECTION -->
+    <div class="panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>PROJECTS (SHOWLIST)</h2>
+        <button class="btn btn-outline" id="addProjectBtn">+ ADD PROJECT</button>
+      </div>
+      <div id="projectsList"></div>
     </div>
 
     <!-- ANNOUNCEMENTS SECTION -->
     <div class="panel">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2>ANNOUNCEMENTS</h2>
+        <h2>ANNOUNCEMENTS & NEWS</h2>
         <button class="btn btn-outline" id="addAnnounceBtn">+ ADD ANNOUNCEMENT</button>
       </div>
       <div id="announceList"></div>
     </div>
-
-    <!-- PROJECTS SECTION -->
-    <div class="panel">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2>PROJECTS & WORLDS</h2>
-        <button class="btn btn-outline" id="addProjectBtn">+ ADD PROJECT</button>
-      </div>
-      <div id="projectsList"></div>
-    </div>
   </div>
 
   <script>
-    let state = { announcements: [], projects: [] };
+    let state = { characters: [], announcements: [], projects: [] };
     let fileSha = "";
 
     function utf8ToBase64(str) {
-      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode('0x' + p1)));
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (m, p1) => String.fromCharCode('0x' + p1)));
     }
 
     function base64ToUtf8(str) {
       return decodeURIComponent(Array.prototype.map.call(atob(str), c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
     }
 
-    // Check stored credentials
     function initSession() {
       const owner = sessionStorage.getItem("gh_owner");
       const repo = sessionStorage.getItem("gh_repo");
       const token = sessionStorage.getItem("gh_token");
-
       if (owner && repo && token) {
         document.getElementById("repoOwner").value = owner;
         document.getElementById("repoName").value = repo;
@@ -119,24 +125,21 @@
       }
     }
 
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    document.getElementById("loginForm").addEventListener("submit", async e => {
       e.preventDefault();
       const owner = document.getElementById("repoOwner").value.trim();
       const repo = document.getElementById("repoName").value.trim();
       const token = document.getElementById("ghToken").value.trim();
       const statusEl = document.getElementById("authStatus");
 
-      statusEl.style.color = "var(--muted)";
-      statusEl.textContent = "Connecting to GitHub repository...";
-
-      const success = await loadRepoData(owner, repo, token);
-      if (success) {
+      statusEl.textContent = "Connecting to GitHub...";
+      const ok = await loadRepoData(owner, repo, token);
+      if (ok) {
         sessionStorage.setItem("gh_owner", owner);
         sessionStorage.setItem("gh_repo", repo);
         sessionStorage.setItem("gh_token", token);
       } else {
-        statusEl.style.color = "var(--danger)";
-        statusEl.textContent = "Authentication failed. Check your Token, Owner, and Repo name.";
+        statusEl.textContent = "Authentication failed. Check your Token & Repo name.";
       }
     });
 
@@ -148,20 +151,17 @@
             "Accept": "application/vnd.github+json"
           }
         });
-
-        if (!res.ok) throw new Error("Fetch error");
+        if (!res.ok) throw new Error();
         const data = await res.json();
         fileSha = data.sha;
-        
-        const rawJson = base64ToUtf8(data.content.replace(/\s/g, ''));
-        state = JSON.parse(rawJson);
+        state = JSON.parse(base64ToUtf8(data.content.replace(/\s/g, '')));
+        if (!state.characters) state.characters = [];
 
         document.getElementById("authView").style.display = "none";
         document.getElementById("dashView").style.display = "block";
-        renderAnnouncements();
-        renderProjects();
+        renderAll();
         return true;
-      } catch (err) {
+      } catch {
         return false;
       }
     }
@@ -171,15 +171,24 @@
       window.location.reload();
     });
 
-    function renderAnnouncements() {
-      const list = document.getElementById("announceList");
-      list.innerHTML = state.announcements.map((item, idx) => `
+    function renderAll() {
+      renderCharacters();
+      renderProjects();
+      renderAnnouncements();
+    }
+
+    function renderCharacters() {
+      const list = document.getElementById("charList");
+      list.innerHTML = state.characters.map((c, idx) => `
         <div class="card-item">
-          <input type="text" value="${item.title || ''}" placeholder="Announcement Title" onchange="state.announcements[${idx}].title = this.value">
-          <input type="text" value="${item.category || ''}" placeholder="Category (e.g. ANNOUNCEMENT, NEWS)" onchange="state.announcements[${idx}].category = this.value">
-          <input type="date" value="${item.date || ''}" onchange="state.announcements[${idx}].date = this.value">
-          <textarea rows="3" placeholder="Message content" onchange="state.announcements[${idx}].content = this.value">${item.content || ''}</textarea>
-          <button class="btn btn-danger" style="align-self: flex-start;" onclick="state.announcements.splice(${idx},1); renderAnnouncements();">DELETE</button>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" value="${c.name || ''}" placeholder="Character Name (e.g. KAIEN)" onchange="state.characters[${idx}].name = this.value">
+            <input type="text" value="${c.role || ''}" placeholder="Role (e.g. LEAD PROTAGONIST)" onchange="state.characters[${idx}].role = this.value">
+          </div>
+          <input type="text" value="${c.tag || ''}" placeholder="Traits / Tags (e.g. OVERSIZED TECHWEAR · DUELIST)" onchange="state.characters[${idx}].tag = this.value">
+          <input type="text" value="${c.image || ''}" placeholder="Character Image URL or filename" onchange="state.characters[${idx}].image = this.value">
+          <textarea rows="3" placeholder="Character Lore & Description..." onchange="state.characters[${idx}].description = this.value">${c.description || ''}</textarea>
+          <button class="btn btn-danger" style="align-self: flex-start;" onclick="state.characters.splice(${idx},1); renderCharacters();">DELETE CHARACTER</button>
         </div>
       `).join("");
     }
@@ -189,43 +198,71 @@
       list.innerHTML = state.projects.map((pj, idx) => `
         <div class="card-item">
           <input type="text" value="${pj.title || ''}" placeholder="Project Title" onchange="state.projects[${idx}].title = this.value">
-          <select onchange="state.projects[${idx}].status = this.value">
-            <option value="RELEASED" ${pj.status === 'RELEASED' ? 'selected' : ''}>RELEASED</option>
-            <option value="UPCOMING" ${pj.status === 'UPCOMING' ? 'selected' : ''}>UPCOMING</option>
-          </select>
-          <input type="text" value="${pj.year || ''}" placeholder="Year (e.g. 2026 or TBA)" onchange="state.projects[${idx}].year = this.value">
-          <input type="text" value="${pj.genre || ''}" placeholder="Genre (e.g. Sci-Fi, Dark Fantasy)" onchange="state.projects[${idx}].genre = this.value">
-          <input type="text" value="${pj.image || ''}" placeholder="Artwork image filename (e.g. pj1.png or logo.png)" onchange="state.projects[${idx}].image = this.value">
-          <input type="text" value="${pj.pageUrl || ''}" placeholder="Target Page URL (e.g. pj1.html or #)" onchange="state.projects[${idx}].pageUrl = this.value">
-          <textarea rows="3" placeholder="Project Description" onchange="state.projects[${idx}].description = this.value">${pj.description || ''}</textarea>
+          <div style="display: flex; gap: 10px;">
+            <select onchange="state.projects[${idx}].status = this.value">
+              <option value="RELEASED" ${pj.status === 'RELEASED' ? 'selected' : ''}>RELEASED</option>
+              <option value="UPCOMING" ${pj.status === 'UPCOMING' ? 'selected' : ''}>UPCOMING</option>
+            </select>
+            <input type="text" value="${pj.year || ''}" placeholder="Year (e.g. 2026)" onchange="state.projects[${idx}].year = this.value">
+            <input type="text" value="${pj.genre || ''}" placeholder="Genre" onchange="state.projects[${idx}].genre = this.value">
+          </div>
+          <input type="text" value="${pj.image || ''}" placeholder="Cover Image filename (e.g. logo.png)" onchange="state.projects[${idx}].image = this.value">
+          <textarea rows="3" placeholder="Synopsis..." onchange="state.projects[${idx}].description = this.value">${pj.description || ''}</textarea>
           <button class="btn btn-danger" style="align-self: flex-start;" onclick="state.projects.splice(${idx},1); renderProjects();">DELETE PROJECT</button>
         </div>
       `).join("");
     }
 
-    document.getElementById("addAnnounceBtn").addEventListener("click", () => {
-      state.announcements.unshift({
-        id: Date.now().toString(),
-        title: "NEW ANNOUNCEMENT",
-        category: "ANNOUNCEMENT",
-        date: new Date().toISOString().split("T")[0],
-        content: ""
+    function renderAnnouncements() {
+      const list = document.getElementById("announceList");
+      list.innerHTML = state.announcements.map((item, idx) => `
+        <div class="card-item">
+          <input type="text" value="${item.title || ''}" placeholder="Title" onchange="state.announcements[${idx}].title = this.value">
+          <div style="display: flex; gap: 10px;">
+            <input type="text" value="${item.category || ''}" placeholder="Category (e.g. STUDIO UPDATE)" onchange="state.announcements[${idx}].category = this.value">
+            <input type="date" value="${item.date || ''}" onchange="state.announcements[${idx}].date = this.value">
+          </div>
+          <textarea rows="3" placeholder="Content..." onchange="state.announcements[${idx}].content = this.value">${item.content || ''}</textarea>
+          <button class="btn btn-danger" style="align-self: flex-start;" onclick="state.announcements.splice(${idx},1); renderAnnouncements();">DELETE</button>
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("addCharBtn").addEventListener("click", () => {
+      state.characters.push({
+        id: "c" + (state.characters.length + 1),
+        name: "NEW CHARACTER",
+        role: "OPERATIVE",
+        tag: "ORIGINAL CASTE",
+        image: "logo.png",
+        description: "Character description and lore..."
       });
-      renderAnnouncements();
+      renderCharacters();
     });
 
     document.getElementById("addProjectBtn").addEventListener("click", () => {
       state.projects.push({
         id: state.projects.length + 1,
-        title: "NEW PROJECT",
+        title: "NEW PRODUCTION",
         status: "UPCOMING",
         year: "2026",
-        genre: "Original",
-        description: "",
+        genre: "Original Animation",
+        description: "Project synopsis...",
         image: "logo.png",
         pageUrl: "#"
       });
       renderProjects();
+    });
+
+    document.getElementById("addAnnounceBtn").addEventListener("click", () => {
+      state.announcements.unshift({
+        id: Date.now().toString(),
+        title: "NEW ANNOUNCEMENT",
+        category: "NEWS",
+        date: new Date().toISOString().split("T")[0],
+        content: ""
+      });
+      renderAnnouncements();
     });
 
     document.getElementById("saveAllBtn").addEventListener("click", async () => {
@@ -239,7 +276,7 @@
 
       try {
         const contentStr = JSON.stringify(state, null, 2);
-        const encodedContent = utf8ToBase64(contentStr);
+        const encoded = utf8ToBase64(contentStr);
 
         const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
           method: "PUT",
@@ -249,23 +286,23 @@
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            message: `Update studio content via Admin Panel [${new Date().toISOString()}]`,
-            content: encodedContent,
+            message: `Update characters & showlist via Admin Panel [${new Date().toISOString()}]`,
+            content: encoded,
             sha: fileSha
           })
         });
 
-        const result = await res.json();
+        const data = await res.json();
         if (res.ok) {
-          fileSha = result.content.sha;
-          alert("✓ Published successfully! GitHub Pages will update within 1-2 minutes.");
+          fileSha = data.content.sha;
+          alert("✓ Published successfully! Your website will update live in ~20-30 seconds.");
         } else {
-          throw new Error(result.message || "Commit failed");
+          throw new Error(data.message || "Failed");
         }
       } catch (err) {
-        alert("Failed to commit changes: " + err.message);
+        alert("Commit failed: " + err.message);
       } finally {
-        btn.textContent = "PUBLISH CHANGES";
+        btn.textContent = "PUBLISH ALL CHANGES";
         btn.disabled = false;
       }
     });
@@ -273,4 +310,4 @@
     initSession();
   </script>
 </body>
-  </html>
+</html>
