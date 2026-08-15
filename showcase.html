@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5f5f0">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="index,follow">
+  <title>CODEV2E Showcase | Original Stories & Characters</title>
+  <meta name="description" content="CODEV2E original stories, released projects, upcoming worlds and character archive.">
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f5f5f0;
+      --paper:#fff;
+      --ink:#111;
+      --muted:#666;
+      --line:rgba(0,0,0,.14);
+      --soft:rgba(255,255,255,.68);
+      --display:'Space Grotesk',Inter,sans-serif;
+      --ease:cubic-bezier(.16,1,.3,1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    body.locked{overflow:hidden}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;border:0;cursor:pointer}
+    img{display:block;max-width:100%}
+    ::selection{background:#111;color:#fff}
+
+    .grain{
+      position:fixed;inset:0;pointer-events:none;z-index:-2;opacity:.035;
+      background-image:radial-gradient(#000 1px,transparent 1px);background-size:6px 6px;
+    }
+    .edge{position:fixed;z-index:9000;pointer-events:none;background:#111}
+    .edge.top{top:0;left:0;right:0;height:3px}
+    .edge.bottom{bottom:0;left:0;right:0;height:5px}
+    .edge.left{top:0;bottom:0;left:0;width:3px}
+    .edge.right{top:0;bottom:0;right:0;width:3px}
+
+    header{
+      position:fixed;top:0;left:0;right:0;height:76px;z-index:5000;
+      display:flex;align-items:center;
+      background:linear-gradient(to bottom,rgba(245,245,240,.96),rgba(245,245,240,0));
+      transition:.4s var(--ease)
+    }
+    header.scrolled{background:rgba(245,245,240,.78);backdrop-filter:blur(18px);border-bottom:1px solid rgba(0,0,0,.08)}
+    header.hidden{transform:translateY(-105%);opacity:0}
+    .header-inner{width:min(1200px,calc(100% - 40px));height:100%;margin:auto;display:flex;align-items:center;justify-content:space-between}
+    .brand{font:900 24px/.9 var(--display);letter-spacing:-1.5px}
+    .brand span{opacity:.35}
+    nav{display:flex;gap:28px}
+    nav a{font-size:9px;font-weight:900;letter-spacing:2px;padding:8px 0;position:relative}
+    nav a:after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:#111;transition:.25s}
+    nav a:hover:after,nav a.active:after{width:100%}
+    .menu{display:none;background:none;width:42px;height:42px;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+    .menu span{width:24px;height:2px;background:#111}
+    .mobile-nav{display:none}
+
+    main{width:min(1200px,calc(100% - 40px));margin:auto;padding:120px 0 100px}
+    .hero{min-height:48vh;display:flex;align-items:end;padding:40px 0 70px;border-bottom:1.5px solid #111}
+    .eyebrow{font-size:9px;font-weight:900;letter-spacing:2.5px;color:#777;margin-bottom:20px}
+    h1,h2,h3{font-family:var(--display)}
+    .hero h1{font-size:clamp(68px,12vw,160px);line-height:.78;letter-spacing:-8px;font-weight:900}
+    .outline{color:transparent;-webkit-text-stroke:1.5px #111}
+    .hero-copy{max-width:480px;margin-top:28px;color:#555;font-size:13px;line-height:1.7}
+
+    .section{padding:76px 0;border-bottom:1.5px solid #111}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:28px}
+    .section-head h2{font-size:clamp(42px,7vw,86px);line-height:.8;letter-spacing:-5px}
+    .section-head p{max-width:360px;color:#666;font-size:11px;line-height:1.6}
+    .section-number{font:900 12px var(--display);letter-spacing:2px;margin-bottom:8px}
+
+    /* Screenshot-inspired project shelves */
+    .shelf-wrap{overflow:hidden}
+    .shelf{
+      display:flex;gap:18px;overflow-x:auto;overflow-y:hidden;padding:6px 2px 18px;
+      scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#111 transparent
+    }
+    .project-card{
+      flex:0 0 clamp(250px,30vw,350px);scroll-snap-align:start;
+      background:#111;color:#fff;border:2px solid #111;overflow:hidden;
+      transition:transform .35s var(--ease),box-shadow .35s var(--ease)
+    }
+    .project-card:hover{transform:translateY(-5px);box-shadow:10px 10px 0 #d9d9d2}
+    .poster{height:205px;background:#ddd;overflow:hidden;position:relative}
+    .poster img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+    .project-card:hover .poster img{transform:scale(1.04)}
+    .status{position:absolute;top:10px;left:10px;background:#fff;color:#111;padding:6px 8px;font-size:8px;font-weight:900;letter-spacing:1.5px}
+    .project-info{padding:16px}
+    .project-info h3{font-size:26px;line-height:.9;letter-spacing:-1.4px;margin-bottom:10px}
+    .project-info small{font-size:8px;letter-spacing:1.8px;color:#aaa;font-weight:900}
+    .project-info p{font-size:10px;line-height:1.55;color:#c8c8c8;min-height:32px;margin-bottom:15px}
+    .project-open{display:inline-flex;border:1px solid #777;padding:8px 10px;font-size:8px;letter-spacing:1.5px;font-weight:900}
+    .empty{padding:30px 0;color:#777;font-size:10px;letter-spacing:1.5px}
+
+    /* Character panel */
+    .character-frame{
+      border:2px solid #111;background:#fff;min-height:600px;position:relative;overflow:hidden;
+      display:grid;grid-template-rows:auto 1fr auto
+    }
+    .character-frame:before{content:"";position:absolute;left:0;right:0;top:64px;height:2px;background:#111}
+    .character-top,.character-bottom{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;position:relative;z-index:2}
+    .character-top span,.character-bottom span{font:900 10px var(--display);letter-spacing:2px}
+    .character-count{font-size:11px!important}
+    .character-stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:460px;padding:35px 90px 20px}
+    .character-watermark{
+      position:absolute;inset:auto 0 25px 0;text-align:center;
+      font:900 clamp(58px,13vw,170px)/.8 var(--display);letter-spacing:-8px;
+      color:transparent;-webkit-text-stroke:1px rgba(0,0,0,.055);white-space:nowrap;pointer-events:none
+    }
+    .character-image{position:relative;z-index:1;height:min(56vh,480px);width:auto;object-fit:contain;filter:drop-shadow(0 18px 16px rgba(0,0,0,.08))}
+    .character-info{
+      position:absolute;left:22px;bottom:26px;z-index:2;max-width:38%;
+      background:rgba(255,255,255,.82);backdrop-filter:blur(8px);padding:12px 14px;border-left:3px solid #111
+    }
+    .character-info h3{font-size:28px;line-height:.9;letter-spacing:-1.5px}
+    .character-info p{font-size:9px;line-height:1.45;color:#555;margin-top:7px}
+    .arrow{
+      width:44px;height:44px;border:1.5px solid #111;background:#fff;font-size:22px;transition:.2s
+    }
+    .arrow:hover{background:#111;color:#fff}
+    .dots{display:flex;gap:7px;align-items:center}
+    .dot{width:7px;height:7px;border:1px solid #111;background:#fff}
+    .dot.active{background:#111}
+
+    footer{width:min(1200px,calc(100% - 40px));margin:auto;padding:34px 0 70px;display:flex;justify-content:space-between;gap:20px;font-size:9px;letter-spacing:1px}
+    footer .muted{color:#777}
+
+    .modal{position:fixed;inset:0;z-index:8000;background:rgba(245,245,240,.72);backdrop-filter:blur(20px);display:grid;place-items:center;padding:20px;opacity:0;visibility:hidden;transition:.25s}
+    .modal.open{opacity:1;visibility:visible}
+    .modal-box{width:min(900px,100%);max-height:90vh;overflow:auto;background:#fff;border:2px solid #111;display:grid;grid-template-columns:1fr 1fr}
+    .modal-poster{min-height:420px;background:#111}
+    .modal-poster img{width:100%;height:100%;object-fit:cover}
+    .modal-info{padding:28px}
+    .modal-info h2{font-size:54px;line-height:.82;letter-spacing:-3px;margin:12px 0 18px}
+    .modal-info p{font-size:11px;line-height:1.7;color:#555}
+    .modal-meta{display:flex;gap:10px;margin:20px 0;font-size:8px;letter-spacing:1.5px;font-weight:900}
+    .close{position:absolute;top:18px;right:20px;background:#111;color:#fff;width:42px;height:42px;font-size:25px;z-index:2}
+
+    .reveal{opacity:0;transform:translateY(18px);transition:.7s var(--ease)}
+    .reveal.visible{opacity:1;transform:none}
+
+    @media(max-width:760px){
+      header{height:66px}
+      .header-inner{width:calc(100% - 28px)}
+      nav{display:none}
+      .menu{display:flex}
+      .mobile-nav{
+        position:fixed;inset:0;z-index:4900;background:rgba(245,245,240,.94);backdrop-filter:blur(24px);
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+        transform:translateY(-100%);transition:.5s var(--ease)
+      }
+      .mobile-nav.open{transform:none}
+      .mobile-nav a{font:900 clamp(38px,11vw,70px)/.8 var(--display);letter-spacing:-3px}
+      main{width:calc(100% - 28px);padding-top:94px}
+      .hero{min-height:48vh;padding-bottom:42px}
+      .hero h1{font-size:clamp(62px,18vw,100px);letter-spacing:-5px}
+      .section{padding:55px 0}
+      .section-head{display:block}
+      .section-head p{margin-top:16px}
+      .shelf{gap:12px}
+      .project-card{flex-basis:78vw}
+      .poster{height:180px}
+      .character-frame{min-height:620px}
+      .character-stage{min-height:500px;padding:40px 15px 100px}
+      .character-image{height:min(62vh,470px);max-width:92%}
+      .character-info{left:16px;right:16px;bottom:18px;max-width:none}
+      .character-watermark{font-size:26vw;letter-spacing:-5px}
+      .character-top,.character-bottom{padding:15px}
+      .modal-box{grid-template-columns:1fr;max-height:86vh}
+      .modal-poster{min-height:260px;max-height:45vh}
+      .modal-info h2{font-size:42px}
+      footer{width:calc(100% - 28px);display:block}
+      footer .muted{margin-top:10px}
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <i class="edge top"></i><i class="edge bottom"></i><i class="edge left"></i><i class="edge right"></i>
+
+  <header id="siteHeader">
+    <div class="header-inner">
+      <a class="brand" href="index.html">CODE<span>V2E</span></a>
+      <nav>
+        <a href="index.html">HOME</a>
+        <a href="index.html#about">ABOUT</a>
+        <a class="active" href="showcase.html">SHOWCASE</a>
+        <a href="index.html#contact">CONTACT</a>
+      </nav>
+      <button class="menu" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">HOME</a>
+    <a href="index.html#about">ABOUT</a>
+    <a href="showcase.html">SHOWCASE</a>
+    <a href="index.html#contact">CONTACT</a>
+  </div>
+
+  <main>
+    <section class="hero reveal">
+      <div>
+        <p class="eyebrow">CODEV2E · SHOWCASE</p>
+        <h1>SHOW<br><span class="outline">CASE.</span></h1>
+        <p class="hero-copy">Original stories, upcoming worlds and the characters behind them.</p>
+      </div>
+    </section>
+
+    <section class="section reveal" id="releasedSection">
+      <div class="section-head">
+        <div>
+          <div class="section-number">01</div>
+          <h2>RELEASED.</h2>
+        </div>
+        <p>Stories already out in the CODEV2E archive.</p>
+      </div>
+      <div class="shelf-wrap"><div class="shelf" id="releasedRail"></div></div>
+    </section>
+
+    <section class="section reveal" id="upcomingSection">
+      <div class="section-head">
+        <div>
+          <div class="section-number">02</div>
+          <h2>UPCOMING.</h2>
+        </div>
+        <p>Worlds still taking shape.</p>
+      </div>
+      <div class="shelf-wrap"><div class="shelf" id="upcomingRail"></div></div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <div>
+          <div class="section-number">03</div>
+          <h2>CHARACTER.</h2>
+        </div>
+        <p>The current character file.</p>
+      </div>
+
+      <div class="character-frame">
+        <div class="character-top">
+          <span>CHARACTER FILE</span>
+          <span class="character-count" id="characterCount">01 / 01</span>
+          <span id="characterRole">ORIGINAL CAST</span>
+        </div>
+
+        <div class="character-stage">
+          <div class="character-watermark" id="characterWatermark"></div>
+          <img id="characterImage" class="character-image" src="images/logo.png" alt="Character">
+          <div class="character-info">
+            <h3 id="characterName">Character</h3>
+            <p id="characterDescription"></p>
+          </div>
+        </div>
+
+        <div class="character-bottom">
+          <button class="arrow" id="characterPrev" aria-label="Previous character">←</button>
+          <div class="dots" id="characterDots"></div>
+          <button class="arrow" id="characterNext" aria-label="Next character">→</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 CODEV2E. ALL RIGHTS RESERVED.</span>
+    <span class="muted">ODISHA · INDIA</span>
+  </footer>
+
+  <div class="modal" id="projectModal" aria-hidden="true">
+    <button class="close" id="modalClose" aria-label="Close">×</button>
+    <div class="modal-box">
+      <div class="modal-poster"><img id="modalPoster" src="images/logo.png" alt=""></div>
+      <div class="modal-info">
+        <div class="eyebrow" id="modalStatus"></div>
+        <h2 id="modalTitle">PROJECT.</h2>
+        <div class="modal-meta"><span id="modalGenre"></span><span>•</span><span id="modalYear"></span></div>
+        <p id="modalDescription"></p>
+        <p id="modalStory" style="margin-top:16px"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      let data = {characters:[], projects:[], settings:{}};
+      let characters = [];
+      let currentCharacter = 0;
+      let lastScroll = window.scrollY;
+
+      const $ = s => document.querySelector(s);
+      const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[c]));
+
+      function renderProjects(){
+        const released = $("#releasedRail");
+        const upcoming = $("#upcomingRail");
+        released.innerHTML = "";
+        upcoming.innerHTML = "";
+
+        const makeCard = p => {
+          const card = document.createElement("article");
+          card.className = "project-card";
+          card.innerHTML = `
+            <div class="poster">
+              <img src="${esc(p.image || "images/logo.png")}" alt="${esc(p.title || "Project")}" loading="lazy" onerror="this.src='images/logo.png'">
+              <span class="status">${esc(p.status || "PROJECT")}</span>
+            </div>
+            <div class="project-info">
+              <small>${esc(p.genre || "ORIGINAL")}</small>
+              <h3>${esc(p.title || "Untitled")}</h3>
+              <p>${esc(p.description || "")}</p>
+              <span class="project-open">VIEW</span>
+            </div>`;
+          card.addEventListener("click", () => openProject(p));
+          return card;
+        };
+
+        const releasedItems = data.projects.filter(p => String(p.status).toUpperCase() === "RELEASED");
+        const upcomingItems = data.projects.filter(p => String(p.status).toUpperCase() !== "RELEASED");
+
+        releasedItems.forEach(p => released.appendChild(makeCard(p)));
+        upcomingItems.forEach(p => upcoming.appendChild(makeCard(p)));
+
+        if (!releasedItems.length) released.innerHTML = '<div class="empty">NO RELEASED STORIES YET.</div>';
+        if (!upcomingItems.length) upcoming.innerHTML = '<div class="empty">NO UPCOMING STORIES YET.</div>';
+      }
+
+      function renderCharacters(){
+        characters = Array.isArray(data.characters) ? data.characters : [];
+        if (!characters.length) {
+          $("#characterName").textContent = "NO CHARACTER";
+          $("#characterDescription").textContent = "";
+          $("#characterImage").src = "images/logo.png";
+          $("#characterCount").textContent = "00 / 00";
+          $("#characterRole").textContent = "";
+          $("#characterDots").innerHTML = "";
+          return;
+        }
+
+        const selected = data.settings?.showcase?.characterId;
+        const selectedIndex = characters.findIndex(c => c.id === selected);
+        if (selectedIndex >= 0) currentCharacter = selectedIndex;
+        if (currentCharacter >= characters.length) currentCharacter = 0;
+
+        drawCharacter();
+      }
+
+      function drawCharacter(){
+        const c = characters[currentCharacter];
+        const number = String(currentCharacter + 1).padStart(2, "0");
+        $("#characterCount").textContent = `${number} / ${String(characters.length).padStart(2,"0")}`;
+        $("#characterRole").textContent = c.role || "ORIGINAL CAST";
+        $("#characterName").textContent = c.name || "Character";
+        $("#characterDescription").textContent = c.description || c.tag || "";
+        $("#characterWatermark").textContent = c.name || "";
+        $("#characterImage").src = c.image || "images/logo.png";
+        $("#characterImage").alt = c.name || "Character";
+
+        const dots = $("#characterDots");
+        dots.innerHTML = "";
+        characters.forEach((_, i) => {
+          const dot = document.createElement("button");
+          dot.className = "dot" + (i === currentCharacter ? " active" : "");
+          dot.setAttribute("aria-label", `Character ${i + 1}`);
+          dot.onclick = () => { currentCharacter = i; drawCharacter(); };
+          dots.appendChild(dot);
+        });
+      }
+
+      function openProject(p){
+        $("#modalStatus").textContent = p.status || "PROJECT";
+        $("#modalTitle").textContent = p.title || "Untitled";
+        $("#modalGenre").textContent = p.genre || "ORIGINAL";
+        $("#modalYear").textContent = p.year || "";
+        $("#modalDescription").textContent = p.description || "";
+        $("#modalStory").textContent = p.story || "";
+        $("#modalPoster").src = p.image || "images/logo.png";
+        $("#projectModal").classList.add("open");
+        $("#projectModal").setAttribute("aria-hidden","false");
+        document.body.classList.add("locked");
+      }
+
+      function closeProject(){
+        $("#projectModal").classList.remove("open");
+        $("#projectModal").setAttribute("aria-hidden","true");
+        document.body.classList.remove("locked");
+      }
+
+      async function loadData(){
+        try{
+          const local = localStorage.getItem("codev2e_admin_data");
+          if(local) {
+            data = JSON.parse(local);
+          } else {
+            const res = await fetch("./data.json?v=" + Date.now(), {cache:"no-store"});
+            if(!res.ok) throw new Error("data.json unavailable");
+            data = await res.json();
+          }
+        }catch(e){
+          data = {characters:[],projects:[],settings:{}};
+        }
+        data.characters = Array.isArray(data.characters) ? data.characters : [];
+        data.projects = Array.isArray(data.projects) ? data.projects : [];
+        data.settings = data.settings || {};
+        renderProjects();
+        renderCharacters();
+        revealInit();
+      }
+
+      function revealInit(){
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if(entry.isIntersecting){
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {threshold:.08});
+        document.querySelectorAll(".reveal:not(.visible)").forEach(el => observer.observe(el));
+      }
+
+      $("#characterPrev").onclick = () => {
+        if(!characters.length) return;
+        currentCharacter = (currentCharacter - 1 + characters.length) % characters.length;
+        drawCharacter();
+      };
+      $("#characterNext").onclick = () => {
+        if(!characters.length) return;
+        currentCharacter = (currentCharacter + 1) % characters.length;
+        drawCharacter();
+      };
+      $("#modalClose").onclick = closeProject;
+      $("#projectModal").onclick = e => { if(e.target === $("#projectModal")) closeProject(); };
+      addEventListener("keydown", e => { if(e.key === "Escape") closeProject(); });
+
+      $("#menuBtn").onclick = () => $("#mobileNav").classList.toggle("open");
+      document.querySelectorAll("#mobileNav a").forEach(a => a.onclick = () => $("#mobileNav").classList.remove("open"));
+
+      addEventListener("scroll", () => {
+        const y = scrollY;
+        $("#siteHeader").classList.toggle("scrolled", y > 20);
+        if(y > 120 && y > lastScroll + 4) $("#siteHeader").classList.add("hidden");
+        else if(y < lastScroll - 4 || y < 24) $("#siteHeader").classList.remove("hidden");
+        lastScroll = y;
+      }, {passive:true});
+
+      addEventListener("storage", e => {
+        if(e.key === "codev2e_admin_data") loadData();
+      });
+
+      loadData();
+    })();
+  </script>
+</body>
+</html>
