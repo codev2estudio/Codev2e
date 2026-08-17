@@ -1133,6 +1133,43 @@
 
     let lastScrollY = window.scrollY;
 
+    /* DYNAMIC HERO BACKGROUND UPDATER (VIDEO OR IMAGE) */
+    function updateHeroBackground(src) {
+      const hero = document.getElementById("home");
+      if (!hero || !src) return;
+
+      const isVid = /\.(mp4|webm|ogg|mov)$/i.test(src);
+      let heroVideo = hero.querySelector(".hero-video");
+      let heroImg = hero.querySelector(".hero-bg-img");
+
+      if (isVid) {
+        if (heroImg) heroImg.remove();
+        if (!heroVideo || heroVideo.tagName.toLowerCase() !== "video") {
+          if (heroVideo) heroVideo.remove();
+          heroVideo = document.createElement("video");
+          heroVideo.className = "hero-video";
+          heroVideo.autoplay = true;
+          heroVideo.muted = true;
+          heroVideo.loop = true;
+          heroVideo.setAttribute("playsinline", "");
+          hero.prepend(heroVideo);
+        }
+        if (heroVideo.getAttribute("src") !== src && !heroVideo.src.endsWith(src)) {
+          heroVideo.src = src;
+          heroVideo.load();
+          heroVideo.play().catch(() => {});
+        }
+      } else {
+        if (heroVideo) heroVideo.remove();
+        if (!heroImg) {
+          heroImg = document.createElement("img");
+          heroImg.className = "hero-video hero-bg-img";
+          hero.prepend(heroImg);
+        }
+        heroImg.src = src;
+      }
+    }
+
     /* COMPACT MOBILE MENU TOGGLE */
     function setMenu(open) {
       mobileMenu.classList.toggle("open", open);
@@ -1273,11 +1310,18 @@
         if (!res.ok) throw new Error();
         const data = await res.json();
 
+        // 1. Dynamic Hero Background
+        if (data.settings && data.settings.heroBackground) {
+          updateHeroBackground(data.settings.heroBackground);
+        }
+
+        // 2. Characters
         if (data.characters) {
           characters = data.characters;
           renderContinuousCharacters();
         }
 
+        // 3. Announcements
         const annList = document.getElementById("announcementList");
         if (annList && data.announcements) {
           annList.innerHTML = data.announcements.map(a => `
