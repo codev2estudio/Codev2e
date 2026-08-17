@@ -10,17 +10,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f5f5f0;
-      --surface: rgba(255, 255, 255, 0.75);
-      --surface-card: rgba(255, 255, 255, 0.9);
-      --line: rgba(0, 0, 0, 0.12);
-      --line-strong: rgba(0, 0, 0, 0.25);
-      --text: #111111;
-      --muted: #666666;
-      --dim: #999999;
+      /* Coffee × Paper Warm Palette */
+      --bg: #f6f1eb;
+      --bg-subtle: #fbf8f4;
+      --surface: rgba(255, 253, 249, 0.75);
+      --surface-card: rgba(255, 253, 249, 0.9);
+      --line: rgba(31, 26, 23, 0.1);
+      --line-strong: rgba(31, 26, 23, 0.2);
+      --text: #1f1a17;
+      --muted: #635a52;
+      --dim: #948b81;
+      --coffee-dark: #2a221c;
+      --coffee-accent: #3d3027;
       --danger: #dc2626;
       --font-display: 'Space Grotesk', Inter, sans-serif;
-      --ease: cubic-bezier(.2,.75,.2,1);
+      --ease-pop: cubic-bezier(0.16, 1, 0.3, 1);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     html { background: var(--bg); }
@@ -34,8 +38,8 @@
     }
 
     h1 { font-family: var(--font-display); font-size: clamp(34px, 6vw, 64px); font-weight: 900; letter-spacing: -3px; line-height: .86; }
-    h2 { font-family: var(--font-display); font-size: 22px; font-weight: 900; letter-spacing: -1px; }
-    .outline { color: transparent; -webkit-text-stroke: 1.5px rgba(0,0,0,0.7); }
+    h2 { font-family: var(--font-display); font-size: 20px; font-weight: 900; letter-spacing: -1px; }
+    .outline { color: transparent; -webkit-text-stroke: 1.5px rgba(31, 26, 23, 0.8); }
     .eyebrow { font-size: 9px; font-weight: 800; letter-spacing: 3px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; }
 
     .container { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
@@ -44,9 +48,9 @@
     .btn {
       min-height: 44px;
       padding: 0 20px;
-      background: #111;
-      color: #fff;
-      border: 2px solid #111;
+      background: var(--text);
+      color: #f6f1eb;
+      border: 2px solid var(--text);
       font-size: 9px;
       font-weight: 900;
       letter-spacing: 2px;
@@ -55,29 +59,30 @@
       align-items: center;
       justify-content: center;
       text-transform: uppercase;
-      transition: all .25s var(--ease);
-      border-radius: 4px;
+      transition: transform .25s var(--ease-pop), box-shadow .25s var(--ease-pop), background .25s ease;
+      border-radius: 6px;
+      box-shadow: 2px 2px 0 var(--text);
     }
-    .btn:hover { background: #000; transform: translateY(-2px); }
-    .btn-outline { background: rgba(255,255,255,0.7); border-color: #111; color: #111; }
-    .btn-outline:hover { background: #111; color: #fff; border-color: #111; }
-    .btn-danger { background: transparent; border-color: var(--danger); color: var(--danger); }
-    .btn-danger:hover { background: var(--danger); color: #fff; }
-    .btn-sm { min-height: 34px; padding: 0 12px; font-size: 8px; }
+    .btn:hover { background: #0d0b0a; transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--text); }
+    .btn-outline { background: rgba(255, 253, 249, 0.85); border-color: var(--text); color: var(--text); }
+    .btn-outline:hover { background: var(--text); color: #f6f1eb; border-color: var(--text); }
+    .btn-danger { background: transparent; border-color: var(--danger); color: var(--danger); box-shadow: 2px 2px 0 var(--danger); }
+    .btn-danger:hover { background: var(--danger); color: #fff; box-shadow: 4px 4px 0 var(--danger); }
+    .btn-sm { min-height: 34px; padding: 0 14px; font-size: 8px; }
 
     input, textarea, select {
       width: 100%;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.85);
+      padding: 13px 15px;
+      background: rgba(255, 253, 249, 0.85);
       border: 1.5px solid var(--line);
-      color: #111;
+      color: var(--text);
       font-family: inherit;
       font-size: 13px;
-      border-radius: 4px;
-      transition: border-color .2s ease;
+      border-radius: 6px;
+      transition: border-color .2s ease, background .2s ease;
     }
     input:focus, textarea:focus, select:focus {
-      border-color: #111;
+      border-color: var(--text);
       outline: none;
       background: #fff;
     }
@@ -95,10 +100,10 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(245, 245, 240, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 2px solid #111;
+      background: rgba(246, 241, 235, 0.88);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1.5px solid rgba(31, 26, 23, 0.1);
       padding: 16px 0;
       margin-bottom: 40px;
     }
@@ -114,9 +119,9 @@
 
     .nav-tabs {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       margin-bottom: 30px;
-      border-bottom: 2px solid rgba(0,0,0,0.1);
+      border-bottom: 1.5px solid rgba(31, 26, 23, 0.08);
       padding-bottom: 14px;
       overflow-x: auto;
     }
@@ -130,49 +135,62 @@
       letter-spacing: 2px;
       cursor: pointer;
       text-transform: uppercase;
-      transition: all .2s ease;
-      border-radius: 4px;
+      transition: all .25s var(--ease-pop);
+      border-radius: 6px;
+      white-space: nowrap;
     }
     .tab-btn.active {
-      background: #111;
-      color: #fff;
-      border-color: #111;
+      background: var(--text);
+      color: #f6f1eb;
+      border-color: var(--text);
+      box-shadow: 2px 2px 0 var(--text);
     }
     .tab-btn:hover:not(.active) {
-      color: #111;
-      border-color: rgba(0,0,0,0.2);
+      color: var(--text);
+      border-color: rgba(31, 26, 23, 0.2);
     }
 
     .panel {
       background: var(--surface);
-      border: 2px solid rgba(0,0,0,0.1);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1.5px solid rgba(31, 26, 23, 0.1);
       padding: 32px;
-      border-radius: 6px;
+      border-radius: 12px;
+      box-shadow: 0 4px 0 rgba(31, 26, 23, 0.03), 0 16px 32px rgba(31, 26, 23, 0.03);
     }
     .editor-card {
       position: relative;
       border: 1.5px solid var(--line);
       background: var(--surface-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       padding: 24px;
       margin-bottom: 20px;
       display: grid;
-      grid-template-columns: 140px minmax(0, 1fr);
+      grid-template-columns: 180px minmax(0, 1fr);
       gap: 24px;
-      border-radius: 4px;
-      transition: border-color .25s ease;
+      border-radius: 8px;
+      box-shadow: 0 2px 0 rgba(31, 26, 23, 0.03);
+      transition: border-color .25s ease, transform .25s var(--ease-pop), box-shadow .25s var(--ease-pop);
     }
-    .editor-card:hover { border-color: #111; }
+    .editor-card:hover {
+      border-color: var(--text);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 0 rgba(31, 26, 23, 0.05), 0 12px 24px rgba(31, 26, 23, 0.04);
+    }
     .editor-preview-box {
       width: 100%;
       height: 180px;
-      background: #eee;
+      background: #e8e2da;
       border: 1.5px solid var(--line);
       display: grid;
       place-items: center;
       overflow: hidden;
-      border-radius: 4px;
+      border-radius: 6px;
+      position: relative;
     }
-    .editor-preview-box img {
+    .editor-preview-box img, .editor-preview-box video {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -185,32 +203,33 @@
     .badge {
       display: inline-block;
       padding: 2px 6px;
-      background: rgba(0,0,0,0.1);
+      background: rgba(31, 26, 23, 0.08);
       font-size: 8px;
       font-weight: 800;
-      color: #111;
+      color: var(--text);
       margin-left: 6px;
-      border-radius: 2px;
+      border-radius: 4px;
     }
-    .tab-btn.active .badge { background: rgba(255,255,255,0.2); color: #fff; }
+    .tab-btn.active .badge { background: rgba(246, 241, 235, 0.25); color: #f6f1eb; }
 
     .locked-badge {
       display: inline-block;
-      padding: 4px 10px;
-      background: rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.15);
+      padding: 5px 12px;
+      background: rgba(31, 26, 23, 0.05);
+      border: 1px solid rgba(31, 26, 23, 0.12);
       font-size: 8px;
       font-weight: 800;
-      color: #111;
+      color: var(--text);
       letter-spacing: 1.5px;
-      border-radius: 4px;
+      border-radius: 6px;
     }
 
     .upload-action-row {
       display: flex;
       gap: 10px;
       align-items: center;
-      margin-top: 4px;
+      margin-top: 6px;
+      flex-wrap: wrap;
     }
     .hidden-file-input { display: none; }
 
@@ -271,13 +290,52 @@
     <main class="container">
       
       <nav class="nav-tabs">
-        <button class="tab-btn active" data-tab="tab-chars">01. CHARACTERS <span class="badge" id="countChars">5</span></button>
+        <button class="tab-btn active" data-tab="tab-hero">00. HERO MEDIA</button>
+        <button class="tab-btn" data-tab="tab-chars">01. CHARACTERS <span class="badge" id="countChars">5</span></button>
         <button class="tab-btn" data-tab="tab-projects">02. SHOWLIST PROJECTS <span class="badge" id="countProjects">0</span></button>
         <button class="tab-btn" data-tab="tab-news">03. ANNOUNCEMENTS <span class="badge" id="countNews">0</span></button>
       </nav>
 
-      <!-- TAB 1: CHARACTERS (EDIT ONLY) -->
-      <section id="tab-chars" class="tab-content">
+      <!-- TAB 0: HERO BACKGROUND MEDIA -->
+      <section id="tab-hero" class="tab-content">
+        <div class="panel">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <p class="eyebrow">HOMEPAGE HERO SECTION</p>
+              <h2>BACKGROUND VIDEO / IMAGE</h2>
+            </div>
+            <span class="locked-badge">MP4 · WEBM · PNG · JPG</span>
+          </div>
+
+          <article class="editor-card" id="heroMediaCard">
+            <div class="editor-preview-box" id="heroPreviewBox">
+              <!-- Dynamically populated video or img -->
+            </div>
+
+            <div class="editor-fields">
+              <div>
+                <label>HERO BACKGROUND PATH / URL</label>
+                <input type="text" id="heroBgInput" placeholder="background.mp4 or images/..." oninput="updateHeroBgField(this.value)">
+              </div>
+
+              <div>
+                <label>UPLOAD HERO MEDIA FROM DEVICE (VIDEO OR IMAGE)</label>
+                <div class="upload-action-row">
+                  <input type="file" accept="video/mp4,video/webm,image/*" class="hidden-file-input" id="file-hero-bg" onchange="uploadDirectImage(this.files[0], 'hero', 0, this.nextElementSibling)">
+                  <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('file-hero-bg').click()">⬆ UPLOAD VIDEO / IMAGE TO GITHUB</button>
+                </div>
+              </div>
+
+              <p style="font-size: 11px; color: var(--muted); line-height: 1.6; margin-top: 4px;">
+                💡 You can upload an animated background video (like <code>.mp4</code>) or a high-res artwork image. Click <strong>PUBLISH CHANGES</strong> after uploading.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- TAB 1: CHARACTERS -->
+      <section id="tab-chars" class="tab-content" style="display: none;">
         <div class="panel">
           <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
             <div>
@@ -322,8 +380,12 @@
   </div>
 
   <script>
-    let state = { characters: [], projects: [], announcements: [] };
+    let state = { settings: { heroBackground: "background.mp4" }, characters: [], projects: [], announcements: [] };
     let fileSha = "";
+
+    function isVideo(url) {
+      return /\.(mp4|webm|ogg|mov)$/i.test(url || "");
+    }
 
     function utf8ToBase64(str) {
       return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (m, p1) => String.fromCharCode('0x' + p1)));
@@ -380,10 +442,11 @@
         fileSha = data.sha;
         
         state = JSON.parse(base64ToUtf8(data.content.replace(/\s/g, '')));
+        if (!state.settings) state.settings = { heroBackground: "background.mp4" };
         if (!state.characters || !state.characters.length) {
           state.characters = [
-            { id: "c1", number: "01", name: "KAIEN", role: "LEAD PROTAGONIST // VANGUARD", tag: "TACTICAL · STEALTH · OVERSIZED TECHWEAR", quote: "SILENCE BEFORE THE DISRUPTION", image: "images/logo.png", description: "" },
-            { id: "c2", number: "02", name: "LILITH", role: "CO-LEAD // ANOMALY DUELIST", tag: "STREETWEAR · HIGH MOBILITY · DUELIST", quote: "BREAK THROUGH FIRST", image: "images/logo.png", description: "" },
+            { id: "c1", number: "01", name: "Dieko ashku", role: "LEAD PROTAGONIST // VANGUARD", tag: "TACTICAL · STEALTH · OVERSIZED TECHWEAR", quote: "SILENCE BEFORE THE DISRUPTION", image: "images/logo.png", description: "" },
+            { id: "c2", number: "02", name: "Lixa", role: "CO-LEAD // ANOMALY DUELIST", tag: "STREETWEAR · HIGH MOBILITY · DUELIST", quote: "BREAK THROUGH FIRST", image: "images/logo.png", description: "" },
             { id: "c3", number: "03", name: "REN", role: "CIPHER OPERATIVE // INTEL", tag: "NEURAL NET · SURVEILLANCE", quote: "EVERY SIGNAL LEAVES A PATTERN", image: "images/logo.png", description: "" },
             { id: "c4", number: "04", name: "AERIS", role: "DRIFT NAVIGATOR // PILOT", tag: "DIMENSIONAL DRIFT", quote: "THE HORIZON IS NEVER FIXED", image: "images/logo.png", description: "" },
             { id: "c5", number: "05", name: "ZERO-X", role: "ENIGMATIC PROTOTYPE // WARDEN", tag: "CLASSIFIED", quote: "ORIGINS LOCKED BEHIND PROTOCOL", image: "images/logo.png", description: "" }
@@ -426,13 +489,38 @@
     }
 
     function renderWorkspace() {
+      renderHeroSettings();
       renderCharacters();
       renderProjects();
       renderNews();
       updateCounters();
     }
 
-    /* DIRECT IMAGE UPLOADER */
+    /* RENDER HERO SETTINGS */
+    function renderHeroSettings() {
+      const heroUrl = (state.settings && state.settings.heroBackground) ? state.settings.heroBackground : "background.mp4";
+      document.getElementById("heroBgInput").value = heroUrl;
+
+      const previewBox = document.getElementById("heroPreviewBox");
+      if (isVideo(heroUrl)) {
+        previewBox.innerHTML = `<video src="${heroUrl}" autoplay muted loop playsinline></video>`;
+      } else {
+        previewBox.innerHTML = `<img src="${heroUrl}" alt="Hero Preview" onerror="this.src='images/logo.png'">`;
+      }
+    }
+
+    function updateHeroBgField(val) {
+      if (!state.settings) state.settings = {};
+      state.settings.heroBackground = val;
+      const previewBox = document.getElementById("heroPreviewBox");
+      if (isVideo(val)) {
+        previewBox.innerHTML = `<video src="${val}" autoplay muted loop playsinline></video>`;
+      } else {
+        previewBox.innerHTML = `<img src="${val}" alt="Hero Preview" onerror="this.src='images/logo.png'">`;
+      }
+    }
+
+    /* DIRECT FILE UPLOADER (SUPPORTS VIDEO & IMAGES) */
     async function uploadDirectImage(file, targetType, index, btnEl) {
       if (!file) return;
 
@@ -463,18 +551,24 @@
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            message: `Upload image ${filePath} via Studio Admin`,
+            message: `Upload media ${filePath} via Studio Admin`,
             content: base64Data
           })
         });
 
         if (!res.ok) throw new Error("GitHub rejected upload.");
 
-        if (targetType === 'character') state.characters[index].image = filePath;
-        else if (targetType === 'project') state.projects[index].image = filePath;
+        if (targetType === 'hero') {
+          if (!state.settings) state.settings = {};
+          state.settings.heroBackground = filePath;
+        } else if (targetType === 'character') {
+          state.characters[index].image = filePath;
+        } else if (targetType === 'project') {
+          state.projects[index].image = filePath;
+        }
 
         renderWorkspace();
-        alert(`✓ Image uploaded successfully to ${filePath}! Click "PUBLISH CHANGES" to save.`);
+        alert(`✓ File uploaded successfully to ${filePath}! Click "PUBLISH CHANGES" to make it live.`);
       } catch (err) {
         alert("Upload failed: " + err.message);
       } finally {
@@ -499,7 +593,7 @@
               </div>
               <div>
                 <label>CHARACTER NAME</label>
-                <input type="text" value="${c.name || ''}" placeholder="e.g. KAIEN" onchange="state.characters[${i}].name = this.value">
+                <input type="text" value="${c.name || ''}" placeholder="e.g. Dieko ashku" onchange="state.characters[${i}].name = this.value">
               </div>
               <div>
                 <label>ROLE // AFFILIATION</label>
@@ -687,7 +781,7 @@
         const data = await res.json();
         if (res.ok) {
           fileSha = data.content.sha;
-          alert("✓ Published successfully! Studio changes and uploaded images are now live.");
+          alert("✓ Published successfully! Hero background, characters, and dispatches are now live.");
         } else {
           throw new Error(data.message || "Failed to commit");
         }
