@@ -1,4 +1,7 @@
 {
+  "settings": {
+    "heroBackground": "background.mp4"
+  },
   "characters": [
     {
       "id": "c1",
@@ -8,7 +11,7 @@
       "tag": "TACTICAL · STEALTH · OVERSIZED TECHWEAR",
       "quote": "SILENCE BEFORE THE DISRUPTION",
       "image": "images/1786811210953-img_20260815_215635.png",
-      "description": "Grounded, observant, and calculated. Operating in the urban sectors of the CODEV2E story universe, Kaien navigates anomalous narrative fractures with calm tactical discipline."
+      "description": "Grounded, observant, and calculated. Operating in the urban sectors of the CODEV2E story universe, Dieko navigates anomalous narrative fractures with calm tactical discipline."
     },
     {
       "id": "c2",
@@ -18,7 +21,7 @@
       "tag": "STREETWEAR · HIGH MOBILITY · DUELIST",
       "quote": "BREAK THROUGH FIRST, ASK QUESTIONS LATER",
       "image": "images/1786811335001-file_00000000f0cc82089d25b528bb30fd03.png",
-      "description": "Relentless, explosive, and instinct-driven in combat. Marked by her signature magenta hair streak and combat duelist glove, Lilith spearheads frontline incursions into unstable zones."
+      "description": "Relentless, explosive, and instinct-driven in combat. Marked by her signature combat duelist glove, Lixa spearheads frontline incursions into unstable zones."
     },
     {
       "id": "c3",
@@ -27,7 +30,7 @@
       "role": "CIPHER OPERATIVE // INTEL",
       "tag": "NEURAL NET · SURVEILLANCE · STRATEGY",
       "quote": "EVERY SIGNAL LEAVES A PATTERN",
-      "image": "logo.png",
+      "image": "images/logo.png",
       "description": "The strategic core of the squad. Specializes in decrypting synthetic signal architectures, narrative code, and mapping anomaly threats before engagement."
     },
     {
@@ -37,7 +40,7 @@
       "role": "DRIFT NAVIGATOR // PILOT",
       "tag": "DIMENSIONAL DRIFT · ENERGY SYNCHRONIZATION",
       "quote": "THE HORIZON IS NEVER FIXED",
-      "image": "logo.png",
+      "image": "images/logo.png",
       "description": "A high-reflex dimensional pilot capable of steering crew vessels through volatile drift channels connecting the core sectors of the CODEV2E universe."
     },
     {
@@ -47,7 +50,7 @@
       "role": "ENIGMATIC PROTOTYPE // WARDEN",
       "tag": "CLASSIFIED · HEAVY WEAPONRY · FOUNDATION ERA",
       "quote": "ORIGINS LOCKED BEHIND PROTOCOL",
-      "image": "logo.png",
+      "image": "images/logo.png",
       "description": "A mysterious heavy combatant engineered during the early foundation era. His true allegiances and memories remain encrypted behind high-grade security protocols."
     }
   ],
@@ -58,8 +61,8 @@
       "status": "UPCOMING",
       "year": "2026",
       "genre": "Dark Urban Sci-Fi // Animation",
-      "description": "The flagship original anime production following Kaien and Lilith as they uncover the truth behind the CODEV2E world anomalies.",
-      "image": "logo.png",
+      "description": "The flagship original anime production following Dieko and Lixa as they uncover the truth behind the CODEV2E world anomalies.",
+      "image": "images/logo.png",
       "pageUrl": "#"
     }
   ],
