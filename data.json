@@ -16,18 +16,18 @@
     {
       "id": "c2",
       "number": "02",
-      "name": "Lixa",
-      "role": "CO-LEAD // ANOMALY DUELIST",
+      "name": "Dieco ashku",
+      "role": "Caption//leader ",
       "tag": "STREETWEAR · HIGH MOBILITY · DUELIST",
       "quote": "BREAK THROUGH FIRST, ASK QUESTIONS LATER",
-      "image": "images/1786811335001-file_00000000f0cc82089d25b528bb30fd03.png",
+      "image": "images/1786962951714-1786859025238-removebg-preview.png",
       "description": "Relentless, explosive, and instinct-driven in combat. Marked by her signature combat duelist glove, Lixa spearheads frontline incursions into unstable zones."
     },
     {
       "id": "c3",
       "number": "03",
-      "name": "REN",
-      "role": "CIPHER OPERATIVE // INTEL",
+      "name": "Lili jo",
+      "role": "Apsara ",
       "tag": "NEURAL NET · SURVEILLANCE · STRATEGY",
       "quote": "EVERY SIGNAL LEAVES A PATTERN",
       "image": "images/logo.png",
@@ -40,7 +40,7 @@
       "role": "DRIFT NAVIGATOR // PILOT",
       "tag": "DIMENSIONAL DRIFT · ENERGY SYNCHRONIZATION",
       "quote": "THE HORIZON IS NEVER FIXED",
-      "image": "images/logo.png",
+      "image": "images/logo.",
       "description": "A high-reflex dimensional pilot capable of steering crew vessels through volatile drift channels connecting the core sectors of the CODEV2E universe."
     },
     {
@@ -50,7 +50,7 @@
       "role": "ENIGMATIC PROTOTYPE // WARDEN",
       "tag": "CLASSIFIED · HEAVY WEAPONRY · FOUNDATION ERA",
       "quote": "ORIGINS LOCKED BEHIND PROTOCOL",
-      "image": "images/logo.png",
+      "image": "images/log",
       "description": "A mysterious heavy combatant engineered during the early foundation era. His true allegiances and memories remain encrypted behind high-grade security protocols."
     }
   ],
