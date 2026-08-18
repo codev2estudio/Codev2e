@@ -17,7 +17,7 @@
       "id": "c2",
       "number": "02",
       "name": "Dieco ashku",
-      "role": "Caption//leader ",
+      "role": "Caption//leader",
       "tag": "STREETWEAR · HIGH MOBILITY · DUELIST",
       "quote": "BREAK THROUGH FIRST, ASK QUESTIONS LATER",
       "image": "images/1786962951714-1786859025238-removebg-preview.png",
@@ -27,7 +27,7 @@
       "id": "c3",
       "number": "03",
       "name": "Lili jo",
-      "role": "Apsara ",
+      "role": "Apsara",
       "tag": "NEURAL NET · SURVEILLANCE · STRATEGY",
       "quote": "EVERY SIGNAL LEAVES A PATTERN",
       "image": "images/1786963088269-file_00000000f0cc82089d25b528bb30fd03.png",
@@ -40,7 +40,7 @@
       "role": "DRIFT NAVIGATOR // PILOT",
       "tag": "DIMENSIONAL DRIFT · ENERGY SYNCHRONIZATION",
       "quote": "THE HORIZON IS NEVER FIXED",
-      "image": "images/logo.",
+      "image": "images/logo.png",
       "description": "A high-reflex dimensional pilot capable of steering crew vessels through volatile drift channels connecting the core sectors of the CODEV2E universe."
     },
     {
@@ -50,20 +50,28 @@
       "role": "ENIGMATIC PROTOTYPE // WARDEN",
       "tag": "CLASSIFIED · HEAVY WEAPONRY · FOUNDATION ERA",
       "quote": "ORIGINS LOCKED BEHIND PROTOCOL",
-      "image": "images/log",
+      "image": "images/logo.png",
       "description": "A mysterious heavy combatant engineered during the early foundation era. His true allegiances and memories remain encrypted behind high-grade security protocols."
     }
   ],
-  "projects": [
+  "articles": [
     {
-      "id": 1,
-      "title": "PROJECT ALPHA",
-      "status": "UPCOMING",
-      "year": "2026",
-      "genre": "Dark Urban Sci-Fi // Animation",
-      "description": "The flagship original anime production following Dieko and Lixa as they uncover the truth behind the CODEV2E world anomalies.",
-      "image": "images/logo.png",
-      "pageUrl": "#"
+      "id": "1",
+      "title": "The Philosophy of Original Worldbuilding",
+      "category": "ESSAY",
+      "date": "2026",
+      "coverImage": "images/logo.png",
+      "excerpt": "Why CODEV2E prioritizes independent proprietary worldbuilding over commission-based pipelines.",
+      "content": "At CODEV2E Studio, independent animation is built from fundamental lore upward.\n\nRather than executing outsourced commissions, our creative resources are dedicated to developing proprietary universes, stylized silhouettes, and high-mobility kinetic choreography.\n\nEvery character, weapon architecture, and city grid is designed to serve an expansive interconnected narrative."
+    },
+    {
+      "id": "2",
+      "title": "Visual Development & Combat Choreography",
+      "category": "BREAKDOWN",
+      "date": "2026",
+      "coverImage": "images/logo.png",
+      "excerpt": "A deep dive into our character posture styling, fluid kinetic motion, and techwear influences.",
+      "content": "Designing high-mobility duelists and tactical vanguards requires balance between functional techwear aesthetics and clean animation silhouettes.\n\nBy establishing strong key poses early in visual development, our animation sequences retain distinct character personalities throughout complex choreography."
     }
   ],
   "announcements": [
