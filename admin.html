@@ -291,8 +291,8 @@
       
       <nav class="nav-tabs">
         <button class="tab-btn active" data-tab="tab-hero">00. HERO MEDIA</button>
-        <button class="tab-btn" data-tab="tab-chars">01. CHARACTERS <span class="badge" id="countChars">5</span></button>
-        <button class="tab-btn" data-tab="tab-projects">02. SHOWLIST PROJECTS <span class="badge" id="countProjects">0</span></button>
+        <button class="tab-btn" data-tab="tab-chars">01. CHARACTERS <span class="badge" id="countChars">0</span></button>
+        <button class="tab-btn" data-tab="tab-articles">02. ARTICLES <span class="badge" id="countArticles">0</span></button>
         <button class="tab-btn" data-tab="tab-news">03. ANNOUNCEMENTS <span class="badge" id="countNews">0</span></button>
       </nav>
 
@@ -308,9 +308,7 @@
           </div>
 
           <article class="editor-card" id="heroMediaCard">
-            <div class="editor-preview-box" id="heroPreviewBox">
-              <!-- Dynamically populated video or img -->
-            </div>
+            <div class="editor-preview-box" id="heroPreviewBox"></div>
 
             <div class="editor-fields">
               <div>
@@ -327,7 +325,7 @@
               </div>
 
               <p style="font-size: 11px; color: var(--muted); line-height: 1.6; margin-top: 4px;">
-                💡 You can upload an animated background video (like <code>.mp4</code>) or a high-res artwork image. Click <strong>PUBLISH CHANGES</strong> after uploading.
+                💡 Upload an animated background video (like <code>.mp4</code>) or a high-res artwork image. Click <strong>PUBLISH CHANGES</strong> after uploading.
               </p>
             </div>
           </article>
@@ -348,17 +346,17 @@
         </div>
       </section>
 
-      <!-- TAB 2: PROJECTS -->
-      <section id="tab-projects" class="tab-content" style="display: none;">
+      <!-- TAB 2: ARTICLES & ESSAYS -->
+      <section id="tab-articles" class="tab-content" style="display: none;">
         <div class="panel">
           <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
             <div>
-              <p class="eyebrow">ANIMATION PRODUCTIONS</p>
-              <h2>SHOWLIST ARCHIVE</h2>
+              <p class="eyebrow">WRITINGS & INSIGHTS</p>
+              <h2>STUDIO ARTICLES & ESSAYS</h2>
             </div>
-            <button class="btn btn-outline btn-sm" id="addProjectBtn">+ ADD NEW PROJECT</button>
+            <button class="btn btn-outline btn-sm" id="addArticleBtn">+ ADD NEW ARTICLE</button>
           </div>
-          <div id="projectListContainer"></div>
+          <div id="articleListContainer"></div>
         </div>
       </section>
 
@@ -380,7 +378,7 @@
   </div>
 
   <script>
-    let state = { settings: { heroBackground: "background.mp4" }, characters: [], projects: [], announcements: [] };
+    let state = { settings: { heroBackground: "background.mp4" }, characters: [], articles: [], announcements: [] };
     let fileSha = "";
 
     function isVideo(url) {
@@ -446,13 +444,13 @@
         if (!state.characters || !state.characters.length) {
           state.characters = [
             { id: "c1", number: "01", name: "Dieko ashku", role: "LEAD PROTAGONIST // VANGUARD", tag: "TACTICAL · STEALTH · OVERSIZED TECHWEAR", quote: "SILENCE BEFORE THE DISRUPTION", image: "images/logo.png", description: "" },
-            { id: "c2", number: "02", name: "Lixa", role: "CO-LEAD // ANOMALY DUELIST", tag: "STREETWEAR · HIGH MOBILITY · DUELIST", quote: "BREAK THROUGH FIRST", image: "images/logo.png", description: "" },
-            { id: "c3", number: "03", name: "REN", role: "CIPHER OPERATIVE // INTEL", tag: "NEURAL NET · SURVEILLANCE", quote: "EVERY SIGNAL LEAVES A PATTERN", image: "images/logo.png", description: "" },
+            { id: "c2", number: "02", name: "Dieco ashku", role: "Caption//leader", tag: "STREETWEAR · HIGH MOBILITY · DUELIST", quote: "BREAK THROUGH FIRST", image: "images/logo.png", description: "" },
+            { id: "c3", number: "03", name: "Lili jo", role: "Apsara", tag: "NEURAL NET · SURVEILLANCE", quote: "EVERY SIGNAL LEAVES A PATTERN", image: "images/logo.png", description: "" },
             { id: "c4", number: "04", name: "AERIS", role: "DRIFT NAVIGATOR // PILOT", tag: "DIMENSIONAL DRIFT", quote: "THE HORIZON IS NEVER FIXED", image: "images/logo.png", description: "" },
             { id: "c5", number: "05", name: "ZERO-X", role: "ENIGMATIC PROTOTYPE // WARDEN", tag: "CLASSIFIED", quote: "ORIGINS LOCKED BEHIND PROTOCOL", image: "images/logo.png", description: "" }
           ];
         }
-        if (!state.projects) state.projects = [];
+        if (!state.articles) state.articles = [];
         if (!state.announcements) state.announcements = [];
 
         document.getElementById("authView").style.display = "none";
@@ -483,15 +481,15 @@
     });
 
     function updateCounters() {
-      document.getElementById("countChars").textContent = state.characters.length;
-      document.getElementById("countProjects").textContent = state.projects.length;
-      document.getElementById("countNews").textContent = state.announcements.length;
+      document.getElementById("countChars").textContent = state.characters ? state.characters.length : 0;
+      document.getElementById("countArticles").textContent = state.articles ? state.articles.length : 0;
+      document.getElementById("countNews").textContent = state.announcements ? state.announcements.length : 0;
     }
 
     function renderWorkspace() {
       renderHeroSettings();
       renderCharacters();
-      renderProjects();
+      renderArticles();
       renderNews();
       updateCounters();
     }
@@ -563,8 +561,8 @@
           state.settings.heroBackground = filePath;
         } else if (targetType === 'character') {
           state.characters[index].image = filePath;
-        } else if (targetType === 'project') {
-          state.projects[index].image = filePath;
+        } else if (targetType === 'article') {
+          state.articles[index].coverImage = filePath;
         }
 
         renderWorkspace();
@@ -631,61 +629,53 @@
       `).join("");
     }
 
-    function renderProjects() {
-      const container = document.getElementById("projectListContainer");
-      container.innerHTML = state.projects.map((p, i) => `
+    function renderArticles() {
+      const container = document.getElementById("articleListContainer");
+      if (!state.articles) state.articles = [];
+      container.innerHTML = state.articles.map((art, i) => `
         <article class="editor-card">
           <div class="editor-preview-box">
-            <img src="${p.image || 'images/logo.png'}" alt="Preview" onerror="this.src='images/logo.png'">
+            <img src="${art.coverImage || 'images/logo.png'}" alt="Preview" onerror="this.src='images/logo.png'">
           </div>
 
           <div class="editor-fields">
             <div class="grid-3">
               <div>
-                <label>PROJECT TITLE</label>
-                <input type="text" value="${p.title || ''}" placeholder="e.g. PROJECT ALPHA" onchange="state.projects[${i}].title = this.value">
+                <label>ARTICLE TITLE</label>
+                <input type="text" value="${art.title || ''}" placeholder="e.g. The Architecture of CODEV2E" onchange="state.articles[${i}].title = this.value">
               </div>
               <div>
-                <label>STATUS</label>
-                <select onchange="state.projects[${i}].status = this.value">
-                  <option value="RELEASED" ${p.status === 'RELEASED' ? 'selected' : ''}>RELEASED</option>
-                  <option value="UPCOMING" ${p.status === 'UPCOMING' ? 'selected' : ''}>UPCOMING</option>
-                </select>
+                <label>CATEGORY</label>
+                <input type="text" value="${art.category || 'ESSAY'}" placeholder="e.g. PRODUCTION ESSAY" onchange="state.articles[${i}].category = this.value">
               </div>
               <div>
-                <label>YEAR</label>
-                <input type="text" value="${p.year || ''}" placeholder="e.g. 2026" onchange="state.projects[${i}].year = this.value">
-              </div>
-            </div>
-
-            <div class="grid-2">
-              <div>
-                <label>GENRE / THEME</label>
-                <input type="text" value="${p.genre || ''}" placeholder="e.g. Dark Urban Sci-Fi" onchange="state.projects[${i}].genre = this.value">
-              </div>
-              <div>
-                <label>TARGET LINK (OPTIONAL)</label>
-                <input type="text" value="${p.pageUrl || '#'}" placeholder="#" onchange="state.projects[${i}].pageUrl = this.value">
+                <label>DATE / YEAR</label>
+                <input type="text" value="${art.date || '2026'}" placeholder="e.g. 2026" onchange="state.articles[${i}].date = this.value">
               </div>
             </div>
 
             <div>
-              <label>POSTER ARTWORK</label>
-              <input type="text" value="${p.image || ''}" placeholder="images/poster.png or URL" oninput="state.projects[${i}].image = this.value; this.closest('.editor-card').querySelector('.editor-preview-box img').src = this.value;">
+              <label>COVER IMAGE</label>
+              <input type="text" value="${art.coverImage || ''}" placeholder="images/... or URL" oninput="state.articles[${i}].coverImage = this.value; this.closest('.editor-card').querySelector('.editor-preview-box img').src = this.value;">
               
               <div class="upload-action-row">
-                <input type="file" accept="image/*" class="hidden-file-input" id="file-proj-${i}" onchange="uploadDirectImage(this.files[0], 'project', ${i}, this.nextElementSibling)">
-                <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('file-proj-${i}').click()">⬆ UPLOAD POSTER FROM DEVICE</button>
+                <input type="file" accept="image/*" class="hidden-file-input" id="file-art-${i}" onchange="uploadDirectImage(this.files[0], 'article', ${i}, this.nextElementSibling)">
+                <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('file-art-${i}').click()">⬆ UPLOAD COVER ARTWORK</button>
               </div>
             </div>
 
             <div>
-              <label>PROJECT SYNOPSIS</label>
-              <textarea rows="3" placeholder="Story synopsis..." onchange="state.projects[${i}].description = this.value">${p.description || ''}</textarea>
+              <label>CARD SUMMARY / EXCERPT</label>
+              <textarea rows="2" placeholder="Brief summary preview..." onchange="state.articles[${i}].excerpt = this.value">${art.excerpt || ''}</textarea>
+            </div>
+
+            <div>
+              <label>FULL ARTICLE BODY (READING CONTENT)</label>
+              <textarea rows="6" placeholder="Full essay body text..." onchange="state.articles[${i}].content = this.value">${art.content || ''}</textarea>
             </div>
 
             <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-              <button class="btn btn-danger btn-sm" onclick="state.projects.splice(${i},1); renderWorkspace();">DELETE PROJECT</button>
+              <button class="btn btn-danger btn-sm" onclick="state.articles.splice(${i},1); renderWorkspace();">DELETE ARTICLE</button>
             </div>
           </div>
         </article>
@@ -694,6 +684,7 @@
 
     function renderNews() {
       const container = document.getElementById("newsListContainer");
+      if (!state.announcements) state.announcements = [];
       container.innerHTML = state.announcements.map((a, i) => `
         <article class="editor-card" style="grid-template-columns: 1fr;">
           <div class="editor-fields">
@@ -725,21 +716,22 @@
       `).join("");
     }
 
-    document.getElementById("addProjectBtn").addEventListener("click", () => {
-      state.projects.unshift({
-        id: Date.now(),
-        title: "NEW PRODUCTION",
-        status: "UPCOMING",
-        year: "2026",
-        genre: "Original Animation",
-        description: "Project synopsis...",
-        image: "images/logo.png",
-        pageUrl: "#"
+    document.getElementById("addArticleBtn").addEventListener("click", () => {
+      if (!state.articles) state.articles = [];
+      state.articles.unshift({
+        id: Date.now().toString(),
+        title: "NEW ESSAY / PRODUCTION NOTE",
+        category: "ESSAY",
+        date: "2026",
+        coverImage: "images/logo.png",
+        excerpt: "Brief summary...",
+        content: "Write your full in-depth article content here..."
       });
       renderWorkspace();
     });
 
     document.getElementById("addNewsBtn").addEventListener("click", () => {
+      if (!state.announcements) state.announcements = [];
       state.announcements.unshift({
         id: Date.now().toString(),
         title: "NEW ANNOUNCEMENT",
@@ -781,7 +773,7 @@
         const data = await res.json();
         if (res.ok) {
           fileSha = data.content.sha;
-          alert("✓ Published successfully! Hero background, characters, and dispatches are now live.");
+          alert("✓ Published successfully! Hero background, characters, articles, and dispatches are now live.");
         } else {
           throw new Error(data.message || "Failed to commit");
         }
