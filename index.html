@@ -46,6 +46,7 @@
       --header-height: 76px;
       --content-width: 1200px;
       --ease-pop: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
       --font-display: 'Space Grotesk', Inter, sans-serif;
     }
 
@@ -82,7 +83,7 @@
       backdrop-filter: saturate(180%) blur(var(--glass-blur));
       -webkit-backdrop-filter: saturate(180%) blur(var(--glass-blur));
       border-bottom: 1px solid var(--glass-border);
-      transition: transform 0.4s var(--ease-pop), background 0.3s ease;
+      transition: transform 0.45s var(--ease-pop), background 0.3s ease;
     }
     .site-header.hidden { transform: translateY(-105%); }
     .header-inner {
@@ -106,7 +107,7 @@
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 2px;
-      transition: color 0.25s var(--ease-pop);
+      transition: color 0.3s var(--ease-smooth);
     }
     .desktop-nav a::after {
       content: "";
@@ -162,7 +163,7 @@
         flex-direction: column;
         padding: 22px 24px;
         gap: 12px;
-        background: rgba(246, 241, 235, 0.92);
+        background: rgba(246, 241, 235, 0.94);
         backdrop-filter: blur(24px) saturate(180%);
         -webkit-backdrop-filter: blur(24px) saturate(180%);
         border-bottom: 1.5px solid rgba(31, 26, 23, 0.1);
@@ -187,7 +188,7 @@
         padding: 8px 0;
         color: var(--text);
         border-bottom: 1px solid rgba(31, 26, 23, 0.04);
-        transition: transform 0.2s var(--ease-pop), color 0.2s ease;
+        transition: transform 0.25s var(--ease-pop), color 0.2s ease;
       }
       .mobile-menu a:hover {
         transform: translateX(4px);
@@ -211,8 +212,13 @@
       }
     }
 
-    .view { display: none; min-height: 100vh; }
+    .view { display: none; min-height: 100vh; animation: fadeInView 0.4s var(--ease-smooth); }
     .view.active { display: block; }
+
+    @keyframes fadeInView {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     /* ---------- COMMON UI & BUTTONS ---------- */
     .outline { color: transparent; -webkit-text-stroke: 1.5px rgba(31, 26, 23, 0.85); }
@@ -270,7 +276,7 @@
       font-weight: 900;
       letter-spacing: 2px;
       text-transform: uppercase;
-      transition: transform 0.28s var(--ease-pop), box-shadow 0.28s var(--ease-pop), background 0.28s ease;
+      transition: transform 0.3s var(--ease-pop), box-shadow 0.3s var(--ease-pop), background 0.3s ease;
       border: 2px solid var(--text);
       border-radius: 6px;
       box-shadow: 2px 2px 0 var(--text);
@@ -286,17 +292,27 @@
       transform: translate(-2px, -2px);
       box-shadow: 4px 4px 0 var(--text);
     }
+    .btn-outline {
+      background: rgba(255, 253, 249, 0.75);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      background: var(--text);
+      color: #f6f1eb;
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--text);
+    }
 
-    /* ---------- SCROLL-TRIGGERED ANIMATIONS & STAGGERED REVEALS ---------- */
+    /* ---------- MODERN & LIGHTWEIGHT ANIMATIONS ---------- */
     .reveal {
       opacity: 0;
-      transform: translateY(28px) scale(0.98);
-      transition: opacity 0.75s var(--ease-pop), transform 0.75s var(--ease-pop);
+      transform: translateY(24px);
+      transition: opacity 0.8s var(--ease-pop), transform 0.8s var(--ease-pop);
       will-change: opacity, transform;
     }
     .reveal.visible {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
     }
 
     /* Hero Text Staggered Reveal */
@@ -305,7 +321,7 @@
     .hero-content .hero-copy,
     .hero-content .button-row {
       opacity: 0;
-      transform: translateY(18px);
+      transform: translateY(16px);
       transition: opacity 0.7s var(--ease-pop), transform 0.7s var(--ease-pop);
     }
     .hero-content.visible .eyebrow { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
@@ -313,21 +329,20 @@
     .hero-content.visible .hero-copy { opacity: 1; transform: translateY(0); transition-delay: 0.32s; }
     .hero-content.visible .button-row { opacity: 1; transform: translateY(0); transition-delay: 0.44s; }
 
-    /* Character Strip Content Reveal */
+    /* Character Showcase Anim */
     .character-showcase-strip .char-render-img {
       opacity: 0;
-      transform: translateY(24px) scale(0.96);
-      transition: opacity 0.75s var(--ease-pop), transform 0.75s var(--ease-pop);
+      transform: translateY(20px) scale(0.97);
+      transition: opacity 0.8s var(--ease-pop), transform 0.8s var(--ease-pop);
     }
     .character-showcase-strip.visible .char-render-img {
       opacity: 1;
       transform: translateY(0) scale(1);
       transition-delay: 0.1s;
     }
-
     .character-showcase-strip .char-meta-content > * {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(14px);
       transition: opacity 0.65s var(--ease-pop), transform 0.65s var(--ease-pop);
     }
     .character-showcase-strip.visible .char-meta-content > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
@@ -337,43 +352,13 @@
     .character-showcase-strip.visible .char-meta-content > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.44s; }
     .character-showcase-strip.visible .char-meta-content > *:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.52s; }
 
-    /* Phase Card Internal Content Reveal */
-    .phase-card .phase-card-top,
-    .phase-card .phase-title,
-    .phase-card .phase-desc {
+    /* FAQ Box Reveal */
+    .faq-card {
       opacity: 0;
       transform: translateY(14px);
-      transition: opacity 0.65s var(--ease-pop), transform 0.65s var(--ease-pop);
+      transition: opacity 0.65s var(--ease-pop), transform 0.65s var(--ease-pop), border-color 0.3s ease, box-shadow 0.3s ease;
     }
-    .phase-card.visible .phase-card-top { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
-    .phase-card.visible .phase-title { opacity: 1; transform: translateY(0); transition-delay: 0.22s; }
-    .phase-card.visible .phase-desc { opacity: 1; transform: translateY(0); transition-delay: 0.32s; }
-
-    /* About Widget Internal Content Reveal */
-    .about-widget .about-widget-header,
-    .about-widget .about-title,
-    .about-widget .about-text p {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.65s var(--ease-pop), transform 0.65s var(--ease-pop);
-    }
-    .about-widget.visible .about-widget-header { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
-    .about-widget.visible .about-title { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
-    .about-widget.visible .about-text p:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.28s; }
-    .about-widget.visible .about-text p:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.36s; }
-    .about-widget.visible .about-text p:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.44s; }
-
-    /* Announcement Card Content Reveal */
-    .announcement-card .announcement-card-top,
-    .announcement-card h2,
-    .announcement-card p {
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.6s var(--ease-pop), transform 0.6s var(--ease-pop);
-    }
-    .announcement-card.visible .announcement-card-top { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
-    .announcement-card.visible h2 { opacity: 1; transform: translateY(0); transition-delay: 0.16s; }
-    .announcement-card.visible p { opacity: 1; transform: translateY(0); transition-delay: 0.24s; }
+    .faq-card.visible { opacity: 1; transform: translateY(0); }
 
     /* ---------- HERO SECTION ---------- */
     .hero {
@@ -474,9 +459,10 @@
     }
     .roster-header p { max-width: 420px; color: var(--text-muted); font-size: 13px; line-height: 1.75; }
 
+    /* NORMAL ZIG-ZAG STRIP (Index >= 1) */
     .character-showcase-strip {
       position: relative;
-      min-height: 680px;
+      min-height: 640px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
@@ -494,12 +480,59 @@
       direction: ltr;
     }
 
+    /* CENTERED FIRST CHARACTER HERO SHOWCASE (Index 0) */
+    .character-showcase-strip.featured-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      direction: ltr !important;
+      padding: 50px 0 90px;
+      margin-bottom: 40px;
+      border-bottom: 1.5px dashed rgba(31, 26, 23, 0.12);
+    }
+    .character-showcase-strip.featured-center .char-figure-stage {
+      min-height: auto;
+      margin-bottom: 28px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .character-showcase-strip.featured-center .char-render-img {
+      max-height: 520px;
+      margin: 0 auto;
+    }
+    .character-showcase-strip.featured-center .char-meta-content {
+      align-items: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .character-showcase-strip.featured-center .char-role-line {
+      justify-content: center;
+    }
+    .character-showcase-strip.featured-center .char-traits-tag {
+      margin: 0 auto;
+    }
+    .character-showcase-strip.featured-center .char-quote-box {
+      border-left: none;
+      border-top: 2px solid var(--text);
+      border-bottom: 2px solid var(--text);
+      border-radius: 4px;
+      text-align: center;
+      padding: 14px 24px;
+    }
+    .character-showcase-strip.featured-center .char-story-desc {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
     .char-figure-stage {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      min-height: 600px;
+      min-height: 560px;
     }
     .char-figure-stage::before {
       content: "";
@@ -508,19 +541,24 @@
       height: 420px;
       bottom: 20px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(31, 26, 23, 0.05) 0%, transparent 68%);
+      background: radial-gradient(circle, rgba(31, 26, 23, 0.06) 0%, transparent 68%);
       filter: blur(30px);
       z-index: 0;
+      transition: transform 0.6s var(--ease-pop);
     }
     .char-render-img {
       position: relative;
       z-index: 1;
-      max-height: 640px;
+      max-height: 600px;
       width: auto;
       object-fit: contain;
-      filter: drop-shadow(0 12px 30px rgba(31, 26, 23, 0.18));
-      mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+      filter: drop-shadow(0 12px 28px rgba(31, 26, 23, 0.16));
+      mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
+      transition: transform 0.4s var(--ease-pop);
+    }
+    .char-figure-stage:hover .char-render-img {
+      transform: translateY(-4px) scale(1.01);
     }
 
     .char-meta-content {
@@ -552,7 +590,7 @@
     }
     .char-main-heading {
       font-family: var(--font-display);
-      font-size: clamp(48px, 6vw, 88px);
+      font-size: clamp(44px, 5.5vw, 84px);
       line-height: 0.85;
       letter-spacing: -5px;
       font-weight: 900;
@@ -568,7 +606,7 @@
       align-items: center;
       gap: 12px;
     }
-    .char-role-line::before { content: ""; width: 32px; height: 4px; background: var(--text); border-radius: 2px; }
+    .char-role-line::before { content: ""; width: 28px; height: 3px; background: var(--text); border-radius: 2px; }
     .char-traits-tag {
       font-size: 9px;
       font-weight: 800;
@@ -597,70 +635,62 @@
     }
     .char-story-desc { max-width: 480px; color: var(--text-muted); font-size: 14px; line-height: 1.85; }
 
-    /* ---------- 02 // ROADMAP & PHASES (GLASS-BLUR BOXES) ---------- */
+    /* ---------- 02 // FAQ SECTION (REPLACES ROADMAP) ---------- */
     .section { width: min(var(--content-width), calc(100% - 48px)); margin: 0 auto; padding: 120px 0; }
 
-    .studio-phases-grid {
+    .faq-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
     }
-    .phase-card {
-      position: relative;
+    .faq-card {
       background: var(--surface);
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
       border: 1.5px solid rgba(31, 26, 23, 0.1);
-      border-radius: 14px;
-      padding: 38px 30px;
+      border-radius: 12px;
+      padding: 32px 28px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      box-shadow: 0 4px 0 rgba(31, 26, 23, 0.04), 0 16px 32px rgba(31, 26, 23, 0.03);
-      transition: transform 0.35s var(--ease-pop), box-shadow 0.35s var(--ease-pop), border-color 0.35s ease, opacity 0.75s var(--ease-pop);
+      gap: 14px;
+      box-shadow: 0 4px 0 rgba(31, 26, 23, 0.03), 0 16px 32px rgba(31, 26, 23, 0.03);
+      transition: transform 0.35s var(--ease-pop), box-shadow 0.35s var(--ease-pop), border-color 0.3s ease;
     }
-    .phase-card.visible:hover {
-      transform: translateY(-5px) scale(1.01);
+    .faq-card:hover {
+      transform: translateY(-4px);
       border-color: rgba(31, 26, 23, 0.25);
-      box-shadow: 0 6px 0 rgba(31, 26, 23, 0.08), 0 24px 42px rgba(31, 26, 23, 0.06);
+      box-shadow: 0 6px 0 rgba(31, 26, 23, 0.06), 0 24px 38px rgba(31, 26, 23, 0.05);
     }
-    .phase-card-top {
-      display: flex;
+    .faq-q-badge {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(31, 26, 23, 0.06);
-    }
-    .phase-number {
-      font-family: var(--font-display);
-      font-size: 13px;
+      gap: 6px;
+      font-size: 9px;
       font-weight: 900;
-      letter-spacing: 1.5px;
-      color: var(--text);
-    }
-    .phase-badge {
-      font-size: 8px;
-      font-weight: 800;
       letter-spacing: 2px;
+      color: var(--text-dim);
       text-transform: uppercase;
-      padding: 4px 10px;
-      background: var(--text);
-      color: #f6f1eb;
-      border-radius: 4px;
     }
-    .phase-title {
+    .faq-question {
       font-family: var(--font-display);
-      font-size: clamp(20px, 2.2vw, 24px);
+      font-size: clamp(18px, 1.8vw, 22px);
       font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.15;
+      letter-spacing: -0.8px;
+      line-height: 1.25;
       color: var(--text);
     }
-    .phase-desc {
+    .faq-answer {
       font-size: 13px;
-      line-height: 1.75;
+      line-height: 1.8;
       color: var(--text-muted);
+    }
+
+    .faq-bottom-cta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 48px;
     }
 
     /* ---------- 03 // ABOUT STUDIO (EMBEDDED WIDGET) ---------- */
@@ -674,9 +704,9 @@
       padding: 60px 52px;
       box-shadow: 0 4px 0 rgba(31, 26, 23, 0.04), 0 20px 40px -15px rgba(31, 26, 23, 0.04);
       overflow: hidden;
-      transition: transform 0.35s var(--ease-pop), box-shadow 0.35s var(--ease-pop), opacity 0.75s var(--ease-pop);
+      transition: transform 0.35s var(--ease-pop), box-shadow 0.35s var(--ease-pop);
     }
-    .about-widget.visible:hover {
+    .about-widget:hover {
       box-shadow: 0 6px 0 rgba(31, 26, 23, 0.06), 0 28px 50px -15px rgba(31, 26, 23, 0.06);
     }
     .about-widget-header {
@@ -742,6 +772,89 @@
       line-height: 1.6;
       font-weight: 600;
     }
+
+    /* ---------- ARTICLES PAGE VIEW ---------- */
+    .articles-shell { min-height: 100svh; padding: 140px 0 90px; width: min(var(--content-width), calc(100% - 48px)); margin: 0 auto; }
+    .articles-hero { max-width: 800px; margin: 0 auto 60px; text-align: center; }
+    .articles-hero h1 { font-family: var(--font-display); margin-top: 16px; font-size: clamp(52px, 8vw, 100px); line-height: 0.88; letter-spacing: -6px; font-weight: 900; }
+    .articles-copy { max-width: 580px; margin: 20px auto 0; color: var(--text-muted); line-height: 1.75; font-size: 15px; }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 28px;
+    }
+    .article-card {
+      background: var(--surface);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border: 1.5px solid rgba(31, 26, 23, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.35s var(--ease-pop), box-shadow 0.35s var(--ease-pop), border-color 0.3s ease;
+      cursor: pointer;
+    }
+    .article-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--text);
+      box-shadow: 0 6px 0 var(--text), 0 16px 36px rgba(31, 26, 23, 0.08);
+    }
+    .article-cover-wrap {
+      width: 100%;
+      height: 200px;
+      background: #e8e2da;
+      overflow: hidden;
+      position: relative;
+    }
+    .article-cover-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease-smooth);
+    }
+    .article-card:hover .article-cover-wrap img { transform: scale(1.04); }
+    .article-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; gap: 12px; }
+    .article-meta-row { display: flex; justify-content: space-between; font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); }
+    .article-category { color: #f6f1eb; background: var(--text); padding: 3px 8px; border-radius: 4px; }
+    .article-card h2 { font-family: var(--font-display); font-size: 22px; line-height: 1.15; letter-spacing: -1px; }
+    .article-excerpt { color: var(--text-muted); font-size: 13px; line-height: 1.7; flex-grow: 1; }
+    .article-read-btn { font-size: 9px; font-weight: 900; letter-spacing: 2px; color: var(--text); text-transform: uppercase; margin-top: 8px; display: inline-flex; align-items: center; gap: 6px; }
+
+    /* ---------- ARTICLE READER MODAL ---------- */
+    .article-reader-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(246, 241, 235, 0.85);
+      backdrop-filter: saturate(180%) blur(28px);
+      -webkit-backdrop-filter: saturate(180%) blur(28px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s var(--ease-pop), visibility 0.35s ease;
+    }
+    .article-reader-modal.open { opacity: 1; visibility: visible; }
+    .reader-box {
+      width: min(760px, 94vw);
+      max-height: 88vh;
+      overflow-y: auto;
+      background: rgba(255, 253, 249, 0.95);
+      border: 2px solid var(--text);
+      border-radius: 12px;
+      padding: 44px;
+      position: relative;
+      box-shadow: 4px 4px 0 var(--text);
+      transform: scale(0.96);
+      transition: transform 0.35s var(--ease-pop);
+    }
+    .article-reader-modal.open .reader-box { transform: scale(1); }
+    .reader-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--line); }
+    .reader-title { font-family: var(--font-display); font-size: clamp(32px, 5vw, 48px); line-height: 0.95; letter-spacing: -2px; margin: 10px 0; }
+    .reader-content { font-size: 15px; line-height: 1.9; color: var(--text-muted); white-space: pre-line; }
 
     /* ---------- FOOTER ---------- */
     .site-footer { border-top: 2px solid rgba(31, 26, 23, 0.08); }
@@ -839,19 +952,18 @@
 
     @media (max-width: 900px) {
       :root { --header-height: 70px; }
-      .header-inner, .hero-content, .character-roster-section, .section, .footer-inner { width: min(100% - 36px, var(--content-width)); }
+      .header-inner, .hero-content, .character-roster-section, .section, .footer-inner, .articles-shell { width: min(100% - 36px, var(--content-width)); }
       .character-showcase-strip, .character-showcase-strip.reverse { grid-template-columns: 1fr; direction: ltr; gap: 30px; min-height: auto; padding: 60px 0; }
-      .char-figure-stage { min-height: 440px; }
-      .char-render-img { max-height: 460px; }
+      .char-figure-stage { min-height: 420px; }
+      .char-render-img { max-height: 440px; }
       .about-widget { padding: 36px 24px; border-radius: 12px; }
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
-      .studio-phases-grid { grid-template-columns: 1fr; gap: 18px; }
-      .phase-card { padding: 30px 24px; }
+      .reader-box { padding: 30px 20px; }
     }
 
     @media (max-width: 620px) {
-      .announcement-shell { width: calc(100% - 32px); padding: 120px 0 70px; }
-      .announcement-hero h1 { font-size: 18vw; letter-spacing: -4px; }
+      .announcement-shell, .articles-shell { width: calc(100% - 32px); padding: 120px 0 70px; }
+      .announcement-hero h1, .articles-hero h1 { font-size: 16vw; letter-spacing: -4px; }
       .hero { min-height: 100svh; }
       .hero-content { padding: 90px 0 50px; }
       .hero h1 { font-size: clamp(42px, 14vw, 72px); letter-spacing: -3px; line-height: 0.92; }
@@ -878,18 +990,30 @@
     </div>
   </section>
 
+  <!-- ARTICLE READER MODAL -->
+  <section class="article-reader-modal" id="articleReaderModal" aria-hidden="true">
+    <div class="reader-box">
+      <button class="close-overlay" id="readerClose" type="button">×</button>
+      <div class="reader-header">
+        <p class="eyebrow" id="readerCategory">STUDIO ARTICLE</p>
+        <h1 class="reader-title" id="readerTitle">Article Title</h1>
+        <span style="font-size: 10px; font-weight: 800; letter-spacing: 2px; color: var(--text-dim);" id="readerDate"></span>
+      </div>
+      <div class="reader-content" id="readerBody"></div>
+    </div>
+  </section>
+
   <!-- SITE HEADER -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
       <a href="#home" class="brand nav-home">CODE<span>V2E</span></a>
 
-      <!-- Desktop Navigation Bar -->
+      <!-- Desktop Navigation Bar (Roadmap & Characters Removed) -->
       <nav class="desktop-nav" aria-label="Primary navigation">
         <a href="#home" data-route="home">HOME</a>
-        <a href="#roster" data-route="home">CHARACTERS</a>
-        <a href="#roadmap" data-route="home">ROADMAP</a>
         <a href="#about" data-route="home">ABOUT</a>
         <a href="#announcement" data-route="announcement">NEWS</a>
+        <a href="#articles" data-route="articles">ARTICLES</a>
       </nav>
 
       <!-- Mobile Dropdown Toggle Button -->
@@ -901,13 +1025,12 @@
     </div>
   </header>
 
-  <!-- COMPACT MOBILE DROPDOWN (Under topbar only) -->
+  <!-- COMPACT MOBILE DROPDOWN (Roadmap & Characters Removed) -->
   <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
     <a href="#home" data-route="home">HOME</a>
-    <a href="#roster" data-route="home">CHARACTERS</a>
-    <a href="#roadmap" data-route="home">ROADMAP</a>
     <a href="#about" data-route="home">ABOUT</a>
     <a href="#announcement" data-route="announcement">NEWS</a>
+    <a href="#articles" data-route="articles">ARTICLES</a>
 
     <div class="mobile-socials">
       <a href="https://www.youtube.com/@CODEV2E" target="_blank" rel="noopener">YOUTUBE</a>
@@ -965,55 +1088,58 @@
           </p>
         </div>
 
-        <!-- DYNAMIC IMMERSIVE STRIPS CONTAINER -->
+        <!-- DYNAMIC IMMERSIVE STRIPS (First Centered, Rest Zig-Zag) -->
         <div id="characterStripsContainer"></div>
       </section>
 
       <div class="manga-divider"></div>
 
-      <!-- 02 ROADMAP & STUDIO PHASES -->
-      <section class="section" id="roadmap">
+      <!-- 02 FAQ SECTION (REPLACED ROADMAP) -->
+      <section class="section" id="faqSection">
         <div class="section-label reveal">
           <span>02</span>
-          02//ROADMAP
+          02//FAQ & DISPATCHES
         </div>
 
-        <div class="studio-phases-grid">
-          <!-- 02 Studio Phase 1 -->
-          <article class="phase-card reveal">
-            <div class="phase-card-top">
-              <span class="phase-number">02 // PHASE 1</span>
-              <span class="phase-badge">FOUNDATION</span>
-            </div>
-            <h3 class="phase-title">ORIGINAL CAST & DESIGN</h3>
-            <p class="phase-desc">
-              Establishing independent studio operations in Odisha, designing the primary character cast, and architecting core visual combat concepts.
+        <div class="roster-header reveal" style="margin-bottom: 48px;">
+          <div>
+            <p class="eyebrow">QUESTIONS & ANSWERS</p>
+            <h2>STUDIO<br><span class="outline">FAQ.</span></h2>
+          </div>
+          <p>
+            Common questions regarding our original animation pipeline, universe timeline, production status, and creative philosophy.
+          </p>
+        </div>
+
+        <div class="faq-grid" id="faqGrid">
+          <article class="faq-card reveal">
+            <div class="faq-q-badge">01 // PRODUCTION</div>
+            <h3 class="faq-question">What kind of animation productions does CODEV2E develop?</h3>
+            <p class="faq-answer">
+              CODEV2E focuses exclusively on in-house original IP development—building complete anime story worlds, high-mobility combat choreography, and narrative character arcs from scratch.
             </p>
           </article>
 
-          <!-- 02 Studio Phase 2 -->
-          <article class="phase-card reveal">
-            <div class="phase-card-top">
-              <span class="phase-number">02 // PHASE 2</span>
-              <span class="phase-badge">PRODUCTION</span>
-            </div>
-            <h3 class="phase-title">EXPANDED STORY WORLDS</h3>
-            <p class="phase-desc">
-              Active storyboarding, animation drafts, anomaly universe building, and comprehensive narrative world lore development.
+          <article class="faq-card reveal">
+            <div class="faq-q-badge">02 // INDEPENDENCE</div>
+            <h3 class="faq-question">Does the studio accept client animation commissions?</h3>
+            <p class="faq-answer">
+              No. CODEV2E is structured strictly as an independent creator-owned studio. All engineering, design, and storytelling resources are dedicated to our proprietary animation projects.
             </p>
           </article>
 
-          <!-- 02 Studio Phase 3 -->
-          <article class="phase-card reveal">
-            <div class="phase-card-top">
-              <span class="phase-number">02 // PHASE 3</span>
-              <span class="phase-badge">RELEASE</span>
-            </div>
-            <h3 class="phase-title">ANIMATION & UNIVERSE</h3>
-            <p class="phase-desc">
-              Full-scale animated narrative visual sequences, world expansions, and original standalone entertainment properties.
+          <article class="faq-card reveal">
+            <div class="faq-q-badge">03 // RELEASE SCHEDULE</div>
+            <h3 class="faq-question">Where and when will upcoming animation episodes be released?</h3>
+            <p class="faq-answer">
+              Official episodes, visual teasers, and production shorts are broadcast directly across our primary YouTube channel and official portal news feeds.
             </p>
           </article>
+        </div>
+
+        <!-- READ MORE OPTION TO OPEN ARTICLES PAGE -->
+        <div class="faq-bottom-cta reveal">
+          <a href="#articles" class="btn btn-outline" data-route="articles">READ MORE STUDIO ARTICLES & ESSAYS →</a>
         </div>
       </section>
 
@@ -1091,6 +1217,19 @@
     </footer>
   </div>
 
+  <!-- ================= ARTICLES VIEW ================= -->
+  <div class="view" id="articlesView" aria-label="CODEV2E articles and essays">
+    <main class="articles-shell">
+      <section class="articles-hero">
+        <p class="eyebrow">WRITINGS & INSIGHTS</p>
+        <h1>STUDIO<br><span class="outline">ARTICLES.</span></h1>
+        <p class="articles-copy">In-depth essays, animation breakdown deep-dives, worldbuilding architecture notes, and design philosophy from CODEV2E.</p>
+      </section>
+
+      <section class="articles-grid" id="articlesGridContainer"></section>
+    </main>
+  </div>
+
   <!-- ================= ANNOUNCEMENTS VIEW ================= -->
   <div class="view" id="announcementView" aria-label="CODEV2E announcements">
     <main class="announcement-shell">
@@ -1123,6 +1262,7 @@
 
   <script>
     let characters = [];
+    let articles = [];
 
     const header = document.getElementById("siteHeader");
     const menuButton = document.getElementById("menuButton");
@@ -1130,10 +1270,11 @@
 
     const homeView = document.getElementById("homeView");
     const announcementView = document.getElementById("announcementView");
+    const articlesView = document.getElementById("articlesView");
 
     let lastScrollY = window.scrollY;
 
-    /* DYNAMIC HERO BACKGROUND UPDATER (VIDEO OR IMAGE) */
+    /* DYNAMIC HERO BACKGROUND UPDATER */
     function updateHeroBackground(src) {
       const hero = document.getElementById("home");
       if (!hero || !src) return;
@@ -1207,21 +1348,27 @@
     /* VIEW ROUTING */
     function setActiveRoute(route, target = null, updateHash = true) {
       const isAnnouncement = route === "announcement";
+      const isArticles = route === "articles";
 
-      homeView.classList.toggle("active", !isAnnouncement);
+      homeView.classList.toggle("active", !isAnnouncement && !isArticles);
       announcementView.classList.toggle("active", isAnnouncement);
+      articlesView.classList.toggle("active", isArticles);
 
       document.querySelectorAll(".desktop-nav a").forEach(link => {
         link.classList.toggle("active", link.dataset.route === route);
       });
 
       if (updateHash) {
-        const hash = isAnnouncement ? "#announcement" : (target ? "#" + target : "#home");
+        let hash = "#home";
+        if (isAnnouncement) hash = "#announcement";
+        else if (isArticles) hash = "#articles";
+        else if (target) hash = "#" + target;
+
         if (window.location.hash !== hash) history.pushState(null, "", hash);
       }
 
       window.scrollTo({
-        top: target && document.getElementById(target) && !isAnnouncement
+        top: target && document.getElementById(target) && !isAnnouncement && !isArticles
           ? document.getElementById(target).offsetTop - 85
           : 0,
         behavior: "smooth"
@@ -1234,6 +1381,7 @@
     function parseRoute() {
       const hash = window.location.hash.replace("#", "");
       if (hash === "announcement") { setActiveRoute("announcement", null, false); return; }
+      if (hash === "articles") { setActiveRoute("articles", null, false); return; }
       setActiveRoute("home", hash || "home", false);
     }
 
@@ -1243,6 +1391,7 @@
         const route = link.dataset.route;
         const href = link.getAttribute("href") || "";
         if (route === "announcement") { setActiveRoute("announcement"); return; }
+        if (route === "articles") { setActiveRoute("articles"); return; }
         setActiveRoute("home", href.replace("#", "") || "home");
       });
     });
@@ -1253,7 +1402,7 @@
 
     window.addEventListener("popstate", parseRoute);
 
-    /* OPTIMIZED SCROLL-TRIGGERED OBSERVER (TRIGGER ONCE ONLY) */
+    /* OPTIMIZED SCROLL-TRIGGERED OBSERVER */
     let revealObserver;
     function initRevealObserver() {
       if (revealObserver) revealObserver.disconnect();
@@ -1272,18 +1421,19 @@
       document.querySelectorAll(".reveal:not(.visible)").forEach(el => revealObserver.observe(el));
     }
 
-    /* RENDER CHARACTER STRIPS */
+    /* RENDER CHARACTER STRIPS: FIRST IS CENTERED, REST ARE ZIG-ZAG */
     function renderContinuousCharacters() {
       const container = document.getElementById("characterStripsContainer");
       if (!container) return;
       container.innerHTML = "";
 
       characters.forEach((c, idx) => {
-        const isReverse = idx % 2 !== 0;
+        const isFirst = idx === 0;
+        const isReverse = !isFirst && idx % 2 === 0; // alternates normal and reverse after the first
         const numLabel = c.number || `0${idx + 1}`;
 
         const strip = document.createElement("article");
-        strip.className = `character-showcase-strip reveal ${isReverse ? 'reverse' : ''}`;
+        strip.className = `character-showcase-strip reveal ${isFirst ? 'featured-center' : (isReverse ? 'reverse' : '')}`;
         strip.innerHTML = `
           <div class="char-figure-stage">
             <img src="${c.image || 'images/logo.png'}" alt="${c.name} Artwork" class="char-render-img" loading="lazy" onerror="this.src='images/logo.png'">
@@ -1303,6 +1453,54 @@
       initRevealObserver();
     }
 
+    /* RENDER ARTICLES GRID */
+    function renderArticles() {
+      const container = document.getElementById("articlesGridContainer");
+      if (!container) return;
+      if (!articles || !articles.length) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No articles published yet.</p>`;
+        return;
+      }
+
+      container.innerHTML = articles.map((art, idx) => `
+        <article class="article-card reveal" onclick="openArticleReader(${idx})">
+          <div class="article-cover-wrap">
+            <img src="${art.coverImage || 'images/logo.png'}" alt="${art.title}" onerror="this.src='images/logo.png'">
+          </div>
+          <div class="article-body">
+            <div class="article-meta-row">
+              <span class="article-category">${art.category || "ESSAY"}</span>
+              <span>${art.date || "2026"}</span>
+            </div>
+            <h2>${art.title}</h2>
+            <p class="article-excerpt">${art.excerpt || (art.content ? art.content.slice(0, 120) + '...' : '')}</p>
+            <div class="article-read-btn">READ ARTICLE →</div>
+          </div>
+        </article>
+      `).join("");
+      initRevealObserver();
+    }
+
+    /* ARTICLE READER MODAL */
+    const readerModal = document.getElementById("articleReaderModal");
+    const readerClose = document.getElementById("readerClose");
+
+    function openArticleReader(idx) {
+      const art = articles[idx];
+      if (!art) return;
+      document.getElementById("readerCategory").textContent = art.category || "STUDIO ESSAY";
+      document.getElementById("readerTitle").textContent = art.title;
+      document.getElementById("readerDate").textContent = `${art.date || "2026"} · BY CODEV2E`;
+      document.getElementById("readerBody").textContent = art.content || art.excerpt || "";
+      readerModal.classList.add("open");
+      document.body.classList.add("locked");
+    }
+
+    readerClose.addEventListener("click", () => {
+      readerModal.classList.remove("open");
+      document.body.classList.remove("locked");
+    });
+
     /* DATA LOADER */
     async function loadStudioData() {
       try {
@@ -1321,7 +1519,13 @@
           renderContinuousCharacters();
         }
 
-        // 3. Announcements
+        // 3. Articles
+        if (data.articles) {
+          articles = data.articles;
+          renderArticles();
+        }
+
+        // 4. Announcements
         const annList = document.getElementById("announcementList");
         if (annList && data.announcements) {
           annList.innerHTML = data.announcements.map(a => `
