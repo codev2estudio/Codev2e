@@ -60,7 +60,7 @@
       "title": "The Philosophy of Original Worldbuilding",
       "category": "ESSAY",
       "date": "2026",
-      "coverImage": "images/logo.png",
+      "coverImage": "",
       "excerpt": "Why CODEV2E prioritizes independent proprietary worldbuilding over commission-based pipelines.",
       "content": "At CODEV2E Studio, independent animation is built from fundamental lore upward.\n\nRather than executing outsourced commissions, our creative resources are dedicated to developing proprietary universes, stylized silhouettes, and high-mobility kinetic choreography.\n\nEvery character, weapon architecture, and city grid is designed to serve an expansive interconnected narrative."
     },
@@ -74,13 +74,5 @@
       "content": "Designing high-mobility duelists and tactical vanguards requires balance between functional techwear aesthetics and clean animation silhouettes.\n\nBy establishing strong key poses early in visual development, our animation sequences retain distinct character personalities throughout complex choreography."
     }
   ],
-  "announcements": [
-    {
-      "id": "1",
-      "category": "STUDIO DISPATCH",
-      "title": "ORIGINAL ROSTER ARCHIVE ACTIVATED",
-      "date": "2026-08-15",
-      "content": "Official character visual development sheets and narrative profiles are now live on the CODEV2E portal."
-    }
-  ]
+  "announcements": []
 }
